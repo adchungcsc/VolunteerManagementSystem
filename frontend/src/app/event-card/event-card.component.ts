@@ -9,10 +9,10 @@ export class EventCardComponent implements OnInit {
 
   // TODO NEED TO INJECT and work on this.
   /**
-   * 
-   * @param data 
+   * TODO
+   * @param data TODO
    */
-  constructor(public data: any) { 
+  constructor(/*public data: any*/) { 
 
    }
 
