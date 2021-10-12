@@ -6,6 +6,8 @@ import { HttpClientModule } from '@angular/common/http';
 
 import {MatButtonModule} from '@angular/material/button';
 import {MatCardModule} from '@angular/material/card';
+import {MatPaginatorModule} from '@angular/material/paginator';
+import { MatProgressSpinner } from "@angular/material/progress-spinner";
 
 import { AppComponent } from './app.component';
 import { LandingPageComponent } from './landing-page/landing-page.component';
@@ -26,6 +28,8 @@ import { FindAnEventComponent } from './find-an-event/find-an-event.component';
     BrowserAnimationsModule,
     MatCardModule,
     MatButtonModule,
+    MatPaginatorModule,
+    MatProgressSpinner,
     HttpClientModule
   ],
   providers: [],
