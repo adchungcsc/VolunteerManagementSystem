@@ -1,12 +1,38 @@
 const express = require('express')
 const app = express()
+const bodyParser = require('body-parser');
 
-app.get('/', function (req, res) {
+// to support JSON-encoded bodies
+app.use(bodyParser.json());
+// for parsing application/xwww-form-urlencoded
+app.use(bodyParser.urlencoded({extended: true}));
+
+
+app.get('/', (req, res) => {
     //Health/sanity check endpoint
     res.send('Hello World!')
 })
 
-//TODO: Register new user (depended on impl)
+//TODO: Register new users
+
+let users = [
+    {
+        user_id: 0,
+        name: "John Cena",
+        email: "JCena@ncsu.edu",
+        phone_number: "911",
+        role: "Administrator"
+    },
+    {
+        user_id: 0,
+        name: "Mark Zuckerberg",
+        email: "mark@ncsu.edu",
+        phone_number: "911",
+        role: "User"
+    }
+]
+
+let eventCounter = 2 //temp fill in for serial aut inc
 
 //Placeholder until db conn setup
 let events = [
@@ -38,8 +64,22 @@ app.get('/user/:id', (req, res) => {
     /**
      * Get a user based on ID
      */
-    console.log(req.params.id)
-    res.send('Hello World!')
+    let queried_id = req.params.id
+    if (queried_id === undefined) {
+        res.send(users)
+    } else {
+        //Placeholder until db conn setup
+        users.forEach(user => {
+            console.log(user)
+            console.log(user.user_id)
+            console.log(queried_id)
+            if (user.user_id === parseInt(queried_id)) {
+                res.send(user)
+            }
+        })
+        //Didn't find event
+        res.send({})
+    }
 })
 
 app.get('/event/:id?', (req, res) => {
@@ -69,8 +109,21 @@ app.post('/event', (req, res) => {
     /**
      * Create new event
      */
-    //TODO: accept params and create new event
-    res.send('Hello World!')
+        //TODO: add error checking
+        //TODO: link to existing user for organizer.
+    const addedEvent = {
+            id: ++eventCounter,
+            name: req.params.name,
+            address: req.params.address,
+            start_timestamp: req.params.start_timestamp,
+            end_timestamp: req.params.end_timestamp,
+            organizer_id: 0,
+            max_volunteers: req.params.max_volunteers,
+            description: req.params.description,
+            image_path: "https://icatcare.org/app/uploads/2018/07/Thinking-of-getting-a-cat.png"
+    }
+    events.push(addedEvent)
+    res.send(addedEvent)
 })
 
 app.delete('/event/:id', (req, res) => {
@@ -78,7 +131,7 @@ app.delete('/event/:id', (req, res) => {
      * delete event
      */
     let queried_id = req.params.id
-    for(let i = 0; i < events.length; i++){
+    for (let i = 0; i < events.length; i++) {
         if (events[i].id === parseInt(queried_id)) {
             res.send(events[i])
             events.splice(i, 1)
