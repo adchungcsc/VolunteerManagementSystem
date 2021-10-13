@@ -29,7 +29,7 @@ CREATE TABLE event_signup{
   waitlist_timestamp timestamp,
   primary key(event_signup_id),
   foreign key(event_id) references event(event_id),
-  foreign key(user_id) references user(user_id)
+  foreign key(user_id) references users(user_id)
 }
 
 CREATE TABLE event_attendance{
@@ -41,7 +41,7 @@ CREATE TABLE event_attendance{
   attendee_id int,
   primary key(event_attendance_id),
   foreign key(event_id) references event(event_id),
-  foreign key(attendee_id) references user(user_id)
+  foreign key(attendee_id) references users(user_id)
 }
 
 
