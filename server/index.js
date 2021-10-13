@@ -24,7 +24,7 @@ let users = [
         role: "Administrator"
     },
     {
-        user_id: 0,
+        user_id: 1,
         name: "Mark Zuckerberg",
         email: "mark@ncsu.edu",
         phone_number: "911",
@@ -60,7 +60,7 @@ let events = [
     },
 ]
 
-app.get('/user/:id', (req, res) => {
+app.get('/user/:id?', (req, res) => {
     /**
      * Get a user based on ID
      */
@@ -113,13 +113,13 @@ app.post('/event', (req, res) => {
         //TODO: link to existing user for organizer.
     const addedEvent = {
             id: ++eventCounter,
-            name: req.params.name,
-            address: req.params.address,
-            start_timestamp: req.params.start_timestamp,
-            end_timestamp: req.params.end_timestamp,
+            name: req.body.name,
+            address: req.body.address,
+            start_timestamp: req.body.start_timestamp,
+            end_timestamp: req.body.end_timestamp,
             organizer_id: 0,
-            max_volunteers: req.params.max_volunteers,
-            description: req.params.description,
+            max_volunteers: req.body.max_volunteers,
+            description: req.body.description,
             image_path: "https://icatcare.org/app/uploads/2018/07/Thinking-of-getting-a-cat.png"
     }
     events.push(addedEvent)
