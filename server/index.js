@@ -182,6 +182,8 @@ app.post('/signup', (req, res) => {
             is_waitlisted: false,
             waitlist_timestamp: null,
         }
+    //Change to get user_id from their session instead of relying on them to tell us who they are.
+
     console.log(signups)
 
     signups.push(eventSignup)
@@ -189,9 +191,9 @@ app.post('/signup', (req, res) => {
     res.send(eventSignup)
 })
 
-app.get('/event/signup/:id', (req, res) => {
+app.get('/signup/event/:id', (req, res) => {
     /**
-     * Create new event
+     * Get who signed up for an event.
      */
     let signupsForThisEvent = []
     let queried_event_id = req.params.id
@@ -203,9 +205,9 @@ app.get('/event/signup/:id', (req, res) => {
     res.send(signupsForThisEvent)
 })
 
-app.get('/event/user/:id', (req, res) => {
+app.get('/signup/user/:id', (req, res) => {
     /**
-     * Create new event
+     * Get events that a user has signed up for.
      */
     let signupsForThisEvent = []
     let queried_user_id = req.params.id
@@ -217,7 +219,70 @@ app.get('/event/user/:id', (req, res) => {
     res.send(signupsForThisEvent)
 })
 
-//register attendance at an event.
+
+//Register attendance for event.
+
+let attendanceCounter = 1 //temp fill in for serial aut inc
+
+let attendances = [
+    {
+        event_attendance_id: 1,
+        event_id: 1,
+        hours: 1,
+        comment: "Event was great",
+        rating: 5,
+        attendee_id: 1
+    }
+]
+
+app.post('/attend', (req, res) => {
+    /**
+     * Create new event
+     */
+        //TODO: add error checking
+        //TODO: link to existing user and event
+    const eventAttendance = {
+            event_attendance_id: ++attendanceCounter,
+            event_id: req.body.event_id,
+            hours: req.body.hours,
+            comment: req.body.comment,
+            rating: req.body.rating,
+            attendee_id: req.body.attendee_id
+        }
+        //Change to get attendee_id from their session instead of relying on them to tell us who they are.
+
+    attendances.push(eventAttendance)
+    res.send(eventAttendance)
+})
+
+app.get('/attend/event/:id', (req, res) => {
+    /**
+     * Get who attended an event
+     */
+    let attendancesForThisEvent = []
+    let queried_event_id = req.params.id
+    attendances.forEach(attendance => {
+        if (attendance.event_id === parseInt(queried_event_id)) {
+            attendancesForThisEvent.push(attendance)
+        }
+    })
+    res.send(attendancesForThisEvent)
+})
+
+app.get('/attend/user/:id', (req, res) => {
+    /**
+     * Get event attendances a user has registered attendance for.
+     */
+    let attendancesForThisEvent = []
+    let queried_user_id = req.params.id
+    attendances.forEach(attendance => {
+        if (attendance.attendee_id === parseInt(queried_user_id)) {
+            attendancesForThisEvent.push(attendance)
+        }
+    })
+    res.send(attendancesForThisEvent)
+})
+
 
 app.listen(3000, function () {
     console.log('Listening on port 3000...')
