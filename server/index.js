@@ -78,7 +78,7 @@ app.get('/user/:id?', (req, res) => {
             }
         })
         //Didn't find event
-        res.send({})
+        res.status(404).send({})
     }
 })
 
@@ -101,7 +101,7 @@ app.get('/event/:id?', (req, res) => {
             }
         })
         //Didn't find event
-        res.send({})
+        res.status(404).send({})
     }
 })
 
@@ -121,9 +121,9 @@ app.post('/event', (req, res) => {
             max_volunteers: req.body.max_volunteers,
             description: req.body.description,
             image_path: "https://icatcare.org/app/uploads/2018/07/Thinking-of-getting-a-cat.png"
-    }
+        }
     events.push(addedEvent)
-    res.send(addedEvent)
+    res.status(201).send(addedEvent)
 })
 
 app.delete('/event/:id', (req, res) => {
@@ -138,7 +138,149 @@ app.delete('/event/:id', (req, res) => {
         }
     }
     //found nothing
-    res.send({})
+    res.status(404).send({})
+})
+
+let signupCounter = 3 //temp fill in for serial aut inc
+
+let signups = [
+    {
+        event_signup_id: 1,
+        event_id: 0,
+        user_id: 0,
+        is_waitlisted: false,
+        waitlist_timestamp: null,
+    },
+    {
+        event_signup_id: 2,
+        event_id: 0,
+        user_id: 1,
+        is_waitlisted: false,
+        waitlist_timestamp: null,
+    },
+    {
+        event_signup_id: 3,
+        event_id: 1,
+        user_id: 1,
+        is_waitlisted: false,
+        waitlist_timestamp: null,
+    },
+]
+
+//Signup for event
+
+app.post('/signup', (req, res) => {
+    /**
+     * Create new event
+     */
+        //TODO: add error checking
+        //TODO: link to existing user and event
+    const eventSignup = {
+            event_signup_id: ++signupCounter,
+            event_id: req.body.event_id,
+            user_id: req.body.user_id,
+            is_waitlisted: false,
+            waitlist_timestamp: null,
+        }
+    //Change to get user_id from their session instead of relying on them to tell us who they are.
+
+    console.log(signups)
+
+    signups.push(eventSignup)
+    console.log(signups)
+    res.send(eventSignup)
+})
+
+app.get('/signup/event/:id', (req, res) => {
+    /**
+     * Get who signed up for an event.
+     */
+    let signupsForThisEvent = []
+    let queried_event_id = req.params.id
+    signups.forEach(signup => {
+        if (signup.event_id === parseInt(queried_event_id)) {
+            signupsForThisEvent.push(signup)
+        }
+    })
+    res.send(signupsForThisEvent)
+})
+
+app.get('/signup/user/:id', (req, res) => {
+    /**
+     * Get events that a user has signed up for.
+     */
+    let signupsForThisEvent = []
+    let queried_user_id = req.params.id
+    signups.forEach(signup => {
+        if (signup.user_id === parseInt(queried_user_id)) {
+            signupsForThisEvent.push(signup)
+        }
+    })
+    res.send(signupsForThisEvent)
+})
+
+
+//Register attendance for event.
+
+let attendanceCounter = 1 //temp fill in for serial aut inc
+
+let attendances = [
+    {
+        event_attendance_id: 1,
+        event_id: 1,
+        hours: 1,
+        comment: "Event was great",
+        rating: 5,
+        attendee_id: 1
+    }
+]
+
+app.post('/attend', (req, res) => {
+    /**
+     * Create new event
+     */
+        //TODO: add error checking
+        //TODO: link to existing user and event
+    const eventAttendance = {
+            event_attendance_id: ++attendanceCounter,
+            event_id: req.body.event_id,
+            hours: req.body.hours,
+            comment: req.body.comment,
+            rating: req.body.rating,
+            attendee_id: req.body.attendee_id
+        }
+        //Change to get attendee_id from their session instead of relying on them to tell us who they are.
+
+    attendances.push(eventAttendance)
+    res.send(eventAttendance)
+})
+
+app.get('/attend/event/:id', (req, res) => {
+    /**
+     * Get who attended an event
+     */
+    let attendancesForThisEvent = []
+    let queried_event_id = req.params.id
+    attendances.forEach(attendance => {
+        if (attendance.event_id === parseInt(queried_event_id)) {
+            attendancesForThisEvent.push(attendance)
+        }
+    })
+    res.send(attendancesForThisEvent)
+})
+
+app.get('/attend/user/:id', (req, res) => {
+    /**
+     * Get event attendances a user has registered attendance for.
+     */
+    let attendancesForThisEvent = []
+    let queried_user_id = req.params.id
+    attendances.forEach(attendance => {
+        if (attendance.attendee_id === parseInt(queried_user_id)) {
+            attendancesForThisEvent.push(attendance)
+        }
+    })
+    res.send(attendancesForThisEvent)
 })
 
 
