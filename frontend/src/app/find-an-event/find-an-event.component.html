@@ -2,4 +2,10 @@
 
 <!-- Search Box -->
 
-<app-event-card *ngFor="let event of this.dataSource"></app-event-card>
+<!-- <mat-table [dataSource]="dataSource"> -->
+    <!-- <ng-container> -->
+        <app-event-card *ngFor="let event of this.dataSourceInfo | async"></app-event-card>
+    <!-- </ng-container> -->
+
+<!-- </mat-table> -->
+
