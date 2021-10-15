@@ -79,14 +79,14 @@ export class EventsDataSource extends DataSource<EventItem> {
         this.loadingSubject.next(true);
 
         // TODO REMOVE
-        this.eventSubject.next(this.events2);
+        // this.eventSubject.next(this.events2);
         
         // TODO UNCOMMENT
-        // this.eventsService.getAllEvents(true, skipToken, pageSize, filter).pipe(
-        //     catchError(() => of([])),
-        //     finalize(() => this.loadingSubject.next(false))
-        // )
-        // .subscribe(events => this.eventSubject.next(events));
+        this.eventsService.getAllEvents(true, skipToken, pageSize, filter).pipe(
+            catchError(() => of([])),
+            finalize(() => this.loadingSubject.next(false))
+        )
+        .subscribe(events => this.eventSubject.next(events));
     }
 
 }
