@@ -1,1 +1,30 @@
-<p>nav-bar works!</p>
+<mat-drawer-container class="nav-container">
+    <mat-drawer class="nav-link-container" mode="side" [opened]="router.url != '/landing'">
+        <h1 class="landing-logo">Participance</h1>
+        <img class="site-icon" src="../../assets/site_icon.svg">
+        <mat-nav-list>
+            <mat-list-item *ngFor="let link of links">
+               <a class="nav-link" [routerLink]="link.route">{{ link.title }}</a>
+               <!-- TODO: add icons for each link 
+                   <button mat-icon-button (click)="showInfo(link)">
+                  <mat-icon>info</mat-icon>
+               </button> -->
+            </mat-list-item>
+            <div class="manage-account-container">
+                <mat-list-item [matMenuTriggerFor]="menu" class="manage-account nav-link">Profile</mat-list-item>
+                <mat-menu #menu="matMenu">
+                    <button mat-menu-item>
+                      <span>Log Out</span>
+                    </button>
+                </mat-menu>
+            </div>
+
+
+        </mat-nav-list>
+
+    </mat-drawer>
+    <mat-drawer-content>
+    <router-outlet></router-outlet>
+        
+    </mat-drawer-content>
+</mat-drawer-container>

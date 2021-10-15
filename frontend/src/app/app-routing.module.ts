@@ -7,6 +7,7 @@ import { DashboardPageComponent } from './dashboard-page/dashboard-page.componen
 import { FindEventPageComponent } from './find-event-page/find-event-page.component';
 import { MyEventsPageComponent } from './my-events-page/my-events-page.component';
 import { EventAdminPageComponent } from './event-admin-page/event-admin-page.component';
+import { ReportsPageComponent } from './reports-page/reports-page.component';
 
 const routes: Routes = [
   // TODO: redirect to dashboard if user is logged in
@@ -17,7 +18,8 @@ const routes: Routes = [
   { path: 'dashboard', component: DashboardPageComponent },
   { path: 'find-event', component: FindEventPageComponent },
   { path: 'my-events', component: MyEventsPageComponent },
-  { path: 'event-admin', component: EventAdminPageComponent }
+  { path: 'event-admin', component: EventAdminPageComponent },
+  { path: 'reports', component: ReportsPageComponent }
 ];
 
 @NgModule({
