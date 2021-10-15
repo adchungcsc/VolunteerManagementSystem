@@ -36,30 +36,46 @@ let users = [
 ]
 
 let eventCounter = 2 //temp fill in for serial aut inc
+/*
+event_id: number;
+  event_name: string;
+  event_location: string;
+  event_start: Date;
+  event_end: Date;
+  event_organizer: string
+  event_organizer_email: string;
+  event_max_volunteers: number;
+  event_max_waitlist: number;
+  event_description: string;
+  event_credit: number;
+  event_image: string;
+ */
 
 //Placeholder until db conn setup
 let events = [
     {
-        id: 1,
-        name: "Test Event",
-        address: "1600 Penn",
-        start_timestamp: null,
-        end_timestamp: null,
-        organizer_id: 0,
-        max_volunteers: 10,
-        description: "Super cool event!",
-        image_path: "https://media.istockphoto.com/photos/bigeyed-naughty-obese-cat-behind-the-desk-with-red-hat-grey-color-picture-id1199279669?b=1&k=20&m=1199279669&s=170667a&w=0&h=munUsqGIlDAmKK0ouS12nHCuzDdoDfvNalw_hHvh6Ls="
+        event_id: 1,
+        event_name: "Test Event",
+        event_location: "1600 Penn",
+        event_start: "13 May 2021 00:00:00 GMT",
+        event_end: "28 Jun 2021 00:00:00 GMT",
+        event_organizer: 0,
+        event_max_volunteers: 10,
+        event_description: "Super cool event!",
+        event_credit: 3,
+        event_image: "https://media.istockphoto.com/photos/bigeyed-naughty-obese-cat-behind-the-desk-with-red-hat-grey-color-picture-id1199279669?b=1&k=20&m=1199279669&s=170667a&w=0&h=munUsqGIlDAmKK0ouS12nHCuzDdoDfvNalw_hHvh6Ls="
     },
     {
-        id: 2,
-        name: "The other event",
-        address: "123 Sesame Street",
-        start_timestamp: null,
-        end_timestamp: null,
-        organizer_id: 0,
-        max_volunteers: 20,
-        description: "Super uncool event!",
-        image_path: "https://media.istockphoto.com/photos/bigeyed-naughty-obese-cat-behind-the-desk-with-red-hat-grey-color-picture-id1199279669?b=1&k=20&m=1199279669&s=170667a&w=0&h=munUsqGIlDAmKK0ouS12nHCuzDdoDfvNalw_hHvh6Ls="
+        event_id: 2,
+        event_name: "Another event",
+        event_location: "123 sesame",
+        event_start: "14 May 2021 00:00:00 GMT",
+        event_end: "23 Jun 2021 00:00:00 GMT",
+        event_organizer: 0,
+        event_max_volunteers: 10,
+        event_description: "Super cool event!",
+        event_credit: 8,
+        event_image: "https://media.istockphoto.com/photos/bigeyed-naughty-obese-cat-behind-the-desk-with-red-hat-grey-color-picture-id1199279669?b=1&k=20&m=1199279669&s=170667a&w=0&h=munUsqGIlDAmKK0ouS12nHCuzDdoDfvNalw_hHvh6Ls="
     },
 ]
 
@@ -97,9 +113,9 @@ app.get('/event/:id?', (req, res) => {
         //Placeholder until db conn setup
         events.forEach(event => {
             console.log(event)
-            console.log(event.id)
+            console.log(event.event_id)
             console.log(queried_id)
-            if (event.id === parseInt(queried_id)) {
+            if (event.event_id === parseInt(queried_id)) {
                 res.send(event)
             }
         })
@@ -114,16 +130,28 @@ app.post('/event', (req, res) => {
      */
         //TODO: add error checking
         //TODO: link to existing user for organizer.
+        // const addedEvent = {
+        //         id: ++eventCounter,
+        //         name: req.body.name,
+        //         address: req.body.address,
+        //         start_timestamp: req.body.start_timestamp,
+        //         end_timestamp: req.body.end_timestamp,
+        //         organizer_id: 0,
+        //         max_volunteers: req.body.max_volunteers,
+        //         description: req.body.description,
+        //         image_path: "https://icatcare.org/app/uploads/2018/07/Thinking-of-getting-a-cat.png"
+        //     }
     const addedEvent = {
-            id: ++eventCounter,
-            name: req.body.name,
-            address: req.body.address,
-            start_timestamp: req.body.start_timestamp,
-            end_timestamp: req.body.end_timestamp,
-            organizer_id: 0,
-            max_volunteers: req.body.max_volunteers,
-            description: req.body.description,
-            image_path: "https://icatcare.org/app/uploads/2018/07/Thinking-of-getting-a-cat.png"
+            event_id: 2,
+            event_name: req.body.name,
+            event_location: req.body.address,
+            event_start: "14 May 2021 00:00:00 GMT",
+            event_end: "23 Jun 2021 00:00:00 GMT",
+            event_organizer: 0,
+            event_max_volunteers: req.body.max_volunteers,
+            event_description: req.body.description,
+            event_credit: 8,
+            event_image: "https://media.istockphoto.com/photos/bigeyed-naughty-obese-cat-behind-the-desk-with-red-hat-grey-color-picture-id1199279669?b=1&k=20&m=1199279669&s=170667a&w=0&h=munUsqGIlDAmKK0ouS12nHCuzDdoDfvNalw_hHvh6Ls="
         }
     events.push(addedEvent)
     res.status(201).send(addedEvent)
@@ -135,7 +163,7 @@ app.delete('/event/:id', (req, res) => {
      */
     let queried_id = req.params.id
     for (let i = 0; i < events.length; i++) {
-        if (events[i].id === parseInt(queried_id)) {
+        if (events[i].event_id === parseInt(queried_id)) {
             res.send(events[i])
             events.splice(i, 1)
         }
@@ -252,7 +280,7 @@ app.post('/attend', (req, res) => {
             rating: req.body.rating,
             attendee_id: req.body.attendee_id
         }
-        //Change to get attendee_id from their session instead of relying on them to tell us who they are.
+    //Change to get attendee_id from their session instead of relying on them to tell us who they are.
 
     attendances.push(eventAttendance)
     res.send(eventAttendance)
