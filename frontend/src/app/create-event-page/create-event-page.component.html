@@ -1,0 +1,42 @@
+<form class="form-container">
+  <mat-card>
+    <mat-card-header>
+      <mat-card-title>Create a New Event</mat-card-title>
+    </mat-card-header>
+    <mat-form-field>
+      <mat-label>Enter a start date</mat-label>
+      <input id="start_timestamp" matInput [matDatepicker]="picker">
+      <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+      <mat-datepicker #picker></mat-datepicker>
+    </mat-form-field>
+    <mat-form-field>
+      <mat-label>Enter a end date</mat-label>
+      <input id="end_timestamp" matInput [matDatepicker]="pickerEnd">
+      <mat-datepicker-toggle matSuffix [for]="pickerEnd"></mat-datepicker-toggle>
+      <mat-datepicker #pickerEnd></mat-datepicker>
+    </mat-form-field>
+    <mat-form-field class="full-width">
+      <mat-label>Start Time</mat-label>
+      <input id="start_time" matInput type="time">
+    </mat-form-field>
+    <mat-form-field class="full-width">
+      <mat-label>End Time</mat-label>
+      <input id="end_time" matInput type="time">
+    </mat-form-field>
+    <mat-form-field class="full-width">
+      <mat-label>Address</mat-label>
+      <input id="address" matInput type="text">
+    </mat-form-field>
+    <mat-form-field class="full-width">
+      <mat-label>Description</mat-label>
+      <input id="description" matInput type="text">
+    </mat-form-field>
+    <mat-form-field class="full-width">
+      <mat-label>Maximum Volunteers</mat-label>
+      <input id="maximum_volunteers" matInput type="number">
+    </mat-form-field>
+    <mat-card-actions>
+      <button mat-raised-button="" color="primary">Create</button>
+    </mat-card-actions>
+  </mat-card>
+</form>
