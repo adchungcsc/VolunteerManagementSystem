@@ -16,6 +16,8 @@ export class NavBarComponent implements OnInit {
     {title: 'Create/Edit an Event', route: '/event-admin'}
   ];
 
+  showFirst = false;
+
   router: Router;
 
   constructor(private _router: Router){

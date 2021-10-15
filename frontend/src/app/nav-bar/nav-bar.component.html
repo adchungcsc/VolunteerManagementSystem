@@ -1,5 +1,5 @@
 <mat-drawer-container class="nav-container">
-    <mat-drawer class="nav-link-container" mode="side" [opened]="router.url != '/landing'">
+    <mat-drawer #drawer class="nav-link-container" mode="side" [opened]="router.url != '/landing'">
         <h1 class="landing-logo">Participance</h1>
         <img class="site-icon" src="../../assets/site_icon.svg">
         <mat-nav-list>
@@ -18,12 +18,14 @@
                     </button>
                 </mat-menu>
             </div>
-
-
         </mat-nav-list>
-
     </mat-drawer>
+
+
     <mat-drawer-content>
+        <div class="example-sidenav-content" *ngIf="router.url != '/landing'">
+            <div (click)="drawer.toggle(); showFirst=!showFirst"><mat-icon *ngIf="showFirst">chevron_right</mat-icon><mat-icon *ngIf="!showFirst">chevron_left</mat-icon></div>
+        </div>
     <router-outlet></router-outlet>
         
     </mat-drawer-content>
