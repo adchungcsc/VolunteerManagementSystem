@@ -1,4 +1,5 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, Input, OnInit } from '@angular/core';
+import { EventItem } from '../events.service';
 
 @Component({
   selector: 'app-event-card',
@@ -7,7 +8,9 @@ import { Component, OnInit } from '@angular/core';
 })
 export class EventCardComponent implements OnInit {
 
-  eventName: string;
+  
+  @Input() eventItem?: EventItem;
+
   eventDate: string;
   eventTimes: string;
   eventImage: string;
@@ -21,14 +24,35 @@ export class EventCardComponent implements OnInit {
   constructor(/*public data: any*/) { 
 
     // TODO REMOVE
-    this.eventName = "Hi";
-    this.eventDate = "Today";
+    this.eventDate = "Placeholder";
     this.eventTimes = "Now";
     this.eventImage = "Random";
 
    }
 
   ngOnInit(): void {
+    if (this.eventItem) {
+      // If the event item is present (it should be), get info from it.
+      // Populate date
+      this.eventDate = this.eventItem.event_start.toLocaleDateString();
+      if (this.eventItem.event_start.toLocaleDateString() != this.eventItem.event_end.toLocaleDateString()) {
+        this.eventDate += " - ";
+        this.eventDate += this.eventItem.event_end.toLocaleDateString();
+      }
+      // Populate time.
+      this.eventTimes = this.eventItem.event_start.toLocaleTimeString() + " - " + this.eventItem.event_end.toLocaleTimeString();
+
+      // If no image.
+      if (!this.eventItem.event_image || this.eventItem.event_image === '') {
+        // TODO Set to placeholder image.
+        this.eventImage = "https://brand.ncsu.edu/img/logo/brick2x2.jpg";
+      } else {
+        this.eventImage = this.eventItem.event_image;
+      }
+
+      
+
+    }
   }
 
 }

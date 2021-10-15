@@ -9,6 +9,7 @@ import {MatCardModule} from '@angular/material/card';
 import {MatPaginatorModule} from '@angular/material/paginator';
 // import { MatProgressSpinner } from "@angular/material/progress-spinner";
 import {MatTableModule} from '@angular/material/table';
+import { FlexLayoutModule } from '@angular/flex-layout';
 
 
 import { AppComponent } from './app.component';
@@ -33,6 +34,7 @@ import { FindAnEventComponent } from './find-an-event/find-an-event.component';
     MatPaginatorModule,
     // MatProgressSpinner,
     MatTableModule,
+    FlexLayoutModule,
     HttpClientModule
   ],
   providers: [],

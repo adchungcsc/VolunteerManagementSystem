@@ -3,9 +3,11 @@
 <!-- Search Box -->
 
 <!-- <mat-table [dataSource]="dataSource"> -->
-    <!-- <ng-container> -->
-        <app-event-card *ngFor="let event of this.dataSourceInfo | async"></app-event-card>
-    <!-- </ng-container> -->
-
+    <!-- https://zoaibkhan.com/blog/create-a-responsive-card-grid-in-angular-using-flex-layout-part-1/ -->
+<div fxLayout="row wrap" fxLayoutGap="5vw grid">
+    <ng-container fxFlex="25%" fxFlex.xs="100%" fxFlex.sm="33%" *ngFor="let event of this.dataSourceInfo | async">
+        <app-event-card [eventItem]="event"></app-event-card>
+    </ng-container>
+</div>
 <!-- </mat-table> -->
 
