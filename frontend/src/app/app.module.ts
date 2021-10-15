@@ -17,10 +17,9 @@ import { AppComponent } from './app.component';
 import { LandingPageComponent } from './landing-page/landing-page.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { EventCardComponent } from './event-card/event-card.component';
-import { FindAnEventComponent } from './find-an-event/find-an-event.component';
+import { FindAnEventComponent } from './find-an-event-page/find-an-event.component';
 import { DetailsDialogComponent } from './details-dialog/details-dialog.component';
 import { DashboardPageComponent } from './dashboard-page/dashboard-page.component';
-import { FindEventPageComponent } from './find-event-page/find-event-page.component';
 import { MyEventsPageComponent } from './my-events-page/my-events-page.component';
 import { EventAdminPageComponent } from './event-admin-page/event-admin-page.component';
 import { NavBarComponent } from './nav-bar/nav-bar.component';
@@ -42,7 +41,6 @@ import {CreateEventPageComponent} from "./create-event-page/create-event-page.co
     FindAnEventComponent,
     DetailsDialogComponent,
     DashboardPageComponent,
-    FindEventPageComponent,
     MyEventsPageComponent,
     EventAdminPageComponent,
     NavBarComponent,
