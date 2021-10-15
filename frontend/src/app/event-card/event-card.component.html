@@ -13,8 +13,9 @@
         <!-- TODO Add location and other info needed. -->
         <!-- One idea https://zoaibkhan.com/blog/truncate-multiple-line-text-in-angular-like-a-pro/ -->
         <!-- <p>{{eventInformation}}</p> -->
+        <p>{{eventItem.event_description}}</p>
     </mat-card-content>
     <mat-card-actions>
-        <button mat-button>More Details</button>
+        <button mat-button (click)="openDialog()">More Details</button>
     </mat-card-actions>
 </mat-card>

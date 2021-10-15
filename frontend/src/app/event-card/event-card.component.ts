@@ -1,4 +1,6 @@
 import { Component, Input, OnInit } from '@angular/core';
+import { MatDialog } from '@angular/material/dialog';
+import { DetailsDialogComponent } from '../details-dialog/details-dialog.component';
 import { EventItem } from '../events.service';
 
 @Component({
@@ -21,7 +23,7 @@ export class EventCardComponent implements OnInit {
    * TODO
    * @param data TODO
    */
-  constructor(/*public data: any*/) { 
+  constructor(public dialog: MatDialog) { 
 
     // TODO REMOVE
     this.eventDate = "Placeholder";
@@ -50,9 +52,16 @@ export class EventCardComponent implements OnInit {
         this.eventImage = this.eventItem.event_image;
       }
 
-      
-
     }
+  }
+
+
+  openDialog() {
+    const dialogRef = this.dialog.open(DetailsDialogComponent, {data: this.eventItem});
+
+    dialogRef.afterClosed().subscribe(result => {
+      console.log(`Dialog result: ${result}`);
+    });
   }
 
 }
