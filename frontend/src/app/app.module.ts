@@ -33,7 +33,7 @@ import { SignUpPageComponent } from './sign-up-page/sign-up-page.component';
     LandingPageComponent,
     EventCardComponent,
     FindAnEventComponent,
-    DetailsDialogComponent
+    DetailsDialogComponent,
     DashboardPageComponent,
     FindEventPageComponent,
     MyEventsPageComponent,
