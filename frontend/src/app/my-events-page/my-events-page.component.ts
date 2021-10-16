@@ -1,4 +1,7 @@
 import { Component, OnInit } from '@angular/core';
+import { Observable } from 'rxjs';
+import { EventsService } from '../events.service';
+import { EventItem, EventsDataSource } from '../find-an-event-page/events-datasource';
 
 @Component({
   selector: 'app-my-events-page',
@@ -8,10 +11,28 @@ import { Component, OnInit } from '@angular/core';
 export class MyEventsPageComponent implements OnInit {
 
   name = "World";
+  dataSource!: EventsDataSource;
 
-  constructor() { }
+  now = new Date();
+
+  aWeekAgo = new Date(this.now.getDate() - 7);
+
+  dataSourceInfo!: Observable<EventItem[]>;
+
+  viewChange: any;
+
+  // TODO IMPORT USERS SERVICE
+  constructor(private eventsService: EventsService) { }
 
   ngOnInit(): void {
+    // TODO
+    this.dataSource = new EventsDataSource(this.eventsService);
+
+    // CollectionViewer a = new CollectionViewer();
+
+    this.dataSourceInfo = this.dataSource.connect(this);
+    // TODO increase page size.
+    this.dataSource.loadEvents('', 0, 10);
   }
 
 }

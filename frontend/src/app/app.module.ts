@@ -36,6 +36,7 @@ import {MatSelectModule} from "@angular/material/select";
 import {MatRadioModule} from "@angular/material/radio";
 import {MatDatepickerModule} from "@angular/material/datepicker";
 import {MatNativeDateModule} from "@angular/material/core";
+import {MatTabsModule} from '@angular/material/tabs';
 import {CreateEventPageComponent} from "./create-event-page/create-event-page.component";
 
 @NgModule({
@@ -71,7 +72,7 @@ import {CreateEventPageComponent} from "./create-event-page/create-event-page.co
     MatCardModule,
     MatDatepickerModule,
     MatNativeDateModule,
-
+    MatTabsModule,
     MatButtonModule,
     MatPaginatorModule,
     // MatProgressSpinner,
