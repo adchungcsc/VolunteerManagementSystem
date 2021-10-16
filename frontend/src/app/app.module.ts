@@ -51,7 +51,7 @@ import {CreateEventPageComponent} from "./create-event-page/create-event-page.co
     NavBarComponent,
     LogInPageComponent,
     SignUpPageComponent,
-    ReportsPageComponent
+    ReportsPageComponent,
     CreateEventPageComponent
   ],
   imports: [
