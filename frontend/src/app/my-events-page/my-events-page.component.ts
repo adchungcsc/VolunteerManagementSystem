@@ -14,8 +14,8 @@ export class MyEventsPageComponent implements OnInit {
   dataSource!: EventsDataSource;
 
   now = new Date();
-
-  aWeekAgo = new Date(this.now.getDate() - 7);
+  item2 = new Date();
+  aWeekAgo = new Date(this.item2.setDate(this.now.getDate() - 7));
 
   dataSourceInfo!: Observable<EventItem[]>;
 
