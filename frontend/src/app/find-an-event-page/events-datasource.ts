@@ -79,14 +79,34 @@ export class EventsDataSource extends DataSource<EventItem> {
         this.loadingSubject.next(true);
 
         // TODO REMOVE
-        this.eventSubject.next(this.events2);
+        // this.eventSubject.next(this.events2);
         
         // TODO UNCOMMENT
-        // this.eventsService.getAllEvents(true, skipToken, pageSize, filter).pipe(
-        //     catchError(() => of([])),
-        //     finalize(() => this.loadingSubject.next(false))
-        // )
-        // .subscribe(events => this.eventSubject.next(events));
+        this.eventsService.getAllEvents(true, skipToken, pageSize, filter).pipe(
+            catchError(() => of([])),
+            finalize(() => this.loadingSubject.next(false))
+        )
+        .subscribe(events => {
+            let eventsConverted = new Array<EventItem>();
+            events.forEach((item: any) => {
+                console.log("Item: ", item);
+                eventsConverted.push({
+                    event_id: item.event_id,
+                    event_name: item.event_name,
+                    event_location: item.event_location,
+                    event_start: new Date(item.event_start),
+                    event_end: new Date(item.event_end),
+                    event_organizer: item.event_organizer,
+                    event_organizer_email: item.event_organizer_email,
+                    event_max_volunteers: item.event_max_volunteers,
+                    event_max_waitlist: item.event_max_waitlist,
+                    event_description: item.event_description,
+                    event_credit: item.event_credit,
+                    event_image: item.event_image
+                });
+            });
+            this.eventSubject.next(eventsConverted);
+        });
     }
 
 }

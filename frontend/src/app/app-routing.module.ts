@@ -9,6 +9,7 @@ import { MyEventsPageComponent } from './my-events-page/my-events-page.component
 import { EventAdminPageComponent } from './event-admin-page/event-admin-page.component';
 import { ReportsPageComponent } from './reports-page/reports-page.component';
 import {CreateEventPageComponent} from "./create-event-page/create-event-page.component";
+import { FindAnEventComponent } from './find-an-event-page/find-an-event.component';
 
 const routes: Routes = [
   { path: '', redirectTo: '/landing', pathMatch: 'full' },

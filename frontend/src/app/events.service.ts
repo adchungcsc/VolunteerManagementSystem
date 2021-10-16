@@ -132,9 +132,11 @@ export class EventsService {
       if (!filter) {
         filter = '';
       }
+
+
   
       // Returns the result or the error...
-      return this.http.get(this.eventsRoute, {
+      let results = this.http.get(this.eventsRoute, {
         headers: this.httpHeaders,
         params: new HttpParams()
           .set('filter', filter)
@@ -144,6 +146,27 @@ export class EventsService {
       }).pipe(
         catchError(this.handleAnyErrors)
       );
+
+      // results.forEach(result => {
+      //   result["spaghetti"] = "spaghet";
+      // })
+
+      // arr: any = [];
+
+      // console.log("results");
+      // console.log(results);
+      // console.log("results body");
+      // console.log(results.subscribe(item => {
+      //   for (const d of (item as any)) {
+      //     this.arr.push({
+      //       {
+
+      //       }
+      //     })
+      //   }
+      // }));
+
+      return results;
     }
 
   /**

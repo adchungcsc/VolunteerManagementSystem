@@ -8,7 +8,7 @@
         <img src={{data.event_image}}>
         <p>{{data.event_description}}</p>
         <h3>Volunteer Slots Filled: {{this.numberFilled}} of {{data.event_max_volunteers}}</h3>
-        <h3>Waitlist Slots Filled: {{this.numberWaitlistFilled}} of {{data.event_max_waitlist}}</h3>
+        <h3>Waitlist Slots Filled: {{this.numberWaitlistFilled}} of {{data.event_max_waitlist ?? 0}}</h3>
     </mat-dialog-content>
 
     <mat-dialog-actions align="end">
