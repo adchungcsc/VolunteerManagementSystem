@@ -28,3 +28,7 @@ Our team is building a web-based volunteer management system to help nonprofits/
 
 ### Wireframe
 https://github.ncsu.edu/CSC-WebApps-F21/WEBAPPS-11/blob/main/Volunteer%20Manager.pdf
+
+### Demo Video
+
+https://drive.google.com/file/d/10xpLSYd45yZM1qrMiOw33iecIT7S0Hhu/view?usp=sharing
