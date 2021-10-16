@@ -18,7 +18,7 @@ const routes: Routes = [
   { path: 'dashboard', component: DashboardPageComponent },
   { path: 'find-event', component: FindAnEventComponent },
   { path: 'my-events', component: MyEventsPageComponent },
-  { path: 'event-admin', component: EventAdminPageComponent },
+  { path: 'event-admin', component: CreateEventPageComponent },
   { path: 'reports', component: ReportsPageComponent },
   { path: 'create-event', component: CreateEventPageComponent }
 ];
