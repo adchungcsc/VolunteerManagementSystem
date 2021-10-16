@@ -1,5 +1,9 @@
 import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
+import { MatSidenavModule } from '@angular/material/sidenav';
+import { MatListModule } from '@angular/material/list';
+import { MatIconModule } from '@angular/material/icon';
+import { MatMenuModule } from '@angular/material/menu';
 
 import { AppRoutingModule } from './app-routing.module';
 import { HttpClientModule } from '@angular/common/http';
@@ -25,6 +29,7 @@ import { EventAdminPageComponent } from './event-admin-page/event-admin-page.com
 import { NavBarComponent } from './nav-bar/nav-bar.component';
 import { LogInPageComponent } from './log-in-page/log-in-page.component';
 import { SignUpPageComponent } from './sign-up-page/sign-up-page.component';
+import { ReportsPageComponent } from './reports-page/reports-page.component';
 import {MatFormFieldModule} from "@angular/material/form-field";
 import {MatInputModule} from "@angular/material/input";
 import {MatSelectModule} from "@angular/material/select";
@@ -46,13 +51,17 @@ import {CreateEventPageComponent} from "./create-event-page/create-event-page.co
     NavBarComponent,
     LogInPageComponent,
     SignUpPageComponent,
+    ReportsPageComponent
     CreateEventPageComponent
   ],
   imports: [
     BrowserModule,
     AppRoutingModule,
     BrowserAnimationsModule,
-
+    MatSidenavModule,
+    MatListModule,
+    MatIconModule,
+    MatMenuModule,
     BrowserModule,
     BrowserAnimationsModule,
     MatFormFieldModule,
