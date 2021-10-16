@@ -11,9 +11,17 @@
 | Reports       | In-Progress | [Wireframe (admin)](https://github.ncsu.edu/CSC-WebApps-F21/WEBAPPS-11/blob/development/wireframes/reports-admin.jpg), [Wireframe (user)](https://github.ncsu.edu/CSC-WebApps-F21/WEBAPPS-11/blob/development/wireframes/reports-user.jpg) |
 
 ### API Endpoints
-| Endpoints         | Status     | Purpose | Response |
+| Endpoints         | Status     | Purpose |
 |--------------|-----------|------------|
-
+| GET /event/{id} | Mock with some business logic | Return list of event or get event by id |
+| POST /event/ | Mock with some business logic | Insert an event (form encoded) |
+| GET /user/{id} | Mocked return | Return list of users or get user by id |
+| GET /signup/event/{id} | Mock with some business logic | Return list of user signups for a given event|
+| GET /signup/user/{id} | Mock with some business logic | Return list of signups for events for a given user|
+| POST /signup/ | Mock with some business logic | Let users signup for an event|
+| GET /attend/event/{id} | Mock with some business logic | Return list of registered attendances for an event |
+| GET /attend/user/{id} | Mock with some business logic | Return list of registered attendances for a given user |
+| POST /attend/ | Mock with some business logic | Let users register their attendance for an event|
 
 ### Pitch
 Our team is building a web-based volunteer management system to help nonprofits/volunteering organizations monitor, orchestrate their volunteering events, and allow members to volunteer with a single unified platform for creating volunteer opportunities, signing up for those opportunities, verifying attendance, and tracking volunteer hours. This free web-based application improves over manual spreadsheets and hour sheets, and is also better than existing platforms that require expensive subscriptions.
