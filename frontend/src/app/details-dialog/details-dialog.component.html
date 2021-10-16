@@ -1,0 +1,19 @@
+<div class="eventDetailsDialog">
+    <h2 mat-dialog-title>{{data.event_name}}</h2>
+    <h4>Location: {{data.event_location}}</h4>
+    <h4>Date(s): {{this.eventDate}}</h4>
+    <h4>Time: {{this.eventTimes}}</h4>
+    
+    <mat-dialog-content class="mat-typography">
+        <img src={{data.event_image}}>
+        <p>{{data.event_description}}</p>
+        <h3>Volunteer Slots Filled: {{this.numberFilled}} of {{data.event_max_volunteers}}</h3>
+        <h3>Waitlist Slots Filled: {{this.numberWaitlistFilled}} of {{data.event_max_waitlist}}</h3>
+    </mat-dialog-content>
+
+    <mat-dialog-actions align="end">
+        <button mat-button mat-dialog-close>Cancel</button>
+        <button mat-button [mat-dialog-close]="true" cdkFocusInitial *ngIf="this.numberFilled < data.event_max_volunteers">Sign up to Volunteer!</button>
+        <button mat-button [mat-dialog-close]="true" cdkFocusInitial *ngIf="this.numberFilled >= data.event_max_volunteers" [disabled]="data.event_max_waitlist === this.numberWaitlistFilled">Join the Waitlist</button>
+    </mat-dialog-actions>
+</div>

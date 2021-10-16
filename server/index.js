@@ -7,6 +7,9 @@ app.use(bodyParser.json());
 // for parsing application/xwww-form-urlencoded
 app.use(bodyParser.urlencoded({extended: true}));
 
+let cors = require('cors')
+app.use(cors())
+
 
 app.get('/', (req, res) => {
     //Health/sanity check endpoint

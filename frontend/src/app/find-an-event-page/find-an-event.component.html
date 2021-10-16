@@ -1,0 +1,11 @@
+<h2>Find an Event</h2>
+
+<!-- Search Box -->
+
+<!-- https://zoaibkhan.com/blog/create-a-responsive-card-grid-in-angular-using-flex-layout-part-1/ -->
+<div fxLayout="row wrap" fxLayoutGap="5vw grid" class="cardContainer">
+    <ng-container *ngFor="let event of this.dataSourceInfo | async">
+        <app-event-card [eventItem]="event"></app-event-card>
+    </ng-container>
+</div>
+

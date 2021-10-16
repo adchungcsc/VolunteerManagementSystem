@@ -1,0 +1,7 @@
+div.eventDetailsDialog {
+    max-height: 90vh;
+}
+
+.mat-dialog-content {
+    max-height: 60vh;
+}

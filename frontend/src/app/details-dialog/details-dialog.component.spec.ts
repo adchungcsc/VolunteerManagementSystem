@@ -1,20 +1,20 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { FindEventPageComponent } from './find-event-page.component';
+import { DetailsDialogComponent } from './details-dialog.component';
 
-describe('FindEventPageComponent', () => {
-  let component: FindEventPageComponent;
-  let fixture: ComponentFixture<FindEventPageComponent>;
+describe('DetailsDialogComponent', () => {
+  let component: DetailsDialogComponent;
+  let fixture: ComponentFixture<DetailsDialogComponent>;
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [ FindEventPageComponent ]
+      declarations: [ DetailsDialogComponent ]
     })
     .compileComponents();
   });
 
   beforeEach(() => {
-    fixture = TestBed.createComponent(FindEventPageComponent);
+    fixture = TestBed.createComponent(DetailsDialogComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });
