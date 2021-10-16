@@ -1,0 +1,45 @@
+.mobile-header {
+    display: none;
+}
+.nav-container {
+    height: 100%;
+}  
+.nav-link-container {
+    background: #CC0000;
+    line-height: 2rem;
+    padding-left: 15px;
+    padding-right: 15px;
+    padding-top: 15px;
+    width: 240px;
+}
+.nav-link {
+    color: white;
+}
+.mobile-nav {
+    display: none;
+}
+.landing-logo {
+    display: inline;
+    margin-left: 10px;
+    color: white;
+    font-weight: 500;
+}
+.site-icon {
+    width: 15%;
+    margin-left: 10px;
+}
+.example-sidenav-content {
+    display: none;
+}
+@media (max-width: 768px) {
+    .nav-link-container {
+        /* width: 150px; */
+        padding-left: 0;
+        padding-right: 0;
+    }
+    .example-sidenav-content {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+    }
+}
