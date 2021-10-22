@@ -11,7 +11,7 @@ import { HttpClientModule } from '@angular/common/http';
 import {MatButtonModule} from '@angular/material/button';
 import {MatCardModule} from '@angular/material/card';
 import {MatPaginatorModule} from '@angular/material/paginator';
-// import { MatProgressSpinner } from "@angular/material/progress-spinner";
+import { MatProgressSpinnerModule } from "@angular/material/progress-spinner";
 import {MatTableModule} from '@angular/material/table';
 import { FlexLayoutModule } from '@angular/flex-layout';
 import {MatDialogModule} from '@angular/material/dialog';
@@ -38,6 +38,7 @@ import {MatDatepickerModule} from "@angular/material/datepicker";
 import {MatNativeDateModule} from "@angular/material/core";
 import {MatTabsModule} from '@angular/material/tabs';
 import {CreateEventPageComponent} from "./create-event-page/create-event-page.component";
+import {MatSlideToggleModule} from '@angular/material/slide-toggle';
 
 @NgModule({
   declarations: [
@@ -75,8 +76,9 @@ import {CreateEventPageComponent} from "./create-event-page/create-event-page.co
     MatTabsModule,
     MatButtonModule,
     MatPaginatorModule,
-    // MatProgressSpinner,
+    MatProgressSpinnerModule,
     MatTableModule,
+    MatSlideToggleModule,
     FlexLayoutModule,
     MatDialogModule,
     HttpClientModule

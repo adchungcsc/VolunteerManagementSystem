@@ -1,8 +1,9 @@
-import { Component, OnInit } from '@angular/core';
-import { Observable } from 'rxjs';
+import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
+import { fromEvent, Observable } from 'rxjs';
 import { EventsService } from '../events.service';
 import { EventItem, EventsDataSource } from './events-datasource';
 import { CollectionViewer } from "@angular/cdk/collections";
+import { debounceTime, distinctUntilChanged, tap } from 'rxjs/operators';
 
 @Component({
   selector: 'app-find-an-event',
@@ -16,6 +17,11 @@ export class FindAnEventComponent implements OnInit {
   dataSourceInfo!: Observable<EventItem[]>;
 
   viewChange: any;
+
+  // TODO
+  displayOldEvents: boolean = false;
+
+  @ViewChild('input') input!: ElementRef;
 
   constructor(private eventsService: EventsService) { }
 
@@ -32,6 +38,28 @@ export class FindAnEventComponent implements OnInit {
     console.log(this.viewChange);
     console.log('datasourceinfo');
     console.log(this.dataSourceInfo);
+  }
+
+  ngAfterViewInit(): void {
+    fromEvent(this.input.nativeElement,'keyup').pipe(
+      debounceTime(150),
+      distinctUntilChanged(),
+      tap(() => {
+        this.dataSource.loadEvents(this.input.nativeElement.value, 0, 10);
+      })
+    ).subscribe();
+  }
+
+  /**
+   * Filters based on search term.
+   * @param event The key up event to start the filter.
+   */
+  applyFilter(event: Event) {
+    // Gets the value from the field.
+    const valueOfFilter = (event.target as HTMLInputElement).value;
+    // Actually filter it.
+    
+
   }
 
 }

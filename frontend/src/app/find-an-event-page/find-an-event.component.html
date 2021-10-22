@@ -1,6 +1,15 @@
 <h2>Find an Event</h2>
 
 <!-- Search Box -->
+<mat-form-field>
+    <mat-label>Search</mat-label>
+    <input matInput (keyup)="applyFilter($event)" placeholder="Search Events" #input>
+</mat-form-field>
+
+<!-- Loading dialog - only visible when loading. -->
+<div class="spinner-container" *ngIf="dataSource.loading$ | async">
+    <mat-spinner></mat-spinner>
+</div>
 
 <!-- https://zoaibkhan.com/blog/create-a-responsive-card-grid-in-angular-using-flex-layout-part-1/ -->
 <div fxLayout="row wrap" fxLayoutGap="5vw grid" class="cardContainer">
