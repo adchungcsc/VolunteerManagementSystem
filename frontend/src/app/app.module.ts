@@ -15,6 +15,7 @@ import { MatProgressSpinnerModule } from "@angular/material/progress-spinner";
 import {MatTableModule} from '@angular/material/table';
 import { FlexLayoutModule } from '@angular/flex-layout';
 import {MatDialogModule} from '@angular/material/dialog';
+import { FormsModule } from '@angular/forms';
 
 
 import { AppComponent } from './app.component';
@@ -79,6 +80,7 @@ import {MatSlideToggleModule} from '@angular/material/slide-toggle';
     MatProgressSpinnerModule,
     MatTableModule,
     MatSlideToggleModule,
+    FormsModule,
     FlexLayoutModule,
     MatDialogModule,
     HttpClientModule

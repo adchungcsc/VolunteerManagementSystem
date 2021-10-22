@@ -6,6 +6,10 @@
     <input matInput (keyup)="applyFilter($event)" placeholder="Search Events" #input>
 </mat-form-field>
 
+<!-- The slider for if old events should be displayed -->
+<mat-slide-toggle [(ngModel)]="displayOldEvents" (change)="displayPreviousEvents()">Show Past Events?</mat-slide-toggle>
+
+
 <!-- Loading dialog - only visible when loading. -->
 <div class="spinner-container" *ngIf="dataSource.loading$ | async">
     <mat-spinner></mat-spinner>

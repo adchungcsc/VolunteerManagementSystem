@@ -18,7 +18,7 @@ export class FindAnEventComponent implements OnInit {
 
   viewChange: any;
 
-  // TODO
+  // This is for the toggle on if old events should be displayed.
   displayOldEvents: boolean = false;
 
   @ViewChild('input') input!: ElementRef;
@@ -32,7 +32,7 @@ export class FindAnEventComponent implements OnInit {
 
     this.dataSourceInfo = this.dataSource.connect(this);
     // TODO increase page size.
-    this.dataSource.loadEvents('', 0, 10);
+    this.dataSource.loadEvents(this.displayOldEvents, '', 0, 10);
 
     console.log('view change');
     console.log(this.viewChange);
@@ -42,12 +42,20 @@ export class FindAnEventComponent implements OnInit {
 
   ngAfterViewInit(): void {
     fromEvent(this.input.nativeElement,'keyup').pipe(
-      debounceTime(150),
+      debounceTime(300),
       distinctUntilChanged(),
       tap(() => {
-        this.dataSource.loadEvents(this.input.nativeElement.value, 0, 10);
+        this.dataSource.loadEvents(this.displayOldEvents, this.input.nativeElement.value, 0, 10);
       })
     ).subscribe();
+  }
+
+  /**
+   * Display or hide previous events.
+   * @param event The event
+   */
+  displayPreviousEvents() {
+    this.dataSource.loadEvents(this.displayOldEvents, this.input.nativeElement.value, 0, 10);
   }
 
   /**
