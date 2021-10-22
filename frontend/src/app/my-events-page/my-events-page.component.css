@@ -1,0 +1,8 @@
+div.cardContainer {
+    max-height: 75vh;
+    padding-left: 5vw;
+}
+
+mat-tab-group {
+    height: 100vh;
+}

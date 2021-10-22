@@ -6,3 +6,26 @@
     <h5>Since joining, you have contributed TODO hours</h5>
 </div>
 
+<mat-tab-group>
+    <mat-tab label="Upcoming">
+        <div fxLayout="row wrap" fxLayoutGap="5vw" class="cardContainer">
+            <ng-container *ngFor="let event of this.dataSourceInfo | async">
+                <app-event-card *ngIf="event.event_end > this.now" [eventItem]="event"></app-event-card>
+            </ng-container>
+        </div>
+    </mat-tab>
+    <mat-tab label="Recent">
+        <div fxLayout="row wrap" fxLayoutGap="5vw" class="cardContainer">
+            <ng-container *ngFor="let event of this.dataSourceInfo | async">
+                <app-event-card *ngIf="event.event_end > this.aWeekAgo && event.event_end <= this.now" [eventItem]="event"></app-event-card>
+            </ng-container>
+        </div>
+    </mat-tab>
+    <mat-tab label="Past">
+        <div fxLayout="row wrap" fxLayoutGap="5vw" class="cardContainer">
+            <ng-container *ngFor="let event of this.dataSourceInfo | async">
+                <app-event-card *ngIf="event.event_end <= this.aWeekAgo" [eventItem]="event"></app-event-card>
+            </ng-container>
+        </div>
+    </mat-tab>
+  </mat-tab-group>

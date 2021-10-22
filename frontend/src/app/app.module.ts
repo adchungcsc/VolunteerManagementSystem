@@ -16,7 +16,6 @@ import {MatTableModule} from '@angular/material/table';
 import { FlexLayoutModule } from '@angular/flex-layout';
 import {MatDialogModule} from '@angular/material/dialog';
 
-
 import { AppComponent } from './app.component';
 import { LandingPageComponent } from './landing-page/landing-page.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
@@ -36,6 +35,7 @@ import {MatSelectModule} from "@angular/material/select";
 import {MatRadioModule} from "@angular/material/radio";
 import {MatDatepickerModule} from "@angular/material/datepicker";
 import {MatNativeDateModule} from "@angular/material/core";
+import {MatTabsModule} from '@angular/material/tabs';
 import {CreateEventPageComponent} from "./create-event-page/create-event-page.component";
 import { UnauthorizedComponent } from './unauthorized/unauthorized.component';
 import { BrowserCacheLocation, InteractionType, IPublicClientApplication, LogLevel, PublicClientApplication } from '@azure/msal-browser';
@@ -118,7 +118,7 @@ export function MSALGuardConfigFactory(): MsalGuardConfiguration {
     MatCardModule,
     MatDatepickerModule,
     MatNativeDateModule,
-
+    MatTabsModule,
     MatButtonModule,
     MatPaginatorModule,
     // MatProgressSpinner,
