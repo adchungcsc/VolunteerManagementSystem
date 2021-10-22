@@ -6,7 +6,7 @@ import { MatIconModule } from '@angular/material/icon';
 import { MatMenuModule } from '@angular/material/menu';
 
 import { AppRoutingModule } from './app-routing.module';
-import { HttpClientModule } from '@angular/common/http';
+import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 
 import {MatButtonModule} from '@angular/material/button';
 import {MatCardModule} from '@angular/material/card';
@@ -37,6 +37,52 @@ import {MatRadioModule} from "@angular/material/radio";
 import {MatDatepickerModule} from "@angular/material/datepicker";
 import {MatNativeDateModule} from "@angular/material/core";
 import {CreateEventPageComponent} from "./create-event-page/create-event-page.component";
+import { UnauthorizedComponent } from './unauthorized/unauthorized.component';
+import { BrowserCacheLocation, InteractionType, IPublicClientApplication, LogLevel, PublicClientApplication } from '@azure/msal-browser';
+import { MsalBroadcastService, MsalGuard, MsalGuardConfiguration, MsalInterceptor, MsalInterceptorConfiguration, MsalRedirectComponent, MsalService, MSAL_GUARD_CONFIG, MSAL_INSTANCE, MSAL_INTERCEPTOR_CONFIG } from '@azure/msal-angular';
+
+// what application is currently directing
+export function MSALInstanceFactory(): IPublicClientApplication {
+  return new PublicClientApplication({
+    auth: {
+      clientId: 'dcd1af31-45f0-43a4-9977-329f46129ba4',
+      authority: 'https://login.microsoftonline.com/common',
+      redirectUri: 'http://localhost:4200/'
+    },
+    cache: {
+      cacheLocation: BrowserCacheLocation.LocalStorage,
+      storeAuthStateInCookie: false, // set to true for IE 11
+    },
+    system: {
+      loggerOptions: {
+        // loggerCallback,
+        logLevel: LogLevel.Info,
+        piiLoggingEnabled: false
+      }
+    }
+  });
+}
+
+// intercepts request for protection
+export function MSALInterceptorConfigFactory(): MsalInterceptorConfiguration {
+  const protectedResourceMap = new Map<string, Array<string>>();
+  protectedResourceMap.set('https://graph.microsoft.com/v1.0/me', ['user.read']);
+
+  return {
+    interactionType: InteractionType.Redirect,
+    protectedResourceMap
+  };
+}
+
+// redirect if not logged in
+export function MSALGuardConfigFactory(): MsalGuardConfiguration {
+  return { 
+    interactionType: InteractionType.Redirect,
+    authRequest: {
+      scopes: ['user.read']
+    }
+  };
+}
 
 @NgModule({
   declarations: [
@@ -52,7 +98,8 @@ import {CreateEventPageComponent} from "./create-event-page/create-event-page.co
     LogInPageComponent,
     SignUpPageComponent,
     ReportsPageComponent,
-    CreateEventPageComponent
+    CreateEventPageComponent,
+    UnauthorizedComponent
   ],
   imports: [
     BrowserModule,
@@ -80,7 +127,28 @@ import {CreateEventPageComponent} from "./create-event-page/create-event-page.co
     MatDialogModule,
     HttpClientModule
   ],
-  providers: [],
-  bootstrap: [AppComponent]
+  providers: [
+    {
+      provide: HTTP_INTERCEPTORS,
+      useClass: MsalInterceptor,
+      multi: true
+    },
+    {
+      provide: MSAL_INSTANCE,
+      useFactory: MSALInstanceFactory
+    },
+    {
+      provide: MSAL_GUARD_CONFIG,
+      useFactory: MSALGuardConfigFactory
+    },
+    {
+      provide: MSAL_INTERCEPTOR_CONFIG,
+      useFactory: MSALInterceptorConfigFactory
+    },
+    MsalService,
+    MsalGuard,
+    MsalBroadcastService
+  ],
+  bootstrap: [AppComponent, MsalRedirectComponent]
 })
 export class AppModule { }

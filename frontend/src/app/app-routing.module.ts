@@ -9,18 +9,19 @@ import { EventAdminPageComponent } from './event-admin-page/event-admin-page.com
 import { ReportsPageComponent } from './reports-page/reports-page.component';
 import {CreateEventPageComponent} from "./create-event-page/create-event-page.component";
 import { FindAnEventComponent } from './find-an-event-page/find-an-event.component';
+import { MsalGuard } from '@azure/msal-angular';
 
 const routes: Routes = [
   { path: '', redirectTo: '/landing', pathMatch: 'full' },
   { path: 'landing', component: LandingPageComponent },
   { path: 'log-in', component: LogInPageComponent },
   { path: 'sign-up', component: SignUpPageComponent },
-  { path: 'dashboard', component: DashboardPageComponent },
-  { path: 'find-event', component: FindAnEventComponent },
-  { path: 'my-events', component: MyEventsPageComponent },
-  { path: 'event-admin', component: EventAdminPageComponent },
-  { path: 'reports', component: ReportsPageComponent },
-  { path: 'create-event', component: CreateEventPageComponent }
+  { path: 'dashboard', component: DashboardPageComponent, canActivate: [MsalGuard] },
+  { path: 'find-event', component: FindAnEventComponent, canActivate: [MsalGuard] },
+  { path: 'my-events', component: MyEventsPageComponent, canActivate: [MsalGuard] },
+  { path: 'event-admin', component: EventAdminPageComponent, canActivate: [MsalGuard] },
+  { path: 'reports', component: ReportsPageComponent, canActivate: [MsalGuard] },
+  { path: 'create-event', component: CreateEventPageComponent, canActivate: [MsalGuard] }
 ];
 
 @NgModule({
