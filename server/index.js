@@ -54,6 +54,18 @@ event_id: number;
 //Placeholder until db conn setup
 let events = [
     {
+        event_id: 0,
+        event_name: "NC State Event",
+        event_location: "Talley Student Union",
+        event_start: "26 Oct 2021 00:00:00 GMT",
+        event_end: "28 Oct 2021 00:00:00 GMT",
+        event_organizer: 0,
+        event_max_volunteers: 5,
+        event_description: "Come help out at NC State!",
+        event_credit: 2,
+        event_image: "https://brand.ncsu.edu/img/downloads/belltower-day-thumb.jpg"
+    },
+    {
         event_id: 1,
         event_name: "Test Event",
         event_location: "1600 Penn",
