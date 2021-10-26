@@ -5,9 +5,8 @@ import { LogInPageComponent } from './log-in-page/log-in-page.component';
 import { SignUpPageComponent } from './sign-up-page/sign-up-page.component';
 import { DashboardPageComponent } from './dashboard-page/dashboard-page.component';
 import { MyEventsPageComponent } from './my-events-page/my-events-page.component';
-import { EventAdminPageComponent } from './event-admin-page/event-admin-page.component';
 import { ReportsPageComponent } from './reports-page/reports-page.component';
-import {CreateEventPageComponent} from "./create-event-page/create-event-page.component";
+import { CreateEventPageComponent } from "./create-event-page/create-event-page.component";
 import { FindAnEventComponent } from './find-an-event-page/find-an-event.component';
 import { MsalGuard } from '@azure/msal-angular';
 
@@ -19,7 +18,6 @@ const routes: Routes = [
   { path: 'dashboard', component: DashboardPageComponent, canActivate: [MsalGuard] },
   { path: 'find-event', component: FindAnEventComponent, canActivate: [MsalGuard] },
   { path: 'my-events', component: MyEventsPageComponent, canActivate: [MsalGuard] },
-  { path: 'event-admin', component: EventAdminPageComponent, canActivate: [MsalGuard] },
   { path: 'reports', component: ReportsPageComponent, canActivate: [MsalGuard] },
   { path: 'create-event', component: CreateEventPageComponent, canActivate: [MsalGuard] }
 ];

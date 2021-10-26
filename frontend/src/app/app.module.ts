@@ -24,7 +24,6 @@ import { FindAnEventComponent } from './find-an-event-page/find-an-event.compone
 import { DetailsDialogComponent } from './details-dialog/details-dialog.component';
 import { DashboardPageComponent } from './dashboard-page/dashboard-page.component';
 import { MyEventsPageComponent } from './my-events-page/my-events-page.component';
-import { EventAdminPageComponent } from './event-admin-page/event-admin-page.component';
 import { NavBarComponent } from './nav-bar/nav-bar.component';
 import { LogInPageComponent } from './log-in-page/log-in-page.component';
 import { SignUpPageComponent } from './sign-up-page/sign-up-page.component';
@@ -93,7 +92,6 @@ export function MSALGuardConfigFactory(): MsalGuardConfiguration {
     DetailsDialogComponent,
     DashboardPageComponent,
     MyEventsPageComponent,
-    EventAdminPageComponent,
     NavBarComponent,
     LogInPageComponent,
     SignUpPageComponent,
