@@ -1,20 +1,20 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { EventAdminPageComponent } from './event-admin-page.component';
+import { UnauthorizedComponent } from './unauthorized.component';
 
-describe('EventAdminPageComponent', () => {
-  let component: EventAdminPageComponent;
-  let fixture: ComponentFixture<EventAdminPageComponent>;
+describe('UnauthorizedComponent', () => {
+  let component: UnauthorizedComponent;
+  let fixture: ComponentFixture<UnauthorizedComponent>;
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [ EventAdminPageComponent ]
+      declarations: [ UnauthorizedComponent ]
     })
     .compileComponents();
   });
 
   beforeEach(() => {
-    fixture = TestBed.createComponent(EventAdminPageComponent);
+    fixture = TestBed.createComponent(UnauthorizedComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });
