@@ -1,11 +1,24 @@
 <h2>Find an Event</h2>
 
 <!-- Search Box -->
+<mat-form-field>
+    <mat-label>Search</mat-label>
+    <input matInput (keyup)="applyFilter($event)" placeholder="Search Events" #input>
+</mat-form-field>
+
+<!-- The slider for if old events should be displayed -->
+<mat-slide-toggle [(ngModel)]="displayOldEvents" (change)="displayPreviousEvents()">Show Past Events?</mat-slide-toggle>
+
+
+<!-- Loading dialog - only visible when loading. -->
+<div class="spinner-container" *ngIf="dataSource.loading$ | async">
+    <mat-spinner></mat-spinner>
+</div>
 
 <!-- https://zoaibkhan.com/blog/create-a-responsive-card-grid-in-angular-using-flex-layout-part-1/ -->
 <div fxLayout="row wrap" fxLayoutGap="5vw grid" class="cardContainer">
     <ng-container *ngFor="let event of this.dataSourceInfo | async">
-        <app-event-card [eventItem]="event"></app-event-card>
+        <app-event-card fxFlex.xs="100%" fxFlex.lt-lg="50%" fxFlex.lg="33%" [eventItem]="event"></app-event-card>
     </ng-container>
 </div>
 
