@@ -7,9 +7,9 @@
 .nav-link-container {
     background: #CC0000;
     line-height: 2rem;
-    padding-left: 15px;
-    padding-right: 15px;
-    padding-top: 15px;
+    padding-left: 1vw;
+    padding-right: 1vw;
+    padding-top: 2vh;
     width: 240px;
 }
 .nav-link {
@@ -20,16 +20,21 @@
 }
 .landing-logo {
     display: inline;
-    margin-left: 10px;
+    margin-left: 1vw;
     color: white;
     font-weight: 500;
 }
 .site-icon {
     width: 15%;
-    margin-left: 10px;
+    margin-left: 1vw;
 }
 .example-sidenav-content {
     display: none;
+}
+
+a {
+    text-decoration: none;
+    color: inherit;
 }
 @media (max-width: 768px) {
     .nav-link-container {

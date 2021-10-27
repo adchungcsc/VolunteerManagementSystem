@@ -1,6 +1,6 @@
 <mat-drawer-container class="nav-container">
     <mat-drawer #drawer class="nav-link-container" mode="side" [opened]="router.url != '/landing'">
-        <h1 class="landing-logo">Participance</h1>
+        <h1 class="landing-logo"><a [routerLink]="">Participance</a></h1>
         <img class="site-icon" src="../../assets/site_icon.svg">
         <mat-nav-list>
             <mat-list-item *ngFor="let link of links">
@@ -14,13 +14,12 @@
                 <mat-list-item [matMenuTriggerFor]="menu" class="manage-account nav-link">Profile</mat-list-item>
                 <mat-menu #menu="matMenu">
                     <button mat-menu-item>
-                      <span>Log Out</span>
+                      <span (click)="logout()">Log Out</span>
                     </button>
                 </mat-menu>
             </div>
         </mat-nav-list>
     </mat-drawer>
-
 
     <mat-drawer-content>
         <div class="example-sidenav-content" *ngIf="router.url != '/landing'">
