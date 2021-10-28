@@ -1,10 +1,10 @@
 <mat-drawer-container class="nav-container">
-    <mat-drawer #drawer class="nav-link-container" mode="side" [opened]="router.url != '/landing'">
+    <mat-drawer #drawer class="nav-link-container" mode="side" [opened]="router.url != '/landing' && desktop">
         <h1 class="landing-logo"><a [routerLink]="['']">Participance</a></h1>
         <img class="site-icon" src="../../assets/site_icon.svg">
         <mat-nav-list>
-            <mat-list-item *ngFor="let link of links" class="nav-link">
-                <mat-icon class="nav-icon">{{ link.icon }}</mat-icon><a [routerLink]="link.route">{{ link.title }}</a>
+            <mat-list-item *ngFor="let link of links" class="nav-link" [routerLink]="link.route">
+                <mat-icon class="nav-icon">{{ link.icon }}</mat-icon>{{ link.title }}
             </mat-list-item>
             <div>
                 <mat-list-item [matMenuTriggerFor]="menu" class="nav-link"><mat-icon class="nav-icon">account_circle</mat-icon>Profile</mat-list-item>

@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, HostListener, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { MsalService } from '@azure/msal-angular';
 
@@ -18,6 +18,7 @@ export class NavBarComponent implements OnInit {
   ];
 
   showFirst = false;
+  desktop = false;
 
   router: Router;
 
@@ -32,6 +33,16 @@ export class NavBarComponent implements OnInit {
     this.authService.logoutRedirect({
       postLogoutRedirectUri: "/",
     });
+  }
+
+  @HostListener('window:resize', ['$event'])
+  onResize(event: any) {
+    if (event.target.innerWidth > 768) {
+      this.desktop = true;
+    } else {
+      this.desktop = false;
+      this.showFirst = true;
+    }
   }
 
 }

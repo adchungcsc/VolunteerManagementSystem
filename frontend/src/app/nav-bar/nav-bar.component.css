@@ -43,7 +43,6 @@ a {
 }
 @media (max-width: 768px) {
     .nav-link-container {
-        /* width: 150px; */
         padding-left: 0;
         padding-right: 0;
     }
@@ -51,5 +50,14 @@ a {
         display: flex;
         align-items: center;
         justify-content: center;
+    }
+    .landing-logo {
+        margin-left: 5vw;
+    }
+    .site-icon {
+        margin-left: 3vw;
+    }
+    .nav-icon {
+        padding-right: 2vw;
     }
 }
