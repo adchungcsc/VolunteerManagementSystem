@@ -10,11 +10,11 @@ import { MsalService } from '@azure/msal-angular';
 export class NavBarComponent implements OnInit {
 
   links = [
-    {title: 'Find Events', route: '/find-event'},
-    {title: 'My Events', route: '/my-events'},
-    {title: 'Reports', route: '/reports'},
-    {title: 'Dashboard', route: '/dashboard'},
-    {title: 'Add/Edit Events', route: '/create-event'}
+    {title: 'Dashboard', route: '/dashboard', icon: 'dashboard'},
+    {title: 'Find Events', route: '/find-event', icon: 'add_circle_outline'},
+    {title: 'My Events', route: '/my-events', icon: 'calendar_today'},
+    {title: 'Reports', route: '/reports', icon: 'insights'},
+    {title: 'Add/Edit Events', route: '/create-event', icon: 'create'}
   ];
 
   showFirst = false;

@@ -15,6 +15,9 @@
 .nav-link {
     color: white;
 }
+.nav-icon {
+    padding-right: 0.5vw;
+}
 .mobile-nav {
     display: none;
 }
@@ -27,6 +30,8 @@
 .site-icon {
     width: 15%;
     margin-left: 1vw;
+    position: relative;
+    top: 5px;
 }
 .example-sidenav-content {
     display: none;
