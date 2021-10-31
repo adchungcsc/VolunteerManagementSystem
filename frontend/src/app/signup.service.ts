@@ -68,7 +68,7 @@ export class SignupService {
     if ((eventId == undefined || eventId == null) && eventId !== 0) {
       throw new Error('Invalid ID');
     }
-    return this.http.post(this.signupRoute, eventId, this.httpOptions).pipe(
+    return this.http.post(this.signupRoute, {'eventId': eventId}, this.httpOptions).pipe(
       catchError(this.handleAnyErrors)
     );
   }

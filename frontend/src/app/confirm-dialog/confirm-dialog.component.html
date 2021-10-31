@@ -1,0 +1,8 @@
+<h2 mat-dialog-title>Please Confirm:</h2>
+<mat-dialog-content class="mat-typography">
+    <h3>Are you sure you would like to attempt to Register for {{data}}?</h3>
+</mat-dialog-content>
+<mat-dialog-actions align="end">
+    <button mat-button (click)="onDismiss()">No</button>
+    <button mat-raised-button color="primary" (click)="onConfirm()">Yes</button>
+</mat-dialog-actions>
