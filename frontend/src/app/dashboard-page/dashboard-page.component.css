@@ -1,0 +1,79 @@
+.greeting-container {
+    display: flex;
+    justify-content: center;
+    margin: 20px 15vw 20px 15vw;
+    background: #ffe6e6;
+    padding: 30px;
+}
+
+.greeting-card-title {
+    display: flex;
+    text-align: center;
+    justify-content: center;
+}
+
+.column {
+    display: flex;
+    flex-direction: column;
+    flex-basis: 100%;
+    flex: 1;
+}
+
+.double-column {
+    display: flex;
+    flex-direction: column;
+    flex-basis: 100%;
+    flex: 3;
+}
+
+.text-center {
+    text-align: center;
+}
+
+.row {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    width: 100%;
+}
+
+.dashboard-links {
+    margin: 0px 10vw 20px 10vw;
+}
+
+.dashboard-icon {
+    font-size: 100px;
+}
+
+.dashboard-link {
+    background: #ffe6e6;
+    margin-right: 20px;
+    margin-left: 20px;
+    margin-top: 20px;
+}
+
+.clickable {
+    cursor: pointer;
+}
+.clickable:hover {
+    background: #ffd9d9;
+}
+
+.m-0 {
+    margin: 0px;
+}
+.p-40 {
+    padding-top: 40px;
+}
+.mt-1 {
+    margin-top: 10px;
+}
+
+@media (max-width: 768px) {
+    .mt-mobile {
+        padding-top: 30px;
+    }
+    .greeting-card-title {
+        margin-top: 20px;
+    }
+}

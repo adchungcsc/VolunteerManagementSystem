@@ -1,10 +1,17 @@
 <h1 class="page-header">My Registered Events</h1>
 <hr>
-<div class="page-content">
-    <h2>Hello, {{profile?.givenName}}</h2>
-    <p>You are currently registered for TODO events.</p>
-    <p>Since joining, you have contributed TODO hours.</p>
-</div>
+<mat-card class="greeting-container">
+    <div class="row">
+        <div class="column greeting-card-title">
+            <h2 class="m-0">Hello, {{profile?.givenName}}</h2>
+        </div>
+        <div class="greeting-card-divider"></div>
+        <div class="double-column">
+            <p>You are currently registered for {{userEventsTotal}} event<span *ngIf="userEventsTotal > 1">s</span></p>
+            <p>Since joining, you have contributed {{userHoursTotal}} hour<span *ngIf="userHoursTotal > 1">s</span></p>
+        </div>
+    </div>
+</mat-card>
 
 <mat-tab-group>
     <mat-tab label="Upcoming">
@@ -28,4 +35,4 @@
             </ng-container>
         </div>
     </mat-tab>
-  </mat-tab-group>
+</mat-tab-group>
