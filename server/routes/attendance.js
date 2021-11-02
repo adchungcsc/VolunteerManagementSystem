@@ -1,67 +1,62 @@
 var express = require('express');
+const {models} = require("../orm");
 var router = express.Router();
 
 //Register attendance for event.
 
-let attendanceCounter = 1 //temp fill in for serial aut inc
-
-let attendances = [
-    {
-        event_attendance_id: 1,
-        event_id: 1,
-        hours: 1,
-        comment: "Event was great",
-        rating: 5,
-        attendee_id: 1
-    }
-]
 
 router.post('/attend', (req, res) => {
     /**
      * Create new event
      */
-        //TODO: add error checking
-        //TODO: link to existing user and event
-    const eventAttendance = {
-            event_attendance_id: ++attendanceCounter,
-            event_id: req.body.event_id,
-            hours: req.body.hours,
-            comment: req.body.comment,
-            rating: req.body.rating,
-            attendee_id: req.body.attendee_id
-        }
-    //Change to get attendee_id from their session instead of relying on them to tell us who they are.
-
-    attendances.push(eventAttendance)
-    res.send(eventAttendance)
+    //TODO imp
+    res.send({})
 })
 
-router.get('/attend/event/:id', (req, res) => {
+router.get('/event/:id', async (req, res) => {
     /**
      * Get who attended an event
      */
-    let attendancesForThisEvent = []
-    let queried_event_id = req.params.id
-    attendances.forEach(attendance => {
-        if (attendance.event_id === parseInt(queried_event_id)) {
-            attendancesForThisEvent.push(attendance)
+    let queried_id = req.params.id
+    if (queried_id === undefined) {
+        let attendance = await models.event_attendance.findAll()
+        res.send(attendance)
+    } else {
+        let attendance = await models.event_attendance.findAll({
+            where: {
+                event_id: queried_id
+            }
+        });
+        if (attendance !== null) {
+            res.send(attendance)
+        } else {
+            //Didn't find event
+            res.status(404).send({})
         }
-    })
-    res.send(attendancesForThisEvent)
+    }
 })
 
-router.get('/attend/user/:id', (req, res) => {
+router.get('/user/:id', async (req, res) => {
     /**
      * Get event attendances a user has registered attendance for.
      */
-    let attendancesForThisEvent = []
-    let queried_user_id = req.params.id
-    attendances.forEach(attendance => {
-        if (attendance.attendee_id === parseInt(queried_user_id)) {
-            attendancesForThisEvent.push(attendance)
+    let queried_id = req.params.id
+    if (queried_id === undefined) {
+        let attendance = await models.event_attendance.findAll()
+        res.send(attendance)
+    } else {
+        let attendance = await models.event_attendance.findAll({
+            where: {
+                attendee_id: queried_id
+            }
+        });
+        if (attendance !== null) {
+            res.send(attendance)
+        } else {
+            //Didn't find event
+            res.status(404).send({})
         }
-    })
-    res.send(attendancesForThisEvent)
+    }
 })
 
 

@@ -1,31 +1,9 @@
 var express = require('express');
+const {models} = require("../orm");
 var router = express.Router();
 
 let signupCounter = 3 //temp fill in for serial aut inc
 
-let signups = [
-    {
-        event_signup_id: 1,
-        event_id: 0,
-        user_id: 0,
-        is_waitlisted: false,
-        waitlist_timestamp: null,
-    },
-    {
-        event_signup_id: 2,
-        event_id: 0,
-        user_id: 1,
-        is_waitlisted: false,
-        waitlist_timestamp: null,
-    },
-    {
-        event_signup_id: 3,
-        event_id: 1,
-        user_id: 1,
-        is_waitlisted: false,
-        waitlist_timestamp: null,
-    },
-]
 
 //Signup for event
 
@@ -33,50 +11,54 @@ router.post('/', (req, res) => {
     /**
      * Create new event
      */
-        //TODO: add error checking
-        //TODO: link to existing user and event
-    const eventSignup = {
-            event_signup_id: ++signupCounter,
-            event_id: req.body.event_id,
-            user_id: req.body.user_id,
-            is_waitlisted: false,
-            waitlist_timestamp: null,
-        }
-    //Change to get user_id from their session instead of relying on them to tell us who they are.
-
-    console.log(signups)
-
-    signups.push(eventSignup)
-    console.log(signups)
-    res.send(eventSignup)
+    //TODO: imp
+    res.status(401).send({})
 })
 
-router.get('/event/:id', (req, res) => {
+router.get('/event/:id', async (req, res) => {
     /**
      * Get who signed up for an event.
      */
-    let signupsForThisEvent = []
-    let queried_event_id = req.params.id
-    signups.forEach(signup => {
-        if (signup.event_id === parseInt(queried_event_id)) {
-            signupsForThisEvent.push(signup)
+    let queried_id = req.params.id
+    if (queried_id === undefined) {
+        let signups = await models.event_signup.findAll()
+        res.send(signups)
+    } else {
+        let signups = await models.event_signup.findAll({
+            where: {
+                event_id: queried_id
+            }
+        });
+        if(signups !== null){
+            res.send(signups)
+        }else{
+            //Didn't find event
+            res.status(404).send({})
         }
-    })
-    res.send(signupsForThisEvent)
+    }
 })
 
-router.get('/user/:id', (req, res) => {
+router.get('/user/:id', async (req, res) => {
     /**
      * Get events that a user has signed up for.
      */
-    let signupsForThisEvent = []
-    let queried_user_id = req.params.id
-    signups.forEach(signup => {
-        if (signup.user_id === parseInt(queried_user_id)) {
-            signupsForThisEvent.push(signup)
+    let queried_id = req.params.id
+    if (queried_id === undefined) {
+        let signups = await models.event_signup.findAll()
+        res.send(signups)
+    } else {
+        let signups = await models.event_signup.findAll({
+            where: {
+                user_id: queried_id
+            }
+        });
+        if(signups !== null){
+            res.send(signups)
+        }else{
+            //Didn't find event
+            res.status(404).send({})
         }
-    })
-    res.send(signupsForThisEvent)
+    }
 })
 //export this router to use in our index.js
 module.exports = router;

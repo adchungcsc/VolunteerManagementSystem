@@ -6,7 +6,7 @@ const {applyExtraSetup} = require('./extra-setup');
 // const sequelize = new Sequelize(process.env.DB_CONNECTION_URL);
 
 
-const sequelize = new Sequelize("");
+const sequelize = new Sequelize("postgres://participance@volunteer-manager:@volunteer-manager.postgres.database.azure.com:5432/participance?ssl=true");
 
 const modelDefiners = [
     require('./models/users.model'),
