@@ -12,34 +12,34 @@ module.exports = (sequelize) => {
                 primaryKey: true,
                 type: DataTypes.INTEGER
             },
-            name: {
+            event_name: {
                 allowNull: false,
                 type: DataTypes.STRING
             },
-            address: {
+            event_location: {
                 allowNull: false,
                 type: DataTypes.STRING
             },
-            start_timestamp: {
+            event_start: {
                 allowNull: false,
                 type: DataTypes.DATE
             },
-            end_timestamp: {
+            event_end: {
                 allowNull: false,
                 type: DataTypes.DATE
             },
-            organizer_id: {
+            event_organizer: {
                 allowNull: false,
                 type: DataTypes.INTEGER
             },
-            max_volunteers: {
+            event_max_volunteers: {
                 allowNull: false,
                 type: DataTypes.INTEGER
             },
-            description: {
+            event_description: {
                 type: DataTypes.STRING
             },
-            image_path: {
+            event_image: {
                 type: DataTypes.STRING
             },
         },
