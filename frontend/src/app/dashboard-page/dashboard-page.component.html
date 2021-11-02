@@ -1,2 +1,60 @@
 <h1 class="page-header">Dashboard</h1>
 <hr>
+
+<div class="text-center">
+    <h1>Welcome to Participance!</h1>
+    <h3>Register for an event today and make a difference.</h3>
+</div>
+
+<mat-card class="greeting-container">
+    <div class="row">
+        <div class="column greeting-card-title dashboard-icon">
+            <mat-icon [inline]="true">account_circle</mat-icon>
+        </div>
+        <div class="double-column mt-mobile">
+            <h1><b>Greetings, {{profile?.givenName}}</b></h1>
+            <h3 class="m-0">Since joining, you have volunteered for {{ userHoursTotal }} hour<span *ngIf="userHoursTotal > 1">s</span></h3>
+        </div>
+    </div>
+</mat-card>
+
+<div class="text-center">
+    <h2 class="m-0">What would you like to do?</h2>
+</div>
+
+<div class="dashboard-links">
+    <div class="row">
+        <div class="column">
+            <mat-card class="dashboard-link clickable" [routerLink]="['/find-event']">
+                <div class="row text-center dashboard-icon p-40">
+                    <mat-icon [inline]="true">add_circle_outline</mat-icon>
+                </div>
+                <div class="text-center p-40 mt-1">
+                    <h2 class="m-0">Find an Event</h2>
+                </div>
+            </mat-card>
+        </div>
+        <div class="column">
+            <mat-card class="dashboard-link clickable" [routerLink]="['/my-events']">
+                <div class="row text-center dashboard-icon p-40">
+                    <mat-icon [inline]="true">calendar_today</mat-icon>
+                </div>
+                <div class="text-center p-40 mt-1">
+                    <h2 class="m-0">My Registered Events</h2>
+                </div>
+            </mat-card>
+        </div>
+        <div class="column">
+            <mat-card class="dashboard-link clickable" [routerLink]="['/reports']">
+                <div class="row text-center dashboard-icon p-40">
+                    <mat-icon [inline]="true">insights</mat-icon>
+                </div>
+                <div class="text-center p-40 mt-1">
+                    <h2 class="m-0">Reports</h2>
+                </div>
+            </mat-card>
+        </div>
+    </div>
+</div>
+
+<router-outlet></router-outlet>

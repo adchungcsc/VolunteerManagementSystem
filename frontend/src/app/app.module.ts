@@ -99,7 +99,7 @@ export function MSALGuardConfigFactory(): MsalGuardConfiguration {
     SignUpPageComponent,
     ReportsPageComponent,
     CreateEventPageComponent,
-    UnauthorizedComponent
+    UnauthorizedComponent,
   ],
   imports: [
     BrowserModule,

@@ -17,8 +17,8 @@ export class NavBarComponent implements OnInit {
     {title: 'Add/Edit Events', route: '/create-event', icon: 'create'}
   ];
 
-  showFirst = false;
-  desktop = false;
+  showFirst = true;
+  desktop = true;
 
   router: Router;
 
@@ -27,6 +27,7 @@ export class NavBarComponent implements OnInit {
   }
 
   ngOnInit(): void {
+    window.innerWidth > 768 ? this.desktop = true: this.desktop = false;
   }
 
     logout() {
@@ -37,12 +38,7 @@ export class NavBarComponent implements OnInit {
 
   @HostListener('window:resize', ['$event'])
   onResize(event: any) {
-    if (event.target.innerWidth > 768) {
-      this.desktop = true;
-    } else {
-      this.desktop = false;
-      this.showFirst = true;
-    }
+    event.target.innerWidth > 768 ? this.desktop = true: this.desktop = false; this.showFirst = true;
   }
 
 }
