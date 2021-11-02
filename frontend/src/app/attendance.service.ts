@@ -104,7 +104,7 @@ export class AttendanceService {
     // If not a valid ID/if null, error.
     console.log("the ID is " + userId);
     if ((userId == undefined || userId == null) && userId !== 0) {
-      throw new Error('Invalid Event ID');
+      throw new Error('Invalid User ID');
     }
 
     // Returns the result or the error....
