@@ -73,7 +73,7 @@ export class MyEventsPageComponent implements OnInit {
 
     this.dataSourceInfo = this.dataSource.connect(this);
     // TODO increase page size.
-    this.dataSource.loadEvents('', 0, 10);
+    this.dataSource.loadEvents(true, '', 0, 10);
 
     let events = this.http.get(this.userEventsRoute, this.httpOptions).pipe(
       catchError(this.handleAnyErrors)
