@@ -13,14 +13,14 @@
 ### API Endpoints
 | Endpoints         | Status     | Purpose |
 |--------------|-----------|------------|
-| GET /event/{id} | Mock with some business logic | Return list of event or get event by id |
+| GET /event/{id} | Finished | Return list of event or get event by id |
 | POST /event/ | Mock with some business logic | Insert an event (form encoded) |
-| GET /user/{id} | Mocked return | Return list of users or get user by id |
-| GET /signup/event/{id} | Mock with some business logic | Return list of user signups for a given event|
-| GET /signup/user/{id} | Mock with some business logic | Return list of signups for events for a given user|
+| GET /user/{id} | Finished | Return list of users or get user by id |
+| GET /signup/event/{id} | Finished | Return list of user signups for a given event|
+| GET /signup/user/{id} | Finished | Return list of signups for events for a given user|
 | POST /signup/ | Mock with some business logic | Let users signup for an event|
-| GET /attend/event/{id} | Mock with some business logic | Return list of registered attendances for an event |
-| GET /attend/user/{id} | Mock with some business logic | Return list of registered attendances for a given user |
+| GET /attend/event/{id} | Finished | Return list of registered attendances for an event |
+| GET /attend/user/{id} | Finished | Return list of registered attendances for a given user |
 | POST /attend/ | Mock with some business logic | Let users register their attendance for an event|
 
 ### Pitch
@@ -33,4 +33,4 @@ https://github.ncsu.edu/CSC-WebApps-F21/WEBAPPS-11/blob/main/Volunteer%20Manager
 https://drive.google.com/file/d/10xpLSYd45yZM1qrMiOw33iecIT7S0Hhu/view?usp=sharing
 
 ### M2 Demo Video
-https://csc342m2video.catalfu.com
+http://csc342m2video.catalfu.com
