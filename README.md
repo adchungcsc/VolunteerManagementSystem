@@ -33,4 +33,4 @@ https://github.ncsu.edu/CSC-WebApps-F21/WEBAPPS-11/blob/main/Volunteer%20Manager
 https://drive.google.com/file/d/10xpLSYd45yZM1qrMiOw33iecIT7S0Hhu/view?usp=sharing
 
 ### M2 Demo Video
-https://csc342m2video.ryans.team
+https://csc342m2video.catalfu.com
