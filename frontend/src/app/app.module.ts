@@ -11,10 +11,11 @@ import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 import {MatButtonModule} from '@angular/material/button';
 import {MatCardModule} from '@angular/material/card';
 import {MatPaginatorModule} from '@angular/material/paginator';
-// import { MatProgressSpinner } from "@angular/material/progress-spinner";
+import { MatProgressSpinnerModule } from "@angular/material/progress-spinner";
 import {MatTableModule} from '@angular/material/table';
 import { FlexLayoutModule } from '@angular/flex-layout';
 import {MatDialogModule} from '@angular/material/dialog';
+import { FormsModule } from '@angular/forms';
 
 import { AppComponent } from './app.component';
 import { LandingPageComponent } from './landing-page/landing-page.component';
@@ -36,6 +37,7 @@ import {MatDatepickerModule} from "@angular/material/datepicker";
 import {MatNativeDateModule} from "@angular/material/core";
 import {MatTabsModule} from '@angular/material/tabs';
 import {CreateEventPageComponent} from "./create-event-page/create-event-page.component";
+import {MatSlideToggleModule} from '@angular/material/slide-toggle';
 import { UnauthorizedComponent } from './unauthorized/unauthorized.component';
 import { BrowserCacheLocation, InteractionType, IPublicClientApplication, LogLevel, PublicClientApplication } from '@azure/msal-browser';
 import { MsalBroadcastService, MsalGuard, MsalGuardConfiguration, MsalInterceptor, MsalInterceptorConfiguration, MsalRedirectComponent, MsalService, MSAL_GUARD_CONFIG, MSAL_INSTANCE, MSAL_INTERCEPTOR_CONFIG } from '@azure/msal-angular';
@@ -119,8 +121,10 @@ export function MSALGuardConfigFactory(): MsalGuardConfiguration {
     MatTabsModule,
     MatButtonModule,
     MatPaginatorModule,
-    // MatProgressSpinner,
+    MatProgressSpinnerModule,
     MatTableModule,
+    MatSlideToggleModule,
+    FormsModule,
     FlexLayoutModule,
     MatDialogModule,
     HttpClientModule

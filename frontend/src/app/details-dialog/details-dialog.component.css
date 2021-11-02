@@ -5,3 +5,7 @@ div.eventDetailsDialog {
 .mat-dialog-content {
     max-height: 60vh;
 }
+
+img.dialog-image {
+    max-width: 100%;
+}
