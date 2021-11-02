@@ -29,5 +29,5 @@ module.exports = (sequelize) => {
             timestamps: false,
             freezeTableName: true,
             tableName: "users"
-        }).schema("public");
+        }).schema("participance_updated_cols");
 }

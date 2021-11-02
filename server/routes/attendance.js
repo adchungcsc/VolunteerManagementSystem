@@ -45,16 +45,20 @@ router.get('/user/:id', async (req, res) => {
         let attendance = await models.event_attendance.findAll()
         res.send(attendance)
     } else {
-        let attendance = await models.event_attendance.findAll({
-            where: {
-                attendee_id: queried_id
+        try {
+            let attendance = await models.event_attendance.findAll({
+                where: {
+                    attendee_id: queried_id
+                }
+            });
+            if (attendance !== null) {
+                res.send(attendance)
+            } else {
+                //Didn't find event
+                res.status(404).send({})
             }
-        });
-        if (attendance !== null) {
-            res.send(attendance)
-        } else {
-            //Didn't find event
-            res.status(404).send({})
+        } catch (error) {
+            console.log(error);
         }
     }
 })

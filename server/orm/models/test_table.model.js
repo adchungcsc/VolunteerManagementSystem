@@ -20,7 +20,7 @@ module.exports = (sequelize) => {
         {
             timestamps: false,
             freezeTableName: true,
-            schema: "public",
+            schema: "participance_updated_cols",
             tableName: "test_table"
         });
 }

@@ -9,8 +9,12 @@ router.get('/:id?', async (req, res) => {
      */
     let queried_id = req.params.id
     if (queried_id === undefined) {
-        let events = await models.event.findAll()
-        res.send(events)
+        try {
+            let events = await models.event.findAll()
+            res.send(events)
+        } catch (error) {
+            console.log(error);
+        }
     } else {
         let events = await models.event.findAll({
             where: {
