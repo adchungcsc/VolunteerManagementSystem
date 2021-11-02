@@ -1,31 +1,38 @@
-<h1>My Registered Events</h1>
+<h1 class="page-header">My Registered Events</h1>
 <hr>
-<div>
-    <h3>Hello, {{this.name}}</h3>
-    <h5>You are currently registered for TODO events.</h5>
-    <h5>Since joining, you have contributed TODO hours</h5>
-</div>
+<mat-card class="greeting-container">
+    <div class="row">
+        <div class="column greeting-card-title">
+            <h2 class="m-0">Hello, {{profile?.givenName}}</h2>
+        </div>
+        <div class="greeting-card-divider"></div>
+        <div class="double-column">
+            <p>You are currently registered for {{userEventsTotal}} event<span *ngIf="userEventsTotal > 1">s</span></p>
+            <p>Since joining, you have contributed {{userHoursTotal}} hour<span *ngIf="userHoursTotal > 1">s</span></p>
+        </div>
+    </div>
+</mat-card>
 
 <mat-tab-group>
     <mat-tab label="Upcoming">
         <div fxLayout="row wrap" fxLayoutGap="5vw" class="cardContainer">
             <ng-container *ngFor="let event of this.dataSourceInfo | async">
-                <app-event-card *ngIf="event.event_end > this.now" [eventItem]="event"></app-event-card>
+                <app-event-card fxFlex.xs="100%" fxFlex.lt-lg="50%" fxFlex.lg="33%" *ngIf="event.event_end > this.now" [eventItem]="event"></app-event-card>
             </ng-container>
         </div>
     </mat-tab>
     <mat-tab label="Recent">
         <div fxLayout="row wrap" fxLayoutGap="5vw" class="cardContainer">
             <ng-container *ngFor="let event of this.dataSourceInfo | async">
-                <app-event-card *ngIf="event.event_end > this.aWeekAgo && event.event_end <= this.now" [eventItem]="event"></app-event-card>
+                <app-event-card fxFlex.xs="100%" fxFlex.lt-lg="50%" fxFlex.lg="33%" *ngIf="event.event_end > this.aWeekAgo && event.event_end <= this.now" [eventItem]="event"></app-event-card>
             </ng-container>
         </div>
     </mat-tab>
     <mat-tab label="Past">
         <div fxLayout="row wrap" fxLayoutGap="5vw" class="cardContainer">
             <ng-container *ngFor="let event of this.dataSourceInfo | async">
-                <app-event-card *ngIf="event.event_end <= this.aWeekAgo" [eventItem]="event"></app-event-card>
+                <app-event-card fxFlex.xs="100%" fxFlex.lt-lg="50%" fxFlex.lg="33%" *ngIf="event.event_end <= this.aWeekAgo" [eventItem]="event"></app-event-card>
             </ng-container>
         </div>
     </mat-tab>
-  </mat-tab-group>
+</mat-tab-group>

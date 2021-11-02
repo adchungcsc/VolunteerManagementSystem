@@ -4,8 +4,8 @@
 | Page         | Status     | Wireframe |
 |--------------|-----------|------------|
 | Landing | Done | [Wireframe](https://github.ncsu.edu/CSC-WebApps-F21/WEBAPPS-11/blob/development/wireframes/landing.jpg) |
-| Dashboard      | In-Progress | [Wireframe](https://github.ncsu.edu/CSC-WebApps-F21/WEBAPPS-11/blob/development/wireframes/dashboard.jpg) |
-| Find an Event      | In-Progress  | [Wireframe](https://github.ncsu.edu/CSC-WebApps-F21/WEBAPPS-11/blob/development/wireframes/find-event.jpg) |
+| Dashboard      | Done | [Wireframe](https://github.ncsu.edu/CSC-WebApps-F21/WEBAPPS-11/blob/development/wireframes/dashboard.jpg) |
+| Find an Event      | Done  | [Wireframe](https://github.ncsu.edu/CSC-WebApps-F21/WEBAPPS-11/blob/development/wireframes/find-event.jpg) |
 | My Registered Events      | In-Progress  | [Wireframe](https://github.ncsu.edu/CSC-WebApps-F21/WEBAPPS-11/blob/development/wireframes/my-events.jpg) |
 | Create an Event      | In-Progress | [Wireframe](https://github.ncsu.edu/CSC-WebApps-F21/WEBAPPS-11/blob/development/wireframes/create-event.jpg) |
 | Reports       | In-Progress | [Wireframe (admin)](https://github.ncsu.edu/CSC-WebApps-F21/WEBAPPS-11/blob/development/wireframes/reports-admin.jpg), [Wireframe (user)](https://github.ncsu.edu/CSC-WebApps-F21/WEBAPPS-11/blob/development/wireframes/reports-user.jpg) |
@@ -29,6 +29,8 @@ Our team is building a web-based volunteer management system to help nonprofits/
 ### Wireframe
 https://github.ncsu.edu/CSC-WebApps-F21/WEBAPPS-11/blob/main/Volunteer%20Manager.pdf
 
-### Demo Video
-
+### M1 Demo Video
 https://drive.google.com/file/d/10xpLSYd45yZM1qrMiOw33iecIT7S0Hhu/view?usp=sharing
+
+### M2 Demo Video
+https://csc342m2video.catalfu.com

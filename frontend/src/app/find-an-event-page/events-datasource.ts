@@ -75,14 +75,22 @@ export class EventsDataSource extends DataSource<EventItem> {
         this.loadingSubject.complete();
     }
 
-    loadEvents(filter: string, skipToken: number, pageSize: number) {
+    // This works for getting just current or all events. Doesn't work for just past events.
+    /**
+     * 
+     * @param showPastEvents Should old events be displayed? By default this is true.
+     * @param filter A string for server-side filtering of events.
+     * @param skipToken Where do you want to start? (from 0? from item 10?)
+     * @param pageSize How many elements do you want to be returned?
+     */
+    loadEvents(showPastEvents: boolean = true, filter: string, skipToken: number, pageSize: number) {
         this.loadingSubject.next(true);
 
         // TODO REMOVE
         // this.eventSubject.next(this.events2);
         
         // TODO UNCOMMENT
-        this.eventsService.getAllEvents(true, skipToken, pageSize, filter).pipe(
+        this.eventsService.getAllEvents(showPastEvents, skipToken, pageSize, filter).pipe(
             catchError(() => of([])),
             finalize(() => this.loadingSubject.next(false))
         )

@@ -1,5 +1,8 @@
 import { Component, Input, OnInit } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
+import { MatSnackBar } from '@angular/material/snack-bar';
+import { of } from 'rxjs';
+import { catchError } from 'rxjs/operators';
 import { DetailsDialogComponent } from '../details-dialog/details-dialog.component';
 import { EventItem } from '../events.service';
 
@@ -23,7 +26,7 @@ export class EventCardComponent implements OnInit {
    * TODO
    * @param data TODO
    */
-  constructor(public dialog: MatDialog) { 
+  constructor(public dialog: MatDialog, private _snackBar: MatSnackBar) { 
 
     // TODO REMOVE
     this.eventDate = "Placeholder";
@@ -59,9 +62,21 @@ export class EventCardComponent implements OnInit {
   openDialog() {
     const dialogRef = this.dialog.open(DetailsDialogComponent, {data: this.eventItem});
 
-    dialogRef.afterClosed().subscribe(result => {
-      console.log(`Dialog result: ${result}`);
+    dialogRef.afterClosed().pipe(catchError(err => {
+      this.openSnackBar(`Error: ${err}`);
+      return of([err]);
+    })).subscribe(result => {
+      if (result != undefined) {
+        console.log(`Dialog result: ${result}`);
+        if (result.event === 'signup') {
+          this.openSnackBar(`Event Sign-up Status: ${result.status}`);
+        }
+      }
     });
+  }
+
+  openSnackBar(message: string) {
+    this._snackBar.open(message, undefined, {duration: 3000});
   }
 
 }

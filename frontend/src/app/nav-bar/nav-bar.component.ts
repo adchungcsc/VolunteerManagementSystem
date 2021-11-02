@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, HostListener, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { MsalService } from '@azure/msal-angular';
 
@@ -10,14 +10,15 @@ import { MsalService } from '@azure/msal-angular';
 export class NavBarComponent implements OnInit {
 
   links = [
-    {title: 'Find Events', route: '/find-event'},
-    {title: 'My Events', route: '/my-events'},
-    {title: 'Reports', route: '/reports'},
-    {title: 'Dashboard', route: '/dashboard'},
-    {title: 'Add/Edit Events', route: '/create-event'}
+    {title: 'Dashboard', route: '/dashboard', icon: 'dashboard'},
+    {title: 'Find Events', route: '/find-event', icon: 'add_circle_outline'},
+    {title: 'My Events', route: '/my-events', icon: 'calendar_today'},
+    {title: 'Reports', route: '/reports', icon: 'insights'},
+    {title: 'Add/Edit Events', route: '/create-event', icon: 'create'}
   ];
 
-  showFirst = false;
+  showFirst = true;
+  desktop = true;
 
   router: Router;
 
@@ -26,12 +27,18 @@ export class NavBarComponent implements OnInit {
   }
 
   ngOnInit(): void {
+    window.innerWidth > 768 ? this.desktop = true: this.desktop = false;
   }
 
     logout() {
     this.authService.logoutRedirect({
       postLogoutRedirectUri: "/",
     });
+  }
+
+  @HostListener('window:resize', ['$event'])
+  onResize(event: any) {
+    event.target.innerWidth > 768 ? this.desktop = true: this.desktop = false; this.showFirst = true;
   }
 
 }
