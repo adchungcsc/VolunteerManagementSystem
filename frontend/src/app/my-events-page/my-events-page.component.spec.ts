@@ -1,5 +1,5 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
-
+import {MatCardModule} from '@angular/material/card';
 import { MyEventsPageComponent } from './my-events-page.component';
 
 describe('MyEventsPageComponent', () => {
@@ -8,7 +8,7 @@ describe('MyEventsPageComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [ MyEventsPageComponent ]
+      declarations: [ MyEventsPageComponent, MatCardModule ]
     })
     .compileComponents();
   });
