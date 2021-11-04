@@ -22,44 +22,7 @@ const sessionMiddleware = sessions({
     cookie: {
         secure: false,
         domain: "localhost",
-        maxAge: oneDay
-//Placeholder until db conn setup
-let events = [
-    {
-        event_id: 0,
-        event_name: "NC State Event",
-        event_location: "Talley Student Union",
-        event_start: "26 Oct 2021 00:00:00 GMT",
-        event_end: "28 Oct 2021 00:00:00 GMT",
-        event_organizer: 0,
-        event_max_volunteers: 5,
-        event_description: "Come help out at NC State!",
-        event_credit: 2,
-        event_image: "https://brand.ncsu.edu/img/downloads/belltower-day-thumb.jpg"
-    },
-    {
-        event_id: 1,
-        event_name: "Test Event",
-        event_location: "1600 Penn",
-        event_start: "13 May 2021 00:00:00 GMT",
-        event_end: "28 Jun 2021 00:00:00 GMT",
-        event_organizer: 0,
-        event_max_volunteers: 10,
-        event_description: "Super cool event!",
-        event_credit: 3,
-        event_image: "https://media.istockphoto.com/photos/bigeyed-naughty-obese-cat-behind-the-desk-with-red-hat-grey-color-picture-id1199279669?b=1&k=20&m=1199279669&s=170667a&w=0&h=munUsqGIlDAmKK0ouS12nHCuzDdoDfvNalw_hHvh6Ls="
-    },
-    {
-        event_id: 2,
-        event_name: "Another event",
-        event_location: "123 sesame",
-        event_start: "14 May 2021 00:00:00 GMT",
-        event_end: "23 Jun 2021 00:00:00 GMT",
-        event_organizer: 0,
-        event_max_volunteers: 10,
-        event_description: "Super cool event!",
-        event_credit: 8,
-        event_image: "https://media.istockphoto.com/photos/bigeyed-naughty-obese-cat-behind-the-desk-with-red-hat-grey-color-picture-id1199279669?b=1&k=20&m=1199279669&s=170667a&w=0&h=munUsqGIlDAmKK0ouS12nHCuzDdoDfvNalw_hHvh6Ls="
+        maxAge: oneDay,
     },
     resave: false
 })

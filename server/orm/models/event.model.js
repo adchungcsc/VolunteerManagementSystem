@@ -7,39 +7,48 @@ module.exports = (sequelize) => {
             // The following specification of the 'id' attribute could be omitted
             // since it is the default.
             event_id: {
+                field: 'event_id',
                 allowNull: false,
                 autoIncrement: true,
                 primaryKey: true,
                 type: DataTypes.INTEGER
             },
-            name: {
+            event_name: {
+                field: 'name',
                 allowNull: false,
                 type: DataTypes.STRING
             },
-            address: {
+            event_location: {
+                field: 'name',
                 allowNull: false,
                 type: DataTypes.STRING
             },
-            start_timestamp: {
+            event_start: {
+                field: "start_timestamp",
                 allowNull: false,
                 type: DataTypes.DATE
             },
-            end_timestamp: {
+            event_end: {
+                field: "end_timestamp",
                 allowNull: false,
                 type: DataTypes.DATE
             },
-            organizer_id: {
+            event_organizer: {
+                field: "organizer_id",
                 allowNull: false,
                 type: DataTypes.INTEGER
             },
-            max_volunteers: {
+            event_max_volunteers: {
+                field: "max_volunteers",
                 allowNull: false,
                 type: DataTypes.INTEGER
             },
-            description: {
+            event_description: {
+                field: "description",
                 type: DataTypes.STRING
             },
-            image_path: {
+            event_image: {
+                field: "image_path",
                 type: DataTypes.STRING
             },
         },
