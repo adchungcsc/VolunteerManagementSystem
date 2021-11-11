@@ -19,7 +19,7 @@ module.exports = (sequelize) => {
                 type: DataTypes.STRING
             },
             event_location: {
-                field: 'name',
+                field: 'address',
                 allowNull: false,
                 type: DataTypes.STRING
             },
