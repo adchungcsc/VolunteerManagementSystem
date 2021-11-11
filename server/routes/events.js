@@ -26,24 +26,31 @@ router.get('/:id?', async (req, res) => {
     }
 })
 
-router.post('/', (req, res) => {
+router.post('/', async (req, res) => {
     /**
      * Create new event
      */
-    const addedEvent = {
-        event_id: 2,
-        event_name: req.body.name,
-        event_location: req.body.address,
-        event_start: "14 May 2021 00:00:00 GMT",
-        event_end: "23 Jun 2021 00:00:00 GMT",
-        event_organizer: 0,
-        event_max_volunteers: req.body.max_volunteers,
-        event_description: req.body.description,
-        event_credit: 8,
-        event_image: "https://media.istockphoto.com/photos/bigeyed-naughty-obese-cat-behind-the-desk-with-red-hat-grey-color-picture-id1199279669?b=1&k=20&m=1199279669&s=170667a&w=0&h=munUsqGIlDAmKK0ouS12nHCuzDdoDfvNalw_hHvh6Ls="
-    }
-    //TOOD: Sequelize insert
-    // events.push(addedEvent)
+    const name = req.body.event_name
+    const location = req.body.event_location
+    const event_start = req.body.event_start
+    const event_end = req.body.event_end
+    const event_organizer = req.body.event_organizer
+    const event_max_volunteers = req.body.event_max_volunteers
+    const event_description = req.body.event_description
+    const event_image_path = req.body.event_image
+
+
+    const addedEvent = models.event.build({
+        event_name: name,
+        event_location: location || "",
+        event_start: event_start || "01 Jan 1970 00:00:00 GMT",
+        event_end: event_end || "01 Jan 1970 00:00:00 GMT",
+        event_organizer: event_organizer,
+        event_max_volunteers: event_max_volunteers || 100,
+        event_description: event_description || "",
+        event_image: event_image_path || "https://media.istockphoto.com/photos/bigeyed-naughty-obese-cat-behind-the-desk-with-red-hat-grey-color-picture-id1199279669?b=1&k=20&m=1199279669&s=170667a&w=0&h=munUsqGIlDAmKK0ouS12nHCuzDdoDfvNalw_hHvh6Ls="
+    })
+    await addedEvent.save()
     res.status(201).send(addedEvent)
 })
 
