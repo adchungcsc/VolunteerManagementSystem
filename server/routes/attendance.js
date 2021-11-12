@@ -5,12 +5,28 @@ var router = express.Router();
 //Register attendance for event.
 
 
-router.post('/attend', (req, res) => {
+router.post('/', async (req, res) => {
     /**
-     * Create new event
+     * Create new attendance for an event
      */
-    //TODO imp
-    res.send({})
+    const event_id = req.body.event_id
+    const hours = req.body.hours
+    const comment = req.body.comment
+    const rating = req.body.rating
+    const attendee_id = req.body.attendee_id
+
+    const addedAttendance = models.event_attendance.build({
+        event_id: event_id,
+        hours: hours,
+        comment: comment,
+        rating: rating,
+        attendee_id: attendee_id
+    })
+    await addedAttendance.save().catch((reason) => {
+        // TODO more gracefully handle later.
+        res.status(400).send(reason)
+    })
+    res.status(201).send(addedAttendance)
 })
 
 router.get('/event/:id', async (req, res) => {
@@ -59,6 +75,18 @@ router.get('/user/:id', async (req, res) => {
     }
 })
 
+router.delete("/:id", async (req, res) => {
+    let deletedCount = await models.event_attendance.destroy({
+        where: {
+            event_attendance_id: req.params.id
+        }
+    })
+    if(deletedCount === 1){
+        res.status(204).send()
+    }else{
+        res.status(404).send()
+    }
+})
 
 //export this router to use in our index.js
 module.exports = router;

@@ -50,7 +50,10 @@ router.post('/', async (req, res) => {
         event_description: event_description || "",
         event_image: event_image_path || "https://media.istockphoto.com/photos/bigeyed-naughty-obese-cat-behind-the-desk-with-red-hat-grey-color-picture-id1199279669?b=1&k=20&m=1199279669&s=170667a&w=0&h=munUsqGIlDAmKK0ouS12nHCuzDdoDfvNalw_hHvh6Ls="
     })
-    await addedEvent.save()
+    await addedEvent.save().catch((reason) =>{
+        // TODO more gracefully handle later.
+        res.status(400).send(reason)
+    })
     res.status(201).send(addedEvent)
 })
 
