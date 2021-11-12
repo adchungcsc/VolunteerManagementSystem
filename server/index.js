@@ -31,7 +31,10 @@ app.use(sessionMiddleware);
 
 
 let cors = require('cors')
-app.use(cors())
+app.use(cors({
+    origin: "*"
+}))
+
 const { OAuth2Client } = require('google-auth-library');
 
 
