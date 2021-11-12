@@ -2,17 +2,29 @@ var express = require('express');
 const {models} = require("../orm");
 var router = express.Router();
 
-let signupCounter = 3 //temp fill in for serial aut inc
-
 
 //Signup for event
-
-router.post('/', (req, res) => {
+router.post('/', async (req, res) => {
     /**
-     * Create new event
+     * Create new signup
      */
-    //TODO: imp
-    res.status(401).send({})
+    const event_id = req.body.event_id
+    const user_id = req.body.user_id
+    //TODO: Add logic for check if waitlisted.
+    const is_waitlisted = false
+    const waitlist_timestamp = "01 Jan 1970 00:00:00 GMT"
+
+    const addedSignup = models.event_signup.build({
+        event_id: event_id,
+        user_id: user_id,
+        is_waitlisted: is_waitlisted,
+        waitlist_timestamp: waitlist_timestamp
+    })
+    await addedSignup.save().catch((reason) => {
+        // TODO more gracefully handle later.
+        res.status(400).send(reason)
+    })
+    res.status(201).send(addedSignup)
 })
 
 router.get('/event/:id', async (req, res) => {
@@ -29,9 +41,9 @@ router.get('/event/:id', async (req, res) => {
                 event_id: queried_id
             }
         });
-        if(signups !== null){
+        if (signups !== null) {
             res.send(signups)
-        }else{
+        } else {
             //Didn't find event
             res.status(404).send({})
         }
@@ -52,13 +64,27 @@ router.get('/user/:id', async (req, res) => {
                 user_id: queried_id
             }
         });
-        if(signups !== null){
+        if (signups !== null) {
             res.send(signups)
-        }else{
+        } else {
             //Didn't find event
             res.status(404).send({})
         }
     }
 })
+
+router.delete("/:id", async (req, res) => {
+    let deletedCount = await models.event_signup.destroy({
+        where: {
+            event_signup_id: req.params.id
+        }
+    })
+    if(deletedCount === 1){
+        res.status(204).send()
+    }else{
+        res.status(404).send()
+    }
+})
+
 //export this router to use in our index.js
 module.exports = router;
