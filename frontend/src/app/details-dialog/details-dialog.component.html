@@ -3,6 +3,8 @@
     <h4>Location: {{data.event_location}}</h4>
     <h4>Date(s): {{this.eventDate}}</h4>
     <h4>Time: {{this.eventTimes}}</h4>
+
+    <mat-spinner *ngIf="!loadComplete"></mat-spinner>
     
     <mat-dialog-content class="mat-typography">
         <img class="dialog-image" src={{data.event_image}}>

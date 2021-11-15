@@ -4,6 +4,15 @@ import { Observable, throwError } from 'rxjs';
 import { catchError } from 'rxjs/operators';
 import { environment } from 'src/environments/environment';
 
+export interface AttendanceItem {
+  event_attendance_id: number;
+  event_id: number;
+  hours: number;
+  comment: string;
+  rating: number;
+  attendee_id: number;
+}
+
 @Injectable({
   providedIn: 'root'
 })
@@ -118,20 +127,62 @@ export class AttendanceService {
     return results;
   }
 
+  // /**
+  //  * Enrolls the current volunteer into the event.
+  //  * TODO SHOULD WE ALSO PROVIDE THE USER ID?
+  //  * @param eventId The Id of the event.
+  //  * @param formData The Contents of the form (image, description).
+  //  */
+  //  submitAttendanceForEvent(eventId: number, formData: FormData): Observable<any> {
+  //   if ((eventId == undefined || eventId == null) && eventId !== 0) {
+  //     throw new Error('Invalid ID');
+  //   }
+  //   return this.http.post(this.attendanceRoute, {'eventId': eventId, 'formData': formData}, this.httpOptions).pipe(
+  //     catchError(this.handleAnyErrors)
+  //   );
+  // }
+
   /**
-   * Enrolls the current volunteer into the event.
+   * Submits the proof into the event.
    * TODO SHOULD WE ALSO PROVIDE THE USER ID?
    * @param eventId The Id of the event.
-   * @param formData The Contents of the form (image, description).
+   * @param data The Contents of the form (description).
    */
-   submitAttendanceForEvent(eventId: number, formData: FormData): Observable<any> {
+   submitAttendanceForEvent(eventId: number, data: any): Observable<any> {
     if ((eventId == undefined || eventId == null) && eventId !== 0) {
       throw new Error('Invalid ID');
     }
-    return this.http.post(this.attendanceRoute, {'eventId': eventId, 'formData': formData}, this.httpOptions).pipe(
+
+    console.log(data);
+    console.log(JSON.stringify(data));
+
+    return this.http.post(this.attendanceRoute + eventId, JSON.stringify(data), this.httpOptions).pipe(
       catchError(this.handleAnyErrors)
     );
   }
+
+    /**
+   * Submits the proof into the event.
+   * TODO SHOULD WE ALSO PROVIDE THE USER ID?
+   * @param eventId The Id of the event.
+   * @param data The Contents of the form (description).
+   */
+     updateAttendanceForEvent(eventId: number, attendanceId: number, data: any): Observable<any> {
+      if ((eventId == undefined || eventId == null) && eventId !== 0) {
+        throw new Error('Invalid ID');
+      }
+
+      if ((attendanceId == undefined || attendanceId == null) && attendanceId !== 0) {
+        throw new Error('Invalid ID');
+      }
+  
+      console.log(data);
+      console.log(JSON.stringify(data));
+  
+      return this.http.put(this.attendanceRoute + eventId + '/' + attendanceId, JSON.stringify(data), this.httpOptions).pipe(
+        catchError(this.handleAnyErrors)
+      );
+    }
 
 }
 
