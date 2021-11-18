@@ -186,5 +186,27 @@ export class EventsService {
     );
   }
 
+  createEvent(data: any): Observable<any> {
+    if (!data) {
+      throw new Error("Invalid Event provided");
+    }
+
+    return this.http.post(this.eventsRoute, JSON.stringify(data), this.httpOptions).pipe(
+      catchError(this.handleAnyErrors)
+    );
+  }
+
+  updateEvent(eventId: number, data: any): Observable<any> {
+    if (!eventId) {
+      throw new Error("Invalid event ID");
+    } else if (!data) {
+      throw new Error("Invalid data");
+    }
+
+    return this.http.put(this.eventsRoute, JSON.stringify(data), this.httpOptions).pipe(
+      catchError(this.handleAnyErrors)
+    );
+  }
+
   // TODO NEED TO ADD ABILITY TO CREATE AN EVENT AND UPDATE AN EVENT.
 }

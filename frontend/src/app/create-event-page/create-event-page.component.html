@@ -58,11 +58,13 @@
       <input id="description" formControlName="description" matInput type="text">
     </mat-form-field>
 
-    <mat-form-field>
       <!-- TODO FIX THIS -->
-      <mat-label>Event Image</mat-label>
-      <input type="text" formControlName="image" matInput>
-    </mat-form-field>
+    <mat-label>Event Image</mat-label>
+    <button type="button" mat-button (click)="fileUploader.click()">Upload Image</button>
+    <input type="file" #fileUploader (change)="onSelect($event)" hidden accept=".jpg, .jpeg, .png, .heic, .tiff">
+    <div class="preview-image" *ngIf="imagePreview !== '' && imagePreview && form.get('image')?.valid">
+      <img [src]="imagePreview" [alt]="form.value.title" class="previewImage">
+    </div>
 
     <mat-card-actions>
       <button mat-raised-button color="primary" type="submit">Create</button>

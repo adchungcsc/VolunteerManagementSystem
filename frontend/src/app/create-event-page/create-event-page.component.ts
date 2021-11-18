@@ -20,11 +20,14 @@ export class CreateEventPageComponent implements OnInit {
     address: new FormControl('', [Validators.minLength(2), Validators.required]),
     event_organizer: new FormControl(1),
     description: new FormControl(''),
-    image: new FormControl('')
+    image: new FormControl(null)
   });
 
   // A String representing if this is creating an event.
   action: string = 'Create';
+
+  // Used for a preview image.
+  imagePreview: string = '';
 
   constructor() { 
     
@@ -52,9 +55,33 @@ export class CreateEventPageComponent implements OnInit {
   ngOnInit(): void {
   }
 
+
+  // Image Preview
+  // ADAPTED FROM https://medium.com/weekly-webtips/handling-file-uploads-in-angular-reactive-approach-7f90453f57cb
+  onSelect(event: Event) {
+    let eT: HTMLInputElement = (event.target as HTMLInputElement);
+    if (eT == null) {
+      throw new Error('Error with event');
+    }
+    if (eT.files == null || eT.files.length == 0) {
+      throw new Error("Error with files event.");
+      
+    }
+
+    const file = eT.files[0];
+    this.form.patchValue({image: file});
+    this.form.get('image')?.updateValueAndValidity();
+    const reader = new FileReader();
+    reader.onload = () => {
+      this.imagePreview = (reader.result != null) ? reader.result.toString() : '';
+    };
+    reader.readAsDataURL(file);
+    }
+
   // When submitting
   onSubmit() {
     // First, bundle the form
+    
 
     // Second, send the form and the image to a service to send to the server
 
@@ -79,8 +106,9 @@ export class CreateEventPageComponent implements OnInit {
       address: '',
       event_organizer: 1,
       description: '',
-      image: ''
+      image: null
     });
+    this.imagePreview = '';
   }
 
 }
