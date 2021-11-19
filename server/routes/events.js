@@ -1,6 +1,8 @@
 var express = require('express');
 const {models} = require("../orm");
 const {isLoggedIn} = require("../index");
+const sequelize = require("../orm");
+const {Op} = require("sequelize");
 var router = express.Router();
 
 
@@ -9,13 +11,22 @@ router.get('/:id?', async (req, res) => {
      * Get all events
      */
     let queried_id = req.params.id
+    let event_name = req.query.event_name || ""
+    event_name = event_name.toLowerCase()
+    let event_start_timestamp = req.query.event_start || (new Date("01 Jan 1970 00:00:00 GMT")).toISOString()
+    let event_end_timestamp  = req.query.event_end || (new Date()).toISOString()
     if (queried_id === undefined) {
-        try {
-            let events = await models.event.findAll()
-            res.send(events)
-        } catch (error) {
+        let events = await models.event.findAll({
+            limit: 10,
+            where: {
+                event_name: sequelize.where(sequelize.fn('LOWER', sequelize.col('name')), 'LIKE', '%' + event_name + '%'),
+                start_timestamp: { [Op.gte]: event_start_timestamp },
+                end_timestamp: { [Op.lte]: event_end_timestamp },
+            }
+        }).catch(function(error){
             console.log(error);
-        }
+        });
+        res.send(events)
     } else {
         let events = await models.event.findAll({
             where: {
