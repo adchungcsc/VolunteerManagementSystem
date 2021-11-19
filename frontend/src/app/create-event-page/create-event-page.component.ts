@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { MatSnackBar } from '@angular/material/snack-bar';
+import { ActivatedRoute, Router } from '@angular/router';
 import { of } from 'rxjs';
 import { catchError } from 'rxjs/operators';
 import { EventsService } from '../events.service';
@@ -29,11 +30,12 @@ export class CreateEventPageComponent implements OnInit {
 
   // A String representing if this is creating an event.
   action: string = 'Create';
+  eventId: number = 0;
 
   // Used for a preview image.
   imagePreview: string = '';
 
-  constructor(public eventService: EventsService, private _snackBar: MatSnackBar) { 
+  constructor(public eventService: EventsService, private _snackBar: MatSnackBar, private Activatedroute:ActivatedRoute, private router:Router) { 
     
    }
 
@@ -57,6 +59,29 @@ export class CreateEventPageComponent implements OnInit {
   // }
 
   ngOnInit(): void {
+    this.Activatedroute.queryParams
+        .subscribe(params => { 
+            this.eventId = +params['eventId']||0;
+           console.log('Query params ',this.eventId) 
+           if (this.eventId !== null && this.eventId !== 0) {
+             this.action = "Edit";
+             this.eventService.getEvent(this.eventId).subscribe(item => {
+               this.form = new FormGroup({
+                event_name: new FormControl(item.event_name, [Validators.minLength(2), Validators.required]),
+                start_date: new FormControl(new Date(item.event_start), Validators.required),
+                end_date: new FormControl(new Date(item.event_end), Validators.required),
+                start_time: new FormControl(new Date(item.event_start).getTime()),
+                end_time: new FormControl(new Date(item.event_end).getTime()),
+                num_of_volunteers: new FormControl(item.event_max_volunteers, Validators.required),
+                waitlist_num: new FormControl(0),
+                address: new FormControl(item.event_location, [Validators.minLength(2), Validators.required]),
+                event_organizer: new FormControl(item.event_organizer),
+                description: new FormControl(item.event_description),
+                image: new FormControl(item.event_image)
+              });
+             });
+           }
+    });
   }
 
 
