@@ -2,10 +2,12 @@
 // import {MSAL_GUARD_CONFIG} from "@azure/msal-angular";
 
 import { Component, OnInit, OnDestroy, Inject } from '@angular/core';
-import { MsalService, MsalBroadcastService, MSAL_GUARD_CONFIG, MsalGuardConfiguration } from '@azure/msal-angular';
-import { InteractionStatus, RedirectRequest } from '@azure/msal-browser';
-import { Subject } from 'rxjs';
-import { filter, takeUntil } from 'rxjs/operators';
+// import { MsalService, MsalBroadcastService, MSAL_GUARD_CONFIG, MsalGuardConfiguration } from '@azure/msal-angular';
+// import { InteractionStatus, RedirectRequest } from '@azure/msal-browser';
+// import { Subject } from 'rxjs';
+// import { filter, takeUntil } from 'rxjs/operators';
+import { SocketioService } from './socketio.service';
+import { Router, Event, NavigationStart, NavigationEnd, NavigationError } from '@angular/router';
 
 @Component({
   selector: 'app-root',
@@ -16,41 +18,69 @@ import { filter, takeUntil } from 'rxjs/operators';
 //   title = 'VolunteerManager';
 // }
 
-export class AppComponent implements OnInit, OnDestroy {
-  title = 'msal-angular-tutorial';
-  isIframe = false;
-  loginDisplay = false;
-  private readonly _destroying$ = new Subject<void>();
+// export class AppComponent implements OnInit, OnDestroy {
+//   title = 'msal-angular-tutorial';
+//   isIframe = false;
+//   loginDisplay = false;
+//   private readonly _destroying$ = new Subject<void>();
 
-  constructor(@Inject(MSAL_GUARD_CONFIG) private msalGuardConfig: MsalGuardConfiguration, private broadcastService: MsalBroadcastService, private authService: MsalService) { }
+//   constructor(@Inject(MSAL_GUARD_CONFIG) private msalGuardConfig: MsalGuardConfiguration, private broadcastService: MsalBroadcastService, private authService: MsalService) { }
 
+//   ngOnInit() {
+//     this.isIframe = window !== window.parent && !window.opener;
+
+//     this.broadcastService.inProgress$
+//       .pipe(
+//         filter((status: InteractionStatus) => status === InteractionStatus.None),
+//         takeUntil(this._destroying$)
+//       )
+//       .subscribe(() => {
+//         this.setLoginDisplay();
+//       })
+//   }
+
+//   login() {
+//     if (this.msalGuardConfig.authRequest){
+//       this.authService.loginRedirect({...this.msalGuardConfig.authRequest} as RedirectRequest);
+//     } else {
+//       this.authService.loginRedirect();
+//     }
+//   }
+
+//   setLoginDisplay() {
+//     this.loginDisplay = this.authService.instance.getAllAccounts().length > 0;
+//   }
+
+//   ngOnDestroy(): void {
+//     this._destroying$.next(undefined);
+//     this._destroying$.complete();
+export class AppComponent {
+  title = 'VolunteerManager';
+  currentRoute: string;
+
+  constructor(private socketService: SocketioService, private router: Router) {
+    this.currentRoute = '';
+    this.router.events.subscribe((event: Event) => {
+      if (event instanceof NavigationStart) {
+        console.log('Route change detected');
+      }
+
+      if (event instanceof NavigationEnd) {
+          this.currentRoute = event.url;          
+          console.log(event);
+      }
+
+      if (event instanceof NavigationError) {
+          console.log(event.error);
+      }
+    })
+  }
+  
   ngOnInit() {
-    this.isIframe = window !== window.parent && !window.opener;
-
-    this.broadcastService.inProgress$
-      .pipe(
-        filter((status: InteractionStatus) => status === InteractionStatus.None),
-        takeUntil(this._destroying$)
-      )
-      .subscribe(() => {
-        this.setLoginDisplay();
-      })
+    this.socketService.setupSocketConnection();
   }
 
-  login() {
-    if (this.msalGuardConfig.authRequest){
-      this.authService.loginRedirect({...this.msalGuardConfig.authRequest} as RedirectRequest);
-    } else {
-      this.authService.loginRedirect();
-    }
-  }
-
-  setLoginDisplay() {
-    this.loginDisplay = this.authService.instance.getAllAccounts().length > 0;
-  }
-
-  ngOnDestroy(): void {
-    this._destroying$.next(undefined);
-    this._destroying$.complete();
+  ngOnDestroy() {
+    this.socketService.disconnect();
   }
 }

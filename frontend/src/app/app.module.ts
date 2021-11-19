@@ -47,6 +47,8 @@ import { MsalBroadcastService, MsalGuard, MsalGuardConfiguration, MsalIntercepto
 import { ProofDialogComponent } from './proof-dialog/proof-dialog.component';
 import { ConfirmDialogComponent } from './confirm-dialog/confirm-dialog.component';
 import {MicrosoftLoginComponent} from "./microsoft-login/microsoft-login.component";
+import { DashboardComponent } from './dashboard/dashboard.component';
+import { SocketioService } from './socketio.service';
 
 // what application is currently directing
 export function MSALInstanceFactory(): IPublicClientApplication {
@@ -109,6 +111,7 @@ export function MSALGuardConfigFactory(): MsalGuardConfiguration {
     ProofDialogComponent,
     ConfirmDialogComponent,
     MicrosoftLoginComponent,
+    DashboardComponent
   ],
   imports: [
     BrowserModule,
@@ -162,7 +165,8 @@ export function MSALGuardConfigFactory(): MsalGuardConfiguration {
     },
     MsalService,
     MsalGuard,
-    MsalBroadcastService
+    MsalBroadcastService,
+    SocketioService
   ],
   bootstrap: [AppComponent, MsalRedirectComponent]
 })
