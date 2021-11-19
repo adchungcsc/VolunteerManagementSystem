@@ -33,5 +33,5 @@ module.exports = (sequelize) => {
             timestamps: false,
             freezeTableName: true,
             tableName: "event_attendance"
-        }).schema("participance_updated_cols");
+        }).schema("public");
 }
