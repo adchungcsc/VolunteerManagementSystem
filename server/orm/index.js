@@ -1,12 +1,10 @@
 const {Sequelize} = require('sequelize');
 const {applyExtraSetup} = require('./extra-setup');
+require('dotenv').config();
 
-// In a real app, you should keep the database connection URL as an environment variable.
-// But for this example, we will just use a local SQLite database.
-// const sequelize = new Sequelize(process.env.DB_CONNECTION_URL);
+const DATABASE_CONNECTION_STRING = process.env.DB_CONN_STR || "DECLARE DB_CONN_STR IN ENVIRONMENT VARIABLE";
 
-
-const sequelize = new Sequelize("postgres://participance@volunteer-manager:@volunteer-manager.postgres.database.azure.com:5432/participance?ssl=true");
+const sequelize = new Sequelize(DATABASE_CONNECTION_STRING);
 
 const modelDefiners = [
     require('./models/users.model'),
