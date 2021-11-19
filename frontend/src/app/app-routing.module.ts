@@ -13,7 +13,7 @@ import { MsalGuard } from '@azure/msal-angular';
 const routes: Routes = [
   { path: '', redirectTo: '/landing', pathMatch: 'full' },
   { path: 'landing', component: LandingPageComponent },
-  { path: 'log-in', component: LogInPageComponent, canActivate: [MsalGuard] },
+  { path: 'log-in', component: LogInPageComponent},
   { path: 'sign-up', component: SignUpPageComponent, canActivate: [MsalGuard] },
   { path: 'dashboard', component: DashboardPageComponent, canActivate: [MsalGuard] },
   { path: 'find-event', component: FindAnEventComponent, canActivate: [MsalGuard] },

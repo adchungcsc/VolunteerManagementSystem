@@ -44,7 +44,7 @@ import { BrowserCacheLocation, InteractionType, IPublicClientApplication, LogLev
 import { MsalBroadcastService, MsalGuard, MsalGuardConfiguration, MsalInterceptor, MsalInterceptorConfiguration, MsalRedirectComponent, MsalService, MSAL_GUARD_CONFIG, MSAL_INSTANCE, MSAL_INTERCEPTOR_CONFIG } from '@azure/msal-angular';
 import { ProofDialogComponent } from './proof-dialog/proof-dialog.component';
 import { ConfirmDialogComponent } from './confirm-dialog/confirm-dialog.component';
-import {GoogleLoginComponent} from "./google-login/google-login.component";
+import {MicrosoftLoginComponent} from "./microsoft-login/microsoft-login.component";
 
 // what application is currently directing
 export function MSALInstanceFactory(): IPublicClientApplication {
@@ -106,7 +106,7 @@ export function MSALGuardConfigFactory(): MsalGuardConfiguration {
     UnauthorizedComponent,
     ProofDialogComponent,
     ConfirmDialogComponent,
-    GoogleLoginComponent
+    MicrosoftLoginComponent,
   ],
   imports: [
     BrowserModule,

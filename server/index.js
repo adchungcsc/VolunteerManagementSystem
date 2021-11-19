@@ -3,23 +3,29 @@ const bodyParser = require('body-parser');
 const cookieParser = require("cookie-parser");
 const session = require('express-session');
 const passport = require('passport');
+let cors = require('cors')
 require('./auth');
 require('dotenv').config();
 
 
-
-let cors = require('cors')
-
-
-
-
 const port = process.env.PORT || 4200
+const sessionSecret = process.env.SESSION_SECRET || 'cats'
 
 
 const app = express()
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({extended: true}));
 app.use(cookieParser());
+app.use(session({
+        secret: sessionSecret,
+        resave: false,
+        saveUninitialized: true,
+        cookie: {secure: false}
+    }
+));
+
+app.use(passport.initialize());
+app.use(passport.session());
 
 app.use(cors({
     origin: "*",
@@ -43,16 +49,8 @@ function isLoggedIn(req, res, next) {
     req.user ? next() : res.sendStatus(401);
 }
 
-app.use(session({
-        secret: 'cats',
-        resave: false,
-        saveUninitialized: true,
-        cookie: {secure: false}
-    }
-));
+module.exports = {isLoggedIn}
 
-app.use(passport.initialize());
-app.use(passport.session());
 
 
 app.get('/api/v1/auth/azureadoauth2', passport.authenticate('azure_ad_oauth2'), (req, res) => {
@@ -68,11 +66,7 @@ app.get('/callback',
 );
 
 app.get('/api/v1/protected', isLoggedIn, (req, res) => {
-    stuff = {
-        thing: "yello world"
-    }
-    console.log("Hit Protected")
-    res.send(JSON.stringify(stuff));
+    res.send(JSON.stringify(req.user.user_id));
 });
 
 app.get('/api/v1/logout', (req, res) => {
@@ -84,6 +78,7 @@ app.get('/api/v1/logout', (req, res) => {
 app.get('/auth/google/failure', (req, res) => {
     res.send('Failed to authenticate..');
 });
+
 const users = require('./routes/users');
 const event = require('./routes/events');
 const attendance = require('./routes/attendance');
@@ -97,6 +92,7 @@ app.use('/api/v1/signup', signup);
 
 const path = require('path');
 
+// Migrate angular frontend off express and onto nginx server later.
 app.use(express.static(path.join(__dirname, 'static')));
 
 app.get('/*', async (req, res) => {
