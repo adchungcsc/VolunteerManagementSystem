@@ -24,12 +24,10 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { EventCardComponent } from './event-card/event-card.component';
 import { FindAnEventComponent } from './find-an-event-page/find-an-event.component';
 import { DetailsDialogComponent } from './details-dialog/details-dialog.component';
-import { DashboardPageComponent } from './dashboard-page/dashboard-page.component';
+import { HomePageComponent } from './home-page/home-page.component';
 import { MyEventsPageComponent } from './my-events-page/my-events-page.component';
 import { NavBarComponent } from './nav-bar/nav-bar.component';
 import { LogInPageComponent } from './log-in-page/log-in-page.component';
-import { SignUpPageComponent } from './sign-up-page/sign-up-page.component';
-import { ReportsPageComponent } from './reports-page/reports-page.component';
 import {MatFormFieldModule} from "@angular/material/form-field";
 import {MatInputModule} from "@angular/material/input";
 import {MatSelectModule} from "@angular/material/select";
@@ -100,12 +98,10 @@ export function MSALGuardConfigFactory(): MsalGuardConfiguration {
     EventCardComponent,
     FindAnEventComponent,
     DetailsDialogComponent,
-    DashboardPageComponent,
+    HomePageComponent,
     MyEventsPageComponent,
     NavBarComponent,
     LogInPageComponent,
-    SignUpPageComponent,
-    ReportsPageComponent,
     CreateEventPageComponent,
     UnauthorizedComponent,
     ProofDialogComponent,
