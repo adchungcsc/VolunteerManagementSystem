@@ -44,6 +44,8 @@ import { BrowserCacheLocation, InteractionType, IPublicClientApplication, LogLev
 import { MsalBroadcastService, MsalGuard, MsalGuardConfiguration, MsalInterceptor, MsalInterceptorConfiguration, MsalRedirectComponent, MsalService, MSAL_GUARD_CONFIG, MSAL_INSTANCE, MSAL_INTERCEPTOR_CONFIG } from '@azure/msal-angular';
 import { ProofDialogComponent } from './proof-dialog/proof-dialog.component';
 import { ConfirmDialogComponent } from './confirm-dialog/confirm-dialog.component';
+import { DashboardComponent } from './dashboard/dashboard.component';
+import { SocketioService } from './socketio.service';
 
 // what application is currently directing
 export function MSALInstanceFactory(): IPublicClientApplication {
@@ -104,7 +106,8 @@ export function MSALGuardConfigFactory(): MsalGuardConfiguration {
     CreateEventPageComponent,
     UnauthorizedComponent,
     ProofDialogComponent,
-    ConfirmDialogComponent
+    ConfirmDialogComponent,
+    DashboardComponent
   ],
   imports: [
     BrowserModule,
@@ -155,7 +158,8 @@ export function MSALGuardConfigFactory(): MsalGuardConfiguration {
     },
     MsalService,
     MsalGuard,
-    MsalBroadcastService
+    MsalBroadcastService,
+    SocketioService
   ],
   bootstrap: [AppComponent, MsalRedirectComponent]
 })

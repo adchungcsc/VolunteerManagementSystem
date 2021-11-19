@@ -20,7 +20,8 @@
     "passport": "^0.5.0",
     "passport-azure-ad": "^4.3.1",
     "pg": "^8.7.1",
-    "sequelize": "^6.8.0"
+    "sequelize": "^6.8.0",
+    "socket.io": "^4.4.0"
   },
   "devDependencies": {
     "sequelize-cli": "^6.2.0"
