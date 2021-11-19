@@ -65,13 +65,17 @@ export class CreateEventPageComponent implements OnInit {
            console.log('Query params ',this.eventId) 
            if (this.eventId !== null && this.eventId !== 0) {
              this.action = "Edit";
-             this.eventService.getEvent(this.eventId).subscribe(item => {
+             this.eventService.getEvent(this.eventId).subscribe(items => {
+               let item = items[0];
+               console.log(item);
+               let sT = new Date(item.event_start);
+               let eT = new Date(item.event_end);
                this.form = new FormGroup({
                 event_name: new FormControl(item.event_name, [Validators.minLength(2), Validators.required]),
                 start_date: new FormControl(new Date(item.event_start), Validators.required),
                 end_date: new FormControl(new Date(item.event_end), Validators.required),
-                start_time: new FormControl(new Date(item.event_start).getTime()),
-                end_time: new FormControl(new Date(item.event_end).getTime()),
+                start_time: new FormControl('' + sT.getHours() + ':' + sT.getMinutes()),
+                end_time: new FormControl('' + eT.getHours() + ':' + eT.getMinutes()),
                 num_of_volunteers: new FormControl(item.event_max_volunteers, Validators.required),
                 waitlist_num: new FormControl(0),
                 address: new FormControl(item.event_location, [Validators.minLength(2), Validators.required]),
@@ -79,6 +83,7 @@ export class CreateEventPageComponent implements OnInit {
                 description: new FormControl(item.event_description),
                 image: new FormControl(item.event_image)
               });
+              this.imagePreview = item.event_image;
              });
            }
     });
@@ -134,19 +139,36 @@ export class CreateEventPageComponent implements OnInit {
     console.log(formData);
 
     // TODO EDIT
-    // Second, send the form and the image to a service to send to the server
-    this.eventService.createEvent(formData).pipe(catchError(err => {
-      return of([err]);
-    })).subscribe(item => {
-      // Third, Wait for a response.
-      console.log(item);
+    if (this.action === 'Create') {
+      // Second, send the form and the image to a service to send to the server
+      this.eventService.createEvent(formData).pipe(catchError(err => {
+        return of([err]);
+      })).subscribe(item => {
+        // Third, Wait for a response.
+        console.log(item);
 
-      // Fourth, display a 'snackbar'
-      this.openSnackBar(item.event_name);
+        // Fourth, display a 'snackbar'
+        this.openSnackBar(`Event ${item.event_name} created.`);
 
-      // Fifth, clear the form on the page.
-      this.onClear();
-    });
+        // Fifth, clear the form on the page.
+        this.onClear();
+      });
+    } else {
+      // Second, send the form and the image to a service to send to the server
+      this.eventService.updateEvent(this.eventId, formData).pipe(catchError(err => {
+        return of([err]);
+      })).subscribe(item => {
+        // Third, Wait for a response.
+        console.log(item);
+
+        // Fourth, display a 'snackbar'
+        this.openSnackBar(`Event ${item.event_name} updated.`);
+
+        // Fifth, clear the form on the page.
+        this.onClear();
+      });
+    }
+    
   }
 
   // Clears the form
