@@ -56,10 +56,5 @@ module.exports = (sequelize) => {
             timestamps: false,
             freezeTableName: true,
             tableName: "event"
-<<<<<<< HEAD
         }).schema("public");
 }
-=======
-        }).schema("participance_updated_cols");
-}
->>>>>>> 0204621... db and orm updates, @ldbattig and @rpcatalf
