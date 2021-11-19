@@ -46,6 +46,7 @@ import { BrowserCacheLocation, InteractionType, IPublicClientApplication, LogLev
 import { MsalBroadcastService, MsalGuard, MsalGuardConfiguration, MsalInterceptor, MsalInterceptorConfiguration, MsalRedirectComponent, MsalService, MSAL_GUARD_CONFIG, MSAL_INSTANCE, MSAL_INTERCEPTOR_CONFIG } from '@azure/msal-angular';
 import { ProofDialogComponent } from './proof-dialog/proof-dialog.component';
 import { ConfirmDialogComponent } from './confirm-dialog/confirm-dialog.component';
+import {MicrosoftLoginComponent} from "./microsoft-login/microsoft-login.component";
 
 // what application is currently directing
 export function MSALInstanceFactory(): IPublicClientApplication {
@@ -82,7 +83,7 @@ export function MSALInterceptorConfigFactory(): MsalInterceptorConfiguration {
 
 // redirect if not logged in
 export function MSALGuardConfigFactory(): MsalGuardConfiguration {
-  return { 
+  return {
     interactionType: InteractionType.Redirect,
     authRequest: {
       scopes: ['user.read']
@@ -106,7 +107,8 @@ export function MSALGuardConfigFactory(): MsalGuardConfiguration {
     CreateEventPageComponent,
     UnauthorizedComponent,
     ProofDialogComponent,
-    ConfirmDialogComponent
+    ConfirmDialogComponent,
+    MicrosoftLoginComponent,
   ],
   imports: [
     BrowserModule,

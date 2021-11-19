@@ -1,11 +1,12 @@
 var express = require('express');
 const {models} = require("../orm");
+const {isLoggedIn} = require("../index");
 var router = express.Router();
 
 //Register attendance for event.
 
 
-router.post('/', async (req, res) => {
+router.post('/', isLoggedIn, async (req, res) => {
     /**
      * Create new attendance for an event
      */
@@ -13,7 +14,7 @@ router.post('/', async (req, res) => {
     const hours = req.body.hours
     const comment = req.body.comment
     const rating = req.body.rating
-    const attendee_id = req.body.attendee_id
+    const attendee_id = req.user.user_id // Get user ID from session.
 
     const addedAttendance = models.event_attendance.build({
         event_id: event_id,
@@ -29,7 +30,8 @@ router.post('/', async (req, res) => {
     res.status(201).send(addedAttendance)
 })
 
-router.get('/event/:id', async (req, res) => {
+
+router.get('/event/:id', isLoggedIn, async (req, res) => {
     /**
      * Get who attended an event
      */
@@ -52,38 +54,37 @@ router.get('/event/:id', async (req, res) => {
     }
 })
 
-router.get('/user/:id', async (req, res) => {
+router.get('/user/:id?', isLoggedIn, async (req, res) => {
     /**
      * Get event attendances a user has registered attendance for.
      */
     let queried_id = req.params.id
     if (queried_id === undefined) {
-        let attendance = await models.event_attendance.findAll()
+        // If none specified get attendances registered by current user.
+        queried_id = req.user.user_id
+    }
+    let attendance = await models.event_attendance.findAll({
+        where: {
+            attendee_id: queried_id
+        }
+    });
+    if (attendance !== null) {
         res.send(attendance)
     } else {
-        let attendance = await models.event_attendance.findAll({
-            where: {
-                attendee_id: queried_id
-            }
-        });
-        if (attendance !== null) {
-            res.send(attendance)
-        } else {
-            //Didn't find event
-            res.status(404).send({})
-        }
+        //Didn't find event
+        res.status(404).send({})
     }
 })
 
-router.delete("/:id", async (req, res) => {
+router.delete("/:id", isLoggedIn, async (req, res) => {
     let deletedCount = await models.event_attendance.destroy({
         where: {
             event_attendance_id: req.params.id
         }
     })
-    if(deletedCount === 1){
+    if (deletedCount === 1) {
         res.status(204).send()
-    }else{
+    } else {
         res.status(404).send()
     }
 })
