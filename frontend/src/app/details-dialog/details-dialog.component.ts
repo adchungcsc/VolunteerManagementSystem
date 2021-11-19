@@ -29,7 +29,7 @@ export class DetailsDialogComponent implements OnInit {
   positionOnList: number = 0;
   myId: number = 0;
 
-  constructor(public dialogRef: MatDialogRef<DetailsDialogComponent>, @Inject (MAT_DIALOG_DATA) public data: EventItem, public signupService: SignupService, public userService: UsersService, public attendanceService: AttendanceService, public dialog: MatDialog) { 
+  constructor(public dialogRef: MatDialogRef<DetailsDialogComponent>, @Inject (MAT_DIALOG_DATA) public data: EventItem, public signupService: SignupService, public userService: UsersService, public attendanceService: AttendanceService, public dialog: MatDialog) {
     this.eventId = this.data.event_id;
     this.eventDate = this.data.event_start.toLocaleDateString();
     if (this.data.event_start.toLocaleDateString() != this.data.event_end.toLocaleDateString()) {
@@ -53,6 +53,7 @@ export class DetailsDialogComponent implements OnInit {
       console.log(res.length);
       for (let item of res) {
         console.log(item);
+        console.log(this.myId)
         if (item.is_waitlisted) {
           waitCount++;
           if (item.user_id === this.myId) {
@@ -70,8 +71,8 @@ export class DetailsDialogComponent implements OnInit {
       this.numberWaitlistFilled = waitCount;
       this.loadComplete = true;
     });
-  
-    
+
+
   }
 
   /**

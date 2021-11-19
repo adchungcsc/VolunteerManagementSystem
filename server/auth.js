@@ -18,9 +18,9 @@ passport.use(new AzureAdOAuth2Strategy({
     async function (request, accessToken, refreshToken, profile, done) {
         //Returns a JWT so get the email from it.
         const decoded = jwt_decode(request);
-        console.log(request)
-        console.log(decoded)
-        console.log("email" + decoded.upn)
+        // console.log(request)
+        // console.log(decoded)
+        // console.log("email" + decoded.upn)
         const [user, created] = await models.users.findOrCreate({
             where: { email: decoded.upn },
             defaults: {

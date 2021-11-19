@@ -60,7 +60,7 @@ app.get('/callback',
     passport.authenticate('azure_ad_oauth2', {failureRedirect: '/login'}),
     function (req, res) {
         // Successful authentication, redirect home.
-        res.redirect('/');
+        res.redirect('/find-event');
     }
 );
 
