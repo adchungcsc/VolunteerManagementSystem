@@ -3,16 +3,15 @@ const app = express()
 const bodyParser = require('body-parser');
 
 // to support JSON-encoded bodies
-app.use(bodyParser.json());
+app.use(bodyParser.json({limit: '50mb'}));
 // for parsing application/xwww-form-urlencoded
-app.use(bodyParser.urlencoded({extended: true}));
+app.use(bodyParser.urlencoded({limit: '50mb', extended: true}));
 
 
 const cookieParser = require("cookie-parser");
 const sessions = require('express-session');
 
 app.use(cookieParser());
-
 
 const oneDay = 1000 * 60 * 60 * 24;
 
