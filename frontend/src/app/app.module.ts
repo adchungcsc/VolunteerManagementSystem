@@ -146,28 +146,28 @@ export function MSALGuardConfigFactory(): MsalGuardConfiguration {
     HttpClientModule
   ],
   providers: [
-    {
-      provide: HTTP_INTERCEPTORS,
-      useClass: MsalInterceptor,
-      multi: true
-    },
-    {
-      provide: MSAL_INSTANCE,
-      useFactory: MSALInstanceFactory
-    },
-    {
-      provide: MSAL_GUARD_CONFIG,
-      useFactory: MSALGuardConfigFactory
-    },
-    {
-      provide: MSAL_INTERCEPTOR_CONFIG,
-      useFactory: MSALInterceptorConfigFactory
-    },
-    MsalService,
-    MsalGuard,
-    MsalBroadcastService,
+    // {
+    //   provide: HTTP_INTERCEPTORS,
+    //   useClass: MsalInterceptor,
+    //   multi: true
+    // },
+    // {
+    //   provide: MSAL_INSTANCE,
+    //   useFactory: MSALInstanceFactory
+    // },
+    // {
+    //   provide: MSAL_GUARD_CONFIG,
+    //   useFactory: MSALGuardConfigFactory
+    // },
+    // {
+    //   provide: MSAL_INTERCEPTOR_CONFIG,
+    //   useFactory: MSALInterceptorConfigFactory
+    // },
+    // MsalService,
+    // MsalGuard,
+    // MsalBroadcastService,
     SocketioService
   ],
-  bootstrap: [AppComponent, MsalRedirectComponent]
+  bootstrap: [AppComponent] //, MsalRedirectComponent]
 })
 export class AppModule { }

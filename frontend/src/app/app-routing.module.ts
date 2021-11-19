@@ -15,12 +15,12 @@ const routes: Routes = [
   { path: '', redirectTo: '/landing', pathMatch: 'full' },
   { path: 'landing', component: LandingPageComponent },
   { path: 'log-in', component: LogInPageComponent},
-  { path: 'sign-up', component: SignUpPageComponent, canActivate: [MsalGuard] },
-  { path: 'home', component: DashboardPageComponent, canActivate: [MsalGuard] },
-  { path: 'find-event', component: FindAnEventComponent, canActivate: [MsalGuard] },
-  { path: 'my-events', component: MyEventsPageComponent, canActivate: [MsalGuard] },
-  { path: 'reports', component: ReportsPageComponent, canActivate: [MsalGuard] },
-  { path: 'create-event', component: CreateEventPageComponent, canActivate: [MsalGuard] },
+  { path: 'sign-up', component: SignUpPageComponent, },
+  { path: 'home', component: DashboardPageComponent, },
+  { path: 'find-event', component: FindAnEventComponent, },
+  { path: 'my-events', component: MyEventsPageComponent, },
+  { path: 'reports', component: ReportsPageComponent, },
+  { path: 'create-event', component: CreateEventPageComponent,},
   { path: 'dashboard', component: DashboardComponent }
 ];
 
