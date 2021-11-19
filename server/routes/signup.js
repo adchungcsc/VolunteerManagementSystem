@@ -9,8 +9,9 @@ router.post('/', isLoggedIn, async (req, res) => {
     /**
      * Create new signup
      */
-    const event_id = req.body.event_id
-    const user_id = req.body.user_id
+    console.log("signup")
+    const event_id = req.body.eventId
+    const user_id = req.user.user_id
     //TODO: Add logic for check if waitlisted.
     const is_waitlisted = false
     const waitlist_timestamp = "01 Jan 1970 00:00:00 GMT"
@@ -21,11 +22,18 @@ router.post('/', isLoggedIn, async (req, res) => {
         is_waitlisted: is_waitlisted,
         waitlist_timestamp: waitlist_timestamp
     })
-    await addedSignup.save().catch((reason) => {
-        // TODO more gracefully handle later.
-        res.status(400).send(reason)
-    })
-    res.status(201).send(addedSignup)
+    try{
+        await addedSignup.save()
+        res.status(201).send(addedSignup)
+    }catch(e){
+        console.log(e)
+        res.status(400).send()
+    }
+    // await addedSignup.save().catch((reason) => {
+    //     // TODO more gracefully handle later.
+    //     res.status(400).send(reason)
+    // })
+    // res.status(201).send(addedSignup)
 })
 
 router.get('/event/:id', isLoggedIn, async (req, res) => {
