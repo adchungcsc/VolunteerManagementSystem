@@ -14,16 +14,16 @@ router.get('/:id?', async (req, res) => {
     let event_name = req.query.event_name || ""
     event_name = event_name.toLowerCase()
     let event_start_timestamp = req.query.event_start || (new Date("01 Jan 1970 00:00:00 GMT")).toISOString()
-    let event_end_timestamp  = req.query.event_end || (new Date()).toISOString()
+    let event_end_timestamp = req.query.event_end || (new Date()).toISOString()
     if (queried_id === undefined) {
         let events = await models.event.findAll({
             limit: 10,
             where: {
                 event_name: sequelize.where(sequelize.fn('LOWER', sequelize.col('name')), 'LIKE', '%' + event_name + '%'),
-                start_timestamp: { [Op.gte]: event_start_timestamp },
-                end_timestamp: { [Op.lte]: event_end_timestamp },
+                start_timestamp: {[Op.gte]: event_start_timestamp},
+                end_timestamp: {[Op.lte]: event_end_timestamp},
             }
-        }).catch(function(error){
+        }).catch(function (error) {
             console.log(error);
         });
         res.send(events)
@@ -41,6 +41,45 @@ router.get('/:id?', async (req, res) => {
         }
     }
 })
+
+
+router.put('/',isLoggedIn, async (req, res) => {
+    /**
+     * Create new event
+     */
+    const event_id = req.query.event_id
+    console.log(event_id)
+    const name = req.body.event_name
+    const location = req.body.event_location
+    const event_start = req.body.event_start
+    const event_end = req.body.event_end
+    // const event_organizer = req.user.user_id // Organizer is user posting
+    const event_max_volunteers = req.body.event_max_volunteers
+    const event_description = req.body.event_description
+    const event_image_path = req.body.event_image
+
+    models.event.update(
+        {
+            event_name: name,
+            event_location: location || "",
+            event_start: event_start || "01 Jan 1970 00:00:00 GMT",
+            event_end: event_end || "01 Jan 1970 00:00:00 GMT",
+            event_max_volunteers: event_max_volunteers || 100,
+            event_description: event_description || "",
+            event_image: event_image_path
+        }, {
+            where: {event_id: event_id},
+            returning: true
+        }
+    ).then((updated) => {
+        res.status(201).send(updated)
+    }).catch(err =>{
+        console.log(err)
+        res.status(404).send(err)
+    })
+
+})
+
 
 router.post('/', isLoggedIn, async (req, res) => {
     /**
@@ -66,7 +105,7 @@ router.post('/', isLoggedIn, async (req, res) => {
         event_description: event_description || "",
         event_image: event_image_path || "https://media.istockphoto.com/photos/bigeyed-naughty-obese-cat-behind-the-desk-with-red-hat-grey-color-picture-id1199279669?b=1&k=20&m=1199279669&s=170667a&w=0&h=munUsqGIlDAmKK0ouS12nHCuzDdoDfvNalw_hHvh6Ls="
     })
-    await addedEvent.save().catch((reason) =>{
+    await addedEvent.save().catch((reason) => {
         // TODO more gracefully handle later.
         res.status(400).send(reason)
     })
@@ -83,10 +122,10 @@ router.delete('/:id', isLoggedIn, (req, res) => {
             event_id: queried_id
         }
     })
-    if(event !== null){
+    if (event !== null) {
         event.delete()
         res.status(200).send({})
-    }else{
+    } else {
         res.status(404).send({})
     }
 })
