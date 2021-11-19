@@ -48,8 +48,9 @@ export class EventCardComponent implements OnInit {
       this.eventTimes = this.eventItem.event_start.toLocaleTimeString() + " - " + this.eventItem.event_end.toLocaleTimeString();
 
       // If no image.
-      if (!this.eventItem.event_image || this.eventItem.event_image === '') {
-        // TODO Set to placeholder image.
+      if (!this.eventItem.event_image || this.eventItem.event_image === '' || this.eventItem.event_image === '/') {
+        // Set to placeholder image.
+        this.eventItem.event_image = "https://brand.ncsu.edu/img/logo/brick2x2.jpg";
         this.eventImage = "https://brand.ncsu.edu/img/logo/brick2x2.jpg";
       } else {
         this.eventImage = this.eventItem.event_image;

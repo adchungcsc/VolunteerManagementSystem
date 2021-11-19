@@ -16,7 +16,7 @@ import {MatTableModule} from '@angular/material/table';
 import { FlexLayoutModule } from '@angular/flex-layout';
 import {MatDialogModule} from '@angular/material/dialog';
 import {MatSnackBarModule} from '@angular/material/snack-bar';
-import { FormsModule } from '@angular/forms';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 
 import { AppComponent } from './app.component';
 import { LandingPageComponent } from './landing-page/landing-page.component';
@@ -39,6 +39,8 @@ import {MatNativeDateModule} from "@angular/material/core";
 import {MatTabsModule} from '@angular/material/tabs';
 import {CreateEventPageComponent} from "./create-event-page/create-event-page.component";
 import {MatSlideToggleModule} from '@angular/material/slide-toggle';
+import {MatSliderModule} from '@angular/material/slider';
+import {MatExpansionModule} from '@angular/material/expansion';
 import { UnauthorizedComponent } from './unauthorized/unauthorized.component';
 import { BrowserCacheLocation, InteractionType, IPublicClientApplication, LogLevel, PublicClientApplication } from '@azure/msal-browser';
 import { MsalBroadcastService, MsalGuard, MsalGuardConfiguration, MsalInterceptor, MsalInterceptorConfiguration, MsalRedirectComponent, MsalService, MSAL_GUARD_CONFIG, MSAL_INSTANCE, MSAL_INTERCEPTOR_CONFIG } from '@azure/msal-angular';
@@ -132,9 +134,12 @@ export function MSALGuardConfigFactory(): MsalGuardConfiguration {
     MatTableModule,
     MatSlideToggleModule,
     FormsModule,
+    ReactiveFormsModule,
     FlexLayoutModule,
     MatDialogModule,
     MatSnackBarModule,
+    MatExpansionModule,
+    MatSliderModule,
     HttpClientModule
   ],
   providers: [

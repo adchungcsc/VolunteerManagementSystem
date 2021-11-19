@@ -1,9 +1,13 @@
 import { Component, Inject, OnInit } from '@angular/core';
 import { MatDialog, MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
-import { Observable } from 'rxjs';
+import { Observable, of } from 'rxjs';
+import { catchError } from 'rxjs/operators';
+import { AttendanceItem, AttendanceService } from '../attendance.service';
 import { ConfirmDialogComponent } from '../confirm-dialog/confirm-dialog.component';
 import { EventItem } from '../events.service';
+import { ProofDialogComponent } from '../proof-dialog/proof-dialog.component';
 import { SignupService } from '../signup.service';
+import { UsersService } from '../users.service';
 
 @Component({
   selector: 'app-details-dialog',
@@ -23,8 +27,9 @@ export class DetailsDialogComponent implements OnInit {
   currentlyEnrolled: boolean = false;
   currentlyWaitlisted: boolean = false;
   positionOnList: number = 0;
+  myId: number = 0;
 
-  constructor(public dialogRef: MatDialogRef<DetailsDialogComponent>, @Inject (MAT_DIALOG_DATA) public data: EventItem, public signupService: SignupService, public dialog: MatDialog) { 
+  constructor(public dialogRef: MatDialogRef<DetailsDialogComponent>, @Inject (MAT_DIALOG_DATA) public data: EventItem, public signupService: SignupService, public userService: UsersService, public attendanceService: AttendanceService, public dialog: MatDialog) { 
     this.eventId = this.data.event_id;
     this.eventDate = this.data.event_start.toLocaleDateString();
     if (this.data.event_start.toLocaleDateString() != this.data.event_end.toLocaleDateString()) {
@@ -38,8 +43,9 @@ export class DetailsDialogComponent implements OnInit {
     this.numberFilled = 0;
     this.numberWaitlistFilled = 0;
     this.loadComplete = false;
+    this.myId = userService.getCurrentUserId();
 
-    // TODO add a call to the event service to get the number of slots available.
+    // Add a call to the event service to get the number of slots available.
     this.signupService.getSignupsForEvent(this.data.event_id).subscribe(res => {
       var waitCount: number = 0;
       var enrollCount: number = 0;
@@ -49,8 +55,15 @@ export class DetailsDialogComponent implements OnInit {
         console.log(item);
         if (item.is_waitlisted) {
           waitCount++;
+          if (item.user_id === this.myId) {
+            this.currentlyWaitlisted = true;
+            this.positionOnList = waitCount;
+          }
         } else {
           enrollCount++;
+          if (item.user_id === this.myId) {
+            this.currentlyEnrolled = true;
+          }
         }
       }
       this.numberFilled = enrollCount;
@@ -76,10 +89,52 @@ export class DetailsDialogComponent implements OnInit {
     // This is used for the status.
     var resStatus: string = '';
 
-    // Open dialog box.
+    // Do an API call to find if the current user has provided proof for this event yet.
+    // Get all of the proofs for the current event:
+    this.loadComplete = false;
+    this.attendanceService.getAllAttendanceForEvent(this.eventId).subscribe(result => {
+      console.log(result);
+      var attendMatch: AttendanceItem | null = null;
+      // PULL THE CORRECT ONE IF PRESENT AND PASS IT ONWARDS.
+      result.forEach((element: any) => {
+        if (element.attendee_id === this.myId) {
+          attendMatch = element;
+        }
+      });
 
+      this.loadComplete = true;
+      // Open dialog box.
+      const proofDialogRef = this.dialog.open(ProofDialogComponent, {data: {eventId: this.eventId, eventName: this.data.event_name, attendance: attendMatch}});
 
-    this.dialogRef.close({event: 'proofSubmitted', status: resStatus})
+      proofDialogRef.afterClosed().subscribe(result => {
+        console.log(`Proof Dialog Result: ${result}`);
+        if (result.event === 'cancel') {
+          console.log('CANCELLED');
+          this.dialogRef.close({event: 'No Changes Made to Proof.', status: resStatus})
+        } else if (result.event === 'submitted') {
+          console.log('SUBMITTED');
+          if (attendMatch != null) {
+            console.log('Do an update');
+            this.attendanceService.updateAttendanceForEvent(this.eventId, attendMatch.event_attendance_id, result.data).pipe(catchError(rr => {
+              return of([rr]);
+            })).subscribe(item => {
+              console.log(item);
+              this.dialogRef.close({event: 'proofUpdated', status: resStatus})
+            });
+          } else {
+            console.log('Create a new');
+            this.attendanceService.submitAttendanceForEvent(this.eventId, result.data).pipe(catchError(rr => {
+              return of([rr]);
+            })).subscribe(item => {
+              console.log(item);
+              this.dialogRef.close({event: 'proofSubmitted', status: resStatus})
+            });
+          }
+        }
+      })
+      // Shouldn't get here, but just in case.
+      this.dialogRef.close({event: 'proofSubmitted', status: resStatus})
+      });
   }
 
   /**
