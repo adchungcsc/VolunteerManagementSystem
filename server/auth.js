@@ -29,18 +29,18 @@ passport.use(new AzureAdOAuth2Strategy({
                 phone_number: ""
             }
         });
-        console.log(user)
-        console.log(created)
+        // console.log(user)
+        // console.log(created)
         decoded.user_id = user.user_id
         return done(null, decoded);
     }));
 
 passport.serializeUser(function (user, done) {
-    console.log("SERIALIZE USER" + JSON.stringify(user))
+    // console.log("SERIALIZE USER" + JSON.stringify(user))
     done(null, user);
 });
 
 passport.deserializeUser(function (user, done) {
-    console.log("DESERIALIZE USER" + JSON.stringify(user))
+    // console.log("DESERIALIZE USER" + JSON.stringify(user))
     done(null, user);
 });

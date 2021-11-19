@@ -13,11 +13,11 @@ const routes: Routes = [
   { path: '', redirectTo: '/landing', pathMatch: 'full' },
   { path: 'landing', component: LandingPageComponent },
   { path: 'log-in', component: LogInPageComponent},
-  { path: 'home', component: HomePageComponent, canActivate: [MsalGuard] },
-  { path: 'find-event', component: FindAnEventComponent, canActivate: [MsalGuard] },
-  { path: 'my-events', component: MyEventsPageComponent, canActivate: [MsalGuard] },
-  { path: 'dashboard', component: DashboardComponent, canActivate: [MsalGuard] },
-  { path: 'create-event', component: CreateEventPageComponent, canActivate: [MsalGuard] },
+  { path: 'home', component: HomePageComponent},
+  { path: 'find-event', component: FindAnEventComponent},
+  { path: 'my-events', component: MyEventsPageComponent},
+  { path: 'dashboard', component: DashboardComponent},
+  { path: 'create-event', component: CreateEventPageComponent},
 ];
 
 @NgModule({

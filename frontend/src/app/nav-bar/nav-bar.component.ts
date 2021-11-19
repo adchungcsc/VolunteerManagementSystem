@@ -1,6 +1,6 @@
 import { Component, HostListener, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
-import { MsalService } from '@azure/msal-angular';
+// import { MsalService } from '@azure/msal-angular';
 
 @Component({
   selector: 'app-nav-bar',
@@ -22,8 +22,8 @@ export class NavBarComponent implements OnInit {
 
   router: Router;
 
-  constructor(private _router: Router, private authService: MsalService){
-    this.router = _router; 
+  constructor(private _router: Router){ //, private authService: MsalService){
+    this.router = _router;
   }
 
   ngOnInit(): void {
@@ -31,9 +31,9 @@ export class NavBarComponent implements OnInit {
   }
 
     logout() {
-    this.authService.logoutRedirect({
-      postLogoutRedirectUri: "/",
-    });
+    // this.authService.logoutRedirect({
+    //   postLogoutRedirectUri: "/",
+    // });
   }
 
   @HostListener('window:resize', ['$event'])

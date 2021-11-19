@@ -16,6 +16,10 @@ module.exports = (sequelize) => {
                 allowNull: false,
                 type: DataTypes.INTEGER
             },
+            is_waitlisted: {
+                allowNull: false,
+                type: DataTypes.BOOLEAN
+            },
             waitlist_timestamp: {
                 allowNull: false,
                 type: DataTypes.DATE
