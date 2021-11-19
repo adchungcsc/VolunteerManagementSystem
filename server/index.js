@@ -7,14 +7,15 @@ let cors = require('cors')
 require('./auth');
 require('dotenv').config();
 
-
 const port = process.env.PORT || 4200
 const sessionSecret = process.env.SESSION_SECRET || 'cats'
 
 
 const app = express()
-app.use(bodyParser.json());
-app.use(bodyParser.urlencoded({extended: true}));
+// to support JSON-encoded bodies
+app.use(bodyParser.json({limit: '50mb'}));
+// for parsing application/xwww-form-urlencoded
+app.use(bodyParser.urlencoded({limit: '50mb', extended: true}));
 app.use(cookieParser());
 app.use(session({
         secret: sessionSecret,
@@ -50,8 +51,6 @@ function isLoggedIn(req, res, next) {
 }
 
 module.exports = {isLoggedIn}
-
-
 
 app.get('/api/v1/auth/azureadoauth2', passport.authenticate('azure_ad_oauth2'), (req, res) => {
 })
