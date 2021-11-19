@@ -35,7 +35,7 @@ export class EventsService {
 	private apiBaseUrl = environment.host;
 
 	/** Events Route */
-	private eventsRoute = this.apiBaseUrl + '/api/v1/events/';
+	private eventsRoute = this.apiBaseUrl + '/api/v1/event/';
 
   constructor(private http: HttpClient) { }
 
