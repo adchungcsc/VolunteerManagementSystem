@@ -203,7 +203,7 @@ export class EventsService {
       throw new Error("Invalid data");
     }
 
-    return this.http.put(this.eventsRoute, JSON.stringify(data), this.httpOptions).pipe(
+    return this.http.put(this.eventsRoute + eventId, JSON.stringify(data), this.httpOptions).pipe(
       catchError(this.handleAnyErrors)
     );
   }

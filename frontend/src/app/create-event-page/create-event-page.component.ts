@@ -88,13 +88,16 @@ export class CreateEventPageComponent implements OnInit {
     let startDateTime = this.combineTwoDates(this.form.get('start_date')?.value, this.form.get('start_time')?.value);
     let endDateTime = this.combineTwoDates(this.form.get('end_date')?.value, this.form.get('end_time')?.value);
     console.log(startDateTime);
+    let startT = startDateTime.toISOString();
+    console.log(startT);
+    let endT = (endDateTime.toISOString());
 
     // First, bundle the form
     let formData = {
       event_name: this.form.get('event_name')?.value,
       event_location: this.form.get('address')?.value,
-      event_start: (startDateTime.getMilliseconds()/1000),
-      event_end: (endDateTime.getMilliseconds()/1000),
+      event_start: startT,
+      event_end: endT,
       event_organizer: this.form.get('event_organizer')?.value,
       event_max_volunteers: this.form.get('num_of_volunteers')?.value,
       event_max_waitlist: this.form.get('waitlist_num')?.value,
@@ -102,6 +105,8 @@ export class CreateEventPageComponent implements OnInit {
       // event_image: this.form.get('image')?.value
       event_image: this.imagePreview
     }
+
+    console.log(formData);
 
     // Second, send the form and the image to a service to send to the server
     this.eventService.createEvent(formData).pipe(catchError(err => {
