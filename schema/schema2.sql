@@ -2,7 +2,7 @@ CREATE TABLE users
 (
     user_id      serial,
     name         text,
-    email        text,
+    email        text unique,
     phone_number text,
     role         text,
     primary key (user_id)
