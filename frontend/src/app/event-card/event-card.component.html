@@ -16,6 +16,7 @@
         <p>{{eventItem.event_description}}</p>
     </mat-card-content>
     <mat-card-actions>
+        <a [routerLink]="['../', 'create-event']" [queryParams]="{eventId: this.eventItem.event_id}">Edit Event</a>
         <button mat-button (click)="openDialog()">More Details</button>
     </mat-card-actions>
 </mat-card>
