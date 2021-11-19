@@ -4,6 +4,7 @@
       "secure": false,
       "logLevel": "debug",
       "changeOrigin": true,
+      "cookieDomainRewrite": "localhost",
       "pathRewrite": {
         "^/api/v1/events": "event",
         "^/api/v1": ""

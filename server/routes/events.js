@@ -1,5 +1,6 @@
 var express = require('express');
 const {models} = require("../orm");
+const {isLoggedIn} = require("../index");
 var router = express.Router();
 
 
@@ -26,7 +27,7 @@ router.get('/:id?', async (req, res) => {
     }
 })
 
-router.post('/', async (req, res) => {
+router.post('/', isLoggedIn, async (req, res) => {
     /**
      * Create new event
      */
@@ -34,7 +35,7 @@ router.post('/', async (req, res) => {
     const location = req.body.event_location
     const event_start = req.body.event_start
     const event_end = req.body.event_end
-    const event_organizer = req.body.event_organizer
+    const event_organizer = req.user.user_id // Organizer is user posting
     const event_max_volunteers = req.body.event_max_volunteers
     const event_description = req.body.event_description
     const event_image_path = req.body.event_image
@@ -57,7 +58,7 @@ router.post('/', async (req, res) => {
     res.status(201).send(addedEvent)
 })
 
-router.delete('/:id', (req, res) => {
+router.delete('/:id', isLoggedIn, (req, res) => {
     /**
      * delete event
      */
