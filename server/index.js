@@ -1,120 +1,110 @@
 const express = require('express')
-const app = express()
 const bodyParser = require('body-parser');
-
-// to support JSON-encoded bodies
-app.use(bodyParser.json());
-// for parsing application/xwww-form-urlencoded
-app.use(bodyParser.urlencoded({extended: true}));
-
-
 const cookieParser = require("cookie-parser");
-const sessions = require('express-session');
+const session = require('express-session');
+const passport = require('passport');
+require('./auth');
+require('dotenv').config();
 
-app.use(cookieParser());
-
-
-const oneDay = 1000 * 60 * 60 * 24;
-
-const sessionMiddleware = sessions({
-    secret: "CHANGEMELATERWHENINPRODANDSETASENVIRONMENTVAR",
-    saveUninitialized:true,
-    cookie: {
-        secure: false,
-        domain: "localhost",
-        maxAge: oneDay,
-    },
-    resave: false
-})
-
-app.use(sessionMiddleware);
 
 
 let cors = require('cors')
+
+
+
+
+const port = process.env.PORT || 4200
+
+
+const app = express()
+app.use(bodyParser.json());
+app.use(bodyParser.urlencoded({extended: true}));
+app.use(cookieParser());
+
 app.use(cors({
-    origin: "*"
+    origin: "*",
+    methods: ["GET", "DELETE", "PUT", "POST"],
 }))
 
-const { OAuth2Client } = require('google-auth-library');
-
-
-//Attempted to swap out microsoft with simpler Google login prior to M1 demo but that didn't get working in time due to some shenanigans with express-session lib not properly setting cookie
-//params even after they were set (my guess is that it had to do with difference in domains from lh:3k to lh:4200) but that needs more debugging. Spent a few hours on this and couldn't fix.
-// Going to replace all of this auth and session handling with passportjs at a later date.
-app.get('/googleLogin', (req, res) => {
-
-    let token = req.query.idToken
-    console.log(token)
-
-    //not secret but change to env var later.
-    const CLIENT_ID = "633268372118-5n6sf8p048fom0c04qs7rh0md0fdqql5.apps.googleusercontent.com"
-    const client = new OAuth2Client(CLIENT_ID);
-    async function verify() {
-        try {
-            const ticket = await client.verifyIdToken({
-                idToken: token,
-                audience: CLIENT_ID,
-            });
-            const payload = ticket.getPayload();
-            const userid = payload['sub'];
-            console.log(userid)
-            //Give a session.
-            req.session.message = "Hello World!";
-            req.session.user_id=userid;
-            console.log("SET SESSION PROPERLY")
-            console.log(req.session)
-            console.log(payload)
-        } catch (error) {
-            console.log(error)
-        }
+app.use(function (req, res, next) {
+    res.header('Access-Control-Allow-Credentials', true);
+    res.header('Access-Control-Allow-Origin', req.headers.origin);
+    res.header('Access-Control-Allow-Methods', 'GET,PUT,POST,DELETE');
+    res.header('Access-Control-Allow-Headers', 'X-Requested-With, X-HTTP-Method-Override, Content-Type, Accept');
+    if ('OPTIONS' === req.method) {
+        res.send(200);
+    } else {
+        next();
     }
-    verify().then(()=>{
-        console.log("done")
-    })
+});
+
+function isLoggedIn(req, res, next) {
+    console.log("CHECKING LOG IN STAT")
+    req.user ? next() : res.sendStatus(401);
+}
+
+app.use(session({
+        secret: 'cats',
+        resave: false,
+        saveUninitialized: true,
+        cookie: {secure: false}
+    }
+));
+
+app.use(passport.initialize());
+app.use(passport.session());
+
+
+app.get('/api/v1/auth/azureadoauth2', passport.authenticate('azure_ad_oauth2'), (req, res) => {
 })
 
-app.get('/logout',(req,res) => {
+
+app.get('/callback',
+    passport.authenticate('azure_ad_oauth2', {failureRedirect: '/login'}),
+    function (req, res) {
+        // Successful authentication, redirect home.
+        res.redirect('/');
+    }
+);
+
+app.get('/api/v1/protected', isLoggedIn, (req, res) => {
+    stuff = {
+        thing: "yello world"
+    }
+    console.log("Hit Protected")
+    res.send(JSON.stringify(stuff));
+});
+
+app.get('/api/v1/logout', (req, res) => {
+    req.logout();
     req.session.destroy();
-    res.status(200).send({});
+    res.send('Goodbye!');
 });
 
-
-app.get('/test',(req,res) => {
-    console.log(req.session)
-    res.status(200).send({});
+app.get('/auth/google/failure', (req, res) => {
+    res.send('Failed to authenticate..');
 });
-
-
 const users = require('./routes/users');
 const event = require('./routes/events');
 const attendance = require('./routes/attendance');
 const signup = require('./routes/signup');
 
-app.use('/user', users);
-app.use('/attend', attendance);
-app.use('/event', event);
-app.use('/signup', signup);
+app.use('/api/v1/user', users);
+app.use('/api/v1/attend', attendance);
+app.use('/api/v1/event', event);
+app.use('/api/v1/signup', signup);
 
 
-// async function helloWorld() {
-//     let item = await models.users.findAll();
-//     console.log("All users:", JSON.stringify(item, null, 2));
-//     item = await models.event.findAll();
-//     console.log("All Events:", JSON.stringify(item, null, 2));
-//     item = await models.event_signup.findAll();
-//     console.log("All Event Signups:", JSON.stringify(item, null, 2));
-//     item = await models.event_attendance.findAll();
-//     console.log("All Event Attendances:", JSON.stringify(item, null, 2));
-// }
+const path = require('path');
 
-app.get('/', async (req, res) => {
-    //Health/sanity check endpoint
-    res.send('Hello World!')
+app.use(express.static(path.join(__dirname, 'static')));
+
+app.get('/*', async (req, res) => {
+    res.sendFile(path.resolve(__dirname, 'static', 'index.html'));
+});
+
+
+app.listen(port, function () {
+    console.log('Listening on port ' + port)
 })
 
-
-app.listen(3000, function () {
-    console.log('Listening on port 3000...')
-})
-
-// helloWorld().then(r => console.log("done"))
