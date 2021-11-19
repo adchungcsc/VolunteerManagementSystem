@@ -14,11 +14,11 @@ type ProfileType = {
 }
 
 @Component({
-  selector: 'app-dashboard-page',
-  templateUrl: './dashboard-page.component.html',
-  styleUrls: ['./dashboard-page.component.css']
+  selector: 'app-home-page',
+  templateUrl: './home-page.component.html',
+  styleUrls: ['./home-page.component.css']
 })
-export class DashboardPageComponent implements OnInit {
+export class HomePageComponent implements OnInit {
   profile!: ProfileType;
   /**
    * Headers used for ease
