@@ -133,6 +133,7 @@ export class CreateEventPageComponent implements OnInit {
 
     console.log(formData);
 
+    // TODO EDIT
     // Second, send the form and the image to a service to send to the server
     this.eventService.createEvent(formData).pipe(catchError(err => {
       return of([err]);
