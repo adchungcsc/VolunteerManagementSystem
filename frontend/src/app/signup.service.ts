@@ -60,6 +60,25 @@ export class SignupService {
   }
 
   /**
+   * Finds all of the events a user has signed up.
+   * @param userId The User ID to find events
+   */
+  getEventSignupsForUser(userId: number): Observable<any> {
+    if ((userId == undefined || userId == null) && userId !== 0) {
+      throw new Error('Invalid ID');
+    }
+
+    // Returns the result or the error...
+    let results = this.http.get(this.signupRoute + 'user/' + userId, {
+      headers: this.httpHeaders,
+    }).pipe(
+      catchError(this.handleAnyErrors)
+    );
+
+    return results;
+  }
+
+  /**
    * Enrolls the current volunteer into the event.
    * TODO SHOULD WE ALSO PROVIDE THE USER ID?
    * @param eventId The Id of the event.

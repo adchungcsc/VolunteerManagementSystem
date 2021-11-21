@@ -5,6 +5,9 @@ import { EventItem, EventsDataSource } from '../find-an-event-page/events-dataso
 import { HttpClient, HttpErrorResponse, HttpHeaders } from '@angular/common/http';
 import { environment } from 'src/environments/environment';
 import { catchError } from 'rxjs/operators';
+import { MyEventsDataSource } from './my-events-datasource';
+import { SignupService } from '../signup.service';
+import { EventSignupsService } from '../event-signups.service';
 
 const GRAPH_ENDPOINT = 'https://graph.microsoft.com/v1.0/me';
 
@@ -23,13 +26,15 @@ type ProfileType = {
 export class MyEventsPageComponent implements OnInit {
   profile!: ProfileType;
 
-  dataSource!: EventsDataSource;
+  dataSource!: MyEventsDataSource;
 
   now = new Date();
   item2 = new Date();
   aWeekAgo = new Date(this.item2.setDate(this.now.getDate() - 7));
 
   dataSourceInfo!: Observable<EventItem[]>;
+
+  testInformation: EventItem[] = new Array<EventItem>();
 
   viewChange: any;
   /**
@@ -54,7 +59,9 @@ export class MyEventsPageComponent implements OnInit {
 
   // TODO IMPORT USERS SERVICE
   constructor(
+    private signupsService: SignupService,
     private eventsService: EventsService,
+    private eventSignupService: EventSignupsService,
     private http: HttpClient
     ) { }
 
@@ -66,23 +73,42 @@ export class MyEventsPageComponent implements OnInit {
 
   ngOnInit(): void {
     this.getProfile();
+
+    // TODO UNCOMMENT TO TEST THIS>
     // TODO
-    this.dataSource = new EventsDataSource(this.eventsService);
+    this.dataSource = new MyEventsDataSource(this.signupsService, this.eventsService, this.eventSignupService);
 
     // CollectionViewer a = new CollectionViewer();
 
     this.dataSourceInfo = this.dataSource.connect(this);
-    // TODO increase page size.
-    this.dataSource.loadEvents(true, '', 0, 10);
+    // TODO set user ID.
+    this.dataSource.loadEvents(this.userId);
 
-    let events = this.http.get(this.userEventsRoute, this.httpOptions).pipe(
-      catchError(this.handleAnyErrors)
-    );
-    events.forEach((e: any) => {
-      let event:any = Object.values(e);
-      this.userHoursTotal += event[0].hours;
-      this.userEventsTotal++;
-    })
+    // this.dataSourceInfo.subscribe((item) => {
+    //   item.forEach(element => {
+    //     this.testInformation.push(element);
+    //   });
+    // });
+
+    // this.eventSignupService.getEventsForUser(this.userId).subscribe((item) => {
+    //   item.forEach((element: any) => {
+    //     this.testInformation.push(element);
+    //   });
+    // })
+    
+
+    console.log("DataSourceInfo from MyEvents");
+    console.log(this.dataSourceInfo);
+
+    // TODO UNCOMMENT THIS.
+    // let events = this.http.get(this.userEventsRoute, this.httpOptions).pipe(
+    //   catchError(this.handleAnyErrors)
+    // );
+    // events.forEach((e: any) => {
+    //   let event:any = Object.values(e);
+    //   this.userHoursTotal += event[0].hours;
+    //   this.userEventsTotal++;
+    // })
   }
 
   getProfile() {
