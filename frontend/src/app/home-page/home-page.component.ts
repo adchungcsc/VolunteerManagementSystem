@@ -3,6 +3,7 @@ import { environment } from 'src/environments/environment';
 import { HttpClient, HttpErrorResponse, HttpHeaders } from '@angular/common/http';
 import { catchError } from 'rxjs/operators';
 import { throwError } from 'rxjs';
+import { UsersService } from '../users.service';
 
 const GRAPH_ENDPOINT = 'https://graph.microsoft.com/v1.0/me';
 
@@ -39,7 +40,10 @@ export class HomePageComponent implements OnInit {
   userHoursTotal = 0;
   private userEventsRoute = this.apiBaseUrl + '/api/v1/attend/user/' + this.userId;
 
-  constructor(private http: HttpClient) { }
+  constructor(private http: HttpClient, private userService: UsersService) { 
+    this.userId = userService.getCurrentUserId();
+    this.userEventsRoute = this.apiBaseUrl + '/api/v1/attend/user/' + this.userId;
+  }
 
 	private handleAnyErrors(error: HttpErrorResponse): any {
 		console.error(`Error from server with code ${error.status}, ` 

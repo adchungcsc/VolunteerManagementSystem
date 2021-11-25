@@ -8,6 +8,7 @@ import { catchError } from 'rxjs/operators';
 import { MyEventsDataSource } from './my-events-datasource';
 import { SignupService } from '../signup.service';
 import { EventSignupsService } from '../event-signups.service';
+import { UsersService } from '../users.service';
 
 const GRAPH_ENDPOINT = 'https://graph.microsoft.com/v1.0/me';
 
@@ -62,8 +63,12 @@ export class MyEventsPageComponent implements OnInit {
     private signupsService: SignupService,
     private eventsService: EventsService,
     private eventSignupService: EventSignupsService,
+    private usersService: UsersService,
     private http: HttpClient
-    ) { }
+    ) { 
+      this.userId = usersService.getCurrentUserId();
+      this.userEventsRoute = this.apiBaseUrl + '/api/v1/attend/user/' + this.userId;
+    }
 
   private handleAnyErrors(error: HttpErrorResponse): any {
     console.error(`Error from server with code ${error.status}, ` 

@@ -1,3 +1,11 @@
 a {
     color: black;
 }
+
+section.image-bounds {
+    aspect-ratio: 16 / 9;
+}
+
+img {
+    object-fit: contain;
+}

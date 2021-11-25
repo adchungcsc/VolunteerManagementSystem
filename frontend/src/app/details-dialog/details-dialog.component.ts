@@ -105,7 +105,7 @@ export class DetailsDialogComponent implements OnInit {
 
       this.loadComplete = true;
       // Open dialog box.
-      const proofDialogRef = this.dialog.open(ProofDialogComponent, {data: {eventId: this.eventId, eventName: this.data.event_name, attendance: attendMatch}});
+      const proofDialogRef = this.dialog.open(ProofDialogComponent, {data: {eventId: this.eventId, eventName: this.data.event_name, attendance: attendMatch, userId: this.myId}});
 
       proofDialogRef.afterClosed().subscribe(result => {
         console.log(`Proof Dialog Result: ${result}`);

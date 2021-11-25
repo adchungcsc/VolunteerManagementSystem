@@ -2,6 +2,7 @@ import { Component, Inject, OnInit } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { AttendanceItem } from '../attendance.service';
+import { UsersService } from '../users.service';
 
 @Component({
   selector: 'app-proof-dialog',
@@ -14,7 +15,9 @@ export class ProofDialogComponent implements OnInit {
 
   form: FormGroup;
 
-  constructor(public dialogRef: MatDialogRef<ProofDialogComponent>, @Inject(MAT_DIALOG_DATA) public data: {eventId: number, eventName: string, attendance?: AttendanceItem}) { 
+  nameOfUser: string = "";
+
+  constructor(public dialogRef: MatDialogRef<ProofDialogComponent>, @Inject(MAT_DIALOG_DATA) public data: {eventId: number, eventName: string, attendance?: AttendanceItem, userId: number}, private usersService: UsersService) { 
 
     let numOfHours = 0;
     let commentMessage = '';
@@ -35,10 +38,14 @@ export class ProofDialogComponent implements OnInit {
       rating: new FormControl(ratingStars, [Validators.min(0), Validators.max(5), Validators.required])
     });
 
-
    }
 
   ngOnInit(): void {
+    // Get the user name
+    this.usersService.getUserObjectFromId(this.data.userId).subscribe(userOb => {
+      console.log(userOb);
+      this.nameOfUser = userOb[0].name;
+    });
   }
 
   getMyStyles() {

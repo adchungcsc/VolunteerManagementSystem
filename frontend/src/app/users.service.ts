@@ -51,4 +51,15 @@ export class UsersService {
     return this.user_id
   }
 
+  /**
+   * Gets user from ID.
+   * @param id The ID of the user to find.
+   * @returns Observable
+   */
+  getUserObjectFromId(id: number): Observable<any> {
+    return this.http.get(this.usersRoute + id, this.httpOptions).pipe(
+      catchError(this.handleAnyErrors)
+    );
+  }
+
 }
