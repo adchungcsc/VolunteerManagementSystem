@@ -17,8 +17,9 @@
         <!-- <p>{{eventInformation}}</p> -->
         <p [line-truncation]="2">{{eventItem.event_description}}</p>
     </mat-card-content>
-    <mat-card-actions>
-        <a [routerLink]="['../', 'create-event']" [queryParams]="{eventId: this.eventItem.event_id}">Edit Event</a>
+    <mat-card-actions align="end">
+        <!-- <a [routerLink]="['../', 'create-event']" [queryParams]="{eventId: this.eventItem.event_id}">Edit Event</a> -->
+        <button mat-button [routerLink]="['../', 'create-event']" [queryParams]="{eventId: this.eventItem.event_id}">Edit Event</button>
         <button mat-button (click)="openDialog()">More Details</button>
     </mat-card-actions>
 </mat-card>

@@ -2,10 +2,15 @@ a {
     color: black;
 }
 
-section.image-bounds {
+/* section.image-bounds {
     aspect-ratio: 16 / 9;
-}
+} */
 
 img {
     object-fit: contain;
+    aspect-ratio: 16 / 9;
+}
+
+mat-card-actions {
+    align-items: flex-end;
 }
