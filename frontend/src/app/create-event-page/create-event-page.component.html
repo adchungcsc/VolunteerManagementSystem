@@ -1,3 +1,9 @@
+<!-- Loading dialog - only visible when loading. -->
+<div class="spinner-container" *ngIf="loadingNow">
+  <mat-spinner class="main-spin"></mat-spinner>
+</div>
+
+<!-- This is the form -->
 <form class="form-container" [formGroup]="form" (ngSubmit)="onSubmit()">
   <mat-card>
     <mat-card-header>

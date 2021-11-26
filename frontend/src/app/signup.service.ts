@@ -4,6 +4,17 @@ import { Observable, throwError } from 'rxjs';
 import { catchError } from 'rxjs/operators';
 import { environment } from 'src/environments/environment';
 
+/**
+ * Represents what is returned from signup Service.
+ */
+export interface SignupItem {
+  event_id: number;
+  event_signup_id: number;
+  is_waitlisted: boolean;
+  user_id: number;
+  waitlist_timestamp: any;
+}
+
 @Injectable({
   providedIn: 'root'
 })

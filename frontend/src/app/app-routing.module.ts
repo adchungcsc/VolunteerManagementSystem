@@ -8,6 +8,7 @@ import { CreateEventPageComponent } from "./create-event-page/create-event-page.
 import { FindAnEventComponent } from './find-an-event-page/find-an-event.component';
 import { DashboardComponent } from './dashboard/dashboard.component';
 import { MsalGuard } from '@azure/msal-angular';
+import { ManageEventComponent } from './manage-event/manage-event.component';
 
 const routes: Routes = [
   { path: '', redirectTo: '/landing', pathMatch: 'full' },
@@ -18,6 +19,7 @@ const routes: Routes = [
   { path: 'my-events', component: MyEventsPageComponent},
   { path: 'dashboard', component: DashboardComponent},
   { path: 'create-event', component: CreateEventPageComponent},
+  { path: 'manage-event', component: ManageEventComponent},
 ];
 
 @NgModule({

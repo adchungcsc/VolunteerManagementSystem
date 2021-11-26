@@ -32,12 +32,15 @@ export class CreateEventPageComponent implements OnInit {
   action: string = 'Create';
   eventId: number = 0;
 
+  // If currently loading.
+  loadingNow: boolean = false;
+
   // Used for a preview image.
   imagePreview: string = '';
 
   constructor(public eventService: EventsService, private _snackBar: MatSnackBar, private Activatedroute:ActivatedRoute, private router:Router) { 
-    
-   }
+    this.loadingNow = false;  
+  }
 
   // /**
   //  * Creates the form as new again.
@@ -65,6 +68,7 @@ export class CreateEventPageComponent implements OnInit {
            console.log('Query params ',this.eventId) 
            if (this.eventId !== null && this.eventId !== 0) {
              this.action = "Edit";
+             this.loadingNow = true;
              this.eventService.getEvent(this.eventId).subscribe(items => {
                let item = items[0];
                console.log(item);
@@ -84,6 +88,7 @@ export class CreateEventPageComponent implements OnInit {
                 image: new FormControl(item.event_image)
               });
               this.imagePreview = item.event_image;
+              this.loadingNow = false;
              });
            }
     });
@@ -114,6 +119,7 @@ export class CreateEventPageComponent implements OnInit {
 
   // When submitting
   onSubmit() {
+    this.loadingNow = true;
     // Combine the date and time for start date/time and end date/time.
     let startDateTime = this.combineTwoDates(this.form.get('start_date')?.value, this.form.get('start_time')?.value);
     let endDateTime = this.combineTwoDates(this.form.get('end_date')?.value, this.form.get('end_time')?.value);
@@ -146,6 +152,7 @@ export class CreateEventPageComponent implements OnInit {
       })).subscribe(item => {
         // Third, Wait for a response.
         console.log(item);
+        this.loadingNow = false;
 
         // Fourth, display a 'snackbar'
         this.openSnackBar(`Event ${item.event_name} created.`);
@@ -160,6 +167,7 @@ export class CreateEventPageComponent implements OnInit {
       })).subscribe(item => {
         // Third, Wait for a response.
         console.log(item);
+        this.loadingNow = false;
 
         // Fourth, display a 'snackbar'
         this.openSnackBar(`Event ${item.event_name} updated.`);
@@ -173,20 +181,26 @@ export class CreateEventPageComponent implements OnInit {
 
   // Clears the form
   onClear() {
-    this.form.reset({
-      event_name: '',
-      start_date: new Date(),
-      end_date: new Date(),
-      start_time: '00:00:00',
-      end_time: '00:00:00',
-      num_of_volunteers: 10,
-      waitlist_num: 0,
-      address: '',
-      event_organizer: 1,
-      description: '',
-      image: null
-    });
-    this.imagePreview = '';
+    if (this.action === 'Create') {
+      this.form.reset({
+        event_name: '',
+        start_date: new Date(),
+        end_date: new Date(),
+        start_time: '00:00:00',
+        end_time: '00:00:00',
+        num_of_volunteers: 10,
+        waitlist_num: 0,
+        address: '',
+        event_organizer: 1,
+        description: '',
+        image: null
+      });
+      this.imagePreview = '';
+    } else {
+      // Rerender via init for now.
+      // This is a workaround, but in the future refactor and pull out the subscribe, add error checks, ....
+      this.ngOnInit();
+    }
   }
 
   /**

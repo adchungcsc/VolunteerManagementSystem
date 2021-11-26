@@ -17,3 +17,14 @@
 img.previewImage {
   max-width: 100%;
 }
+
+mat-spinner.main-spin {
+  margin: 0 auto;
+  vertical-align: auto;
+}
+
+div.spinner-container {
+  height: 100vh;
+  width: 100%;
+  background-color: rgba(0, 0, 0, 0.034);
+}

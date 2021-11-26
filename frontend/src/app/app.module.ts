@@ -48,6 +48,7 @@ import {MicrosoftLoginComponent} from "./microsoft-login/microsoft-login.compone
 import { DashboardComponent } from './dashboard/dashboard.component';
 import { SocketioService } from './socketio.service';
 import { LineTruncationDirective, LineTruncationLibModule } from 'ngx-line-truncation';
+import { ManageEventComponent } from './manage-event/manage-event.component';
 
 // what application is currently directing
 export function MSALInstanceFactory(): IPublicClientApplication {
@@ -108,7 +109,8 @@ export function MSALGuardConfigFactory(): MsalGuardConfiguration {
     ProofDialogComponent,
     ConfirmDialogComponent,
     MicrosoftLoginComponent,
-    DashboardComponent
+    DashboardComponent,
+    ManageEventComponent
   ],
   imports: [
     BrowserModule,
