@@ -27,8 +27,8 @@ export class ManageEventComponent implements OnInit {
   eventId: number = 0;
 
   // What columns to show.
-  // displayedColumns = ['user_id', 'is_waitlisted', 'waitlist_timestamp'];
-  displayedColumns = ['user_name', 'user_email', 'is_waitlisted', 'waitlist_timestamp'];
+  displayedColumns = ['user_id', 'is_waitlisted', 'waitlist_timestamp'];
+  // displayedColumns = ['user_name', 'user_email', 'is_waitlisted', 'waitlist_timestamp'];
 
 
   // The datasource
@@ -69,18 +69,27 @@ export class ManageEventComponent implements OnInit {
            })
 
            // At this point, we are not still in our request.
+           // TODO FIX THIS
            this.signupService.getSignupsForEvent(this.eventId).subscribe((signups: any) => {
-             this.dataSource.data = signups;
-             signups.forEach((element: SignupItem) => {
-               this.usersService.getUserObjectFromId(element.user_id).subscribe(i => {
-                 let u: UserItem = {
-                   user_id: element.user_id,
-                   user_name: i.name,
-                   user_email: i.email
-                 };
-                 this.userMap.set(element.user_id, u);
+            //  var loop = new Promise((resolve, reject) => {
+               signups.forEach((element: SignupItem) => {
+                 this.usersService.getUserObjectFromId(element.user_id).subscribe(i => {
+                   let u: UserItem = {
+                     user_id: element.user_id,
+                     user_name: i.name,
+                     user_email: i.email
+                   };
+                   this.userMap.set(element.user_id, u);
+                //  }).add(resolve('complete'));
+                  });
                });
-             });
+            //  });
+             
+             console.log(this.userMap);
+             console.log(this.userMap.values());
+             // TODO THIS RUNS TOO EARLY!!!!!!
+            //  loop.then(this.dataSource.data = signups);
+             this.dataSource.data = signups
            });
         });
   }
