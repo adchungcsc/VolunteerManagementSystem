@@ -39,7 +39,7 @@ router.get('/:id?', async (req, res) => {
             group: ['event.event_id'],
             subQuery: false,
             limit: limit,
-            offset: offset * limit
+            offset: offset
         }).catch(function (error) {
             console.log(error);
         });
