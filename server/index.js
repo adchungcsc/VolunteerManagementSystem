@@ -3,6 +3,7 @@ const bodyParser = require('body-parser');
 const cookieParser = require("cookie-parser");
 const session = require('express-session');
 const passport = require('passport');
+const compression = require('compression')
 let cors = require('cors')
 require('./auth');
 require('dotenv').config();
@@ -12,6 +13,8 @@ const sessionSecret = process.env.SESSION_SECRET || 'cats'
 
 
 const app = express()
+
+app.use(compression());
 // to support JSON-encoded bodies
 app.use(bodyParser.json({limit: '50mb'}));
 // for parsing application/xwww-form-urlencoded
