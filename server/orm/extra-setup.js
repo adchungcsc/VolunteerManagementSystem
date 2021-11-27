@@ -3,13 +3,7 @@ function applyExtraSetup(sequelize) {
     const {users, event, event_attendance, event_signup} = sequelize.models;
     event.hasOne(users);
     event.hasMany(event_signup, {foreignKey: "event_id"});
-    event.hasMany(event_attendance);
-    // //
-    // event_signup.belongsTo(users);
-    // event_signup.belongsTo(event);
-    // //
-    // event_attendance.belongsTo(users);
-    // event_attendance.belongsTo(event);
+    event.hasMany(event_attendance, {foreignKey: "event_id"});
 }
 
 module.exports = {applyExtraSetup};
