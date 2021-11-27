@@ -4,6 +4,19 @@ var router = express.Router();
 const {models} = require('../orm');
 const {isLoggedIn} = require("../index");
 
+
+router.get('/organization', isLoggedIn, async (req, res) => {
+    let users = await models.users.findAll();
+    if (users !== null) {
+        res.send(users)
+    } else {
+        //Didn't find event
+        res.status(404).send({})
+    }
+})
+
+
+
 router.get('/:id?', isLoggedIn, async (req, res) => {
     /**
      * Get a user based on ID
