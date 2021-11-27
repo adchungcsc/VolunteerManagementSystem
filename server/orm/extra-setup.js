@@ -1,15 +1,8 @@
 function applyExtraSetup(sequelize) {
-    // TODO: Will implement FK relations at a later date.
-    // const { users, event, attendance, signup } = sequelize.models;
-    // event.hasOne(users);
-    // event.hasMany(signup);
-    // event.hasMany(attendance);
-    //
-    // signup.belongsTo(users);
-    // signup.belongsTo(event);
-    //
-    // attendance.belongsTo(users);
-    // attendance.belongsTo(event);
+    // TODO: Will implement all FK relations at a later date.
+    const {users, event, event_attendance, event_signup} = sequelize.models;
+    event.hasMany(event_signup, {foreignKey: "event_id"});
+    event.hasMany(event_attendance, {foreignKey: "event_id"});
 }
 
-module.exports = { applyExtraSetup };
+module.exports = {applyExtraSetup};
