@@ -18,10 +18,13 @@ router.get('/:id?', async (req, res) => {
     // Optional find events within a start and end range.
     let event_start_timestamp = req.query.event_start || (new Date("01 Jan 1970 00:00:00 GMT")).toISOString()
     let event_end_timestamp = req.query.event_end || (new Date()).toISOString()
-    // Optional find events only belonging to current user.
-    let getFull = req.query.get_full || false
+
+    //Pagination
+    let limit = req.query.pageSize || 100;
+    let offset = req.query.skipToken || 0;
+
     if (queried_id === undefined) {
-        let events = await models.event.findAll({
+        let events = await models.event.findAndCountAll({
             where: {
                 event_name: sequelize.where(sequelize.fn('LOWER', sequelize.col('name')), 'LIKE', '%' + event_name + '%'),
                 start_timestamp: {[Op.gte]: event_start_timestamp},
@@ -33,11 +36,17 @@ router.get('/:id?', async (req, res) => {
             include: [{
                 model: models.event_signup, attributes: []
             }],
-            group: ['event.event_id']
+            group: ['event.event_id'],
+            subQuery: false,
+            limit: limit,
+            offset: offset * limit
         }).catch(function (error) {
             console.log(error);
         });
-        res.send(events)
+        res.send({
+            events: events.rows,
+            count: events.count.length
+        })
     } else {
         let events = await models.event.findAll({
             where: {
