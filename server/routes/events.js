@@ -2,27 +2,38 @@ var express = require('express');
 const {models} = require("../orm");
 const {isLoggedIn} = require("../index");
 const sequelize = require("../orm");
-const {Op} = require("sequelize");
+const {Op, Sequelize} = require("sequelize");
 var router = express.Router();
 
 
 router.get('/:id?', async (req, res) => {
     /**
-     * Get all events
+     * Get events
      */
+    // Optional find an event by ID
     let queried_id = req.params.id
+    // Optional find an event by name
     let event_name = req.query.event_name || ""
     event_name = event_name.toLowerCase()
+    // Optional find events within a start and end range.
     let event_start_timestamp = req.query.event_start || (new Date("01 Jan 1970 00:00:00 GMT")).toISOString()
     let event_end_timestamp = req.query.event_end || (new Date()).toISOString()
+    // Optional find events only belonging to current user.
+    let getFull = req.query.get_full || false
     if (queried_id === undefined) {
         let events = await models.event.findAll({
-            limit: 10,
             where: {
                 event_name: sequelize.where(sequelize.fn('LOWER', sequelize.col('name')), 'LIKE', '%' + event_name + '%'),
                 start_timestamp: {[Op.gte]: event_start_timestamp},
                 end_timestamp: {[Op.lte]: event_end_timestamp},
-            }
+            },
+            attributes: {
+                include: [[Sequelize.fn("COUNT", Sequelize.col("event_signups.event_signup_id")), "currentSignUps"]]
+            },
+            include: [{
+                model: models.event_signup, attributes: []
+            }],
+            group: ['event.event_id']
         }).catch(function (error) {
             console.log(error);
         });
