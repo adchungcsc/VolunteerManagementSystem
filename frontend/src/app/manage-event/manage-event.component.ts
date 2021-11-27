@@ -120,7 +120,7 @@ export class ManageEventComponent implements OnInit {
   }
 
   clickedRow(row: any) {
-    this.openSnackBar(`Clicked on ${row.user_name}`);
+    this.openSnackBar(`Clicked on ${row.user_id}`);
   }
 
 }

@@ -8,6 +8,7 @@
     <ng-container matColumnDef="user_id">
         <th mat-header-cell *matHeaderCellDef> Attendee </th>
         <td mat-cell *matCellDef="let signup"> {{userMap.get(signup.user_id)?.user_name ?? signup.user_id}} </td>
+        <!-- <td mat-cell *matCellDef="let signup"> {{userMap.get(signup.user_id)?.user_name ?? signup.user_id}} </td> -->
     </ng-container>
 
     <!-- The User Email Column -->
@@ -25,7 +26,7 @@
     <!-- The Timestamp Column -->
     <ng-container matColumnDef="waitlist_timestamp">
         <th mat-header-cell *matHeaderCellDef> Waitlist Time </th>
-        <td mat-cell *matCellDef="let signup"> {{signup.waitlist_timestamp ?? 'N/A'}} </td>
+        <td mat-cell *matCellDef="let signup"> {{signup.is_waitlisted ? signup.waitlist_timestamp : 'N/A'}} </td>
     </ng-container>
 
     <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>

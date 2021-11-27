@@ -156,7 +156,8 @@ export class AttendanceService {
     console.log(data);
     console.log(JSON.stringify(data));
 
-    return this.http.post(this.attendanceRoute + eventId, JSON.stringify(data), this.httpOptions).pipe(
+    // Removed EventID from the post path.
+    return this.http.post(this.attendanceRoute, JSON.stringify(data), this.httpOptions).pipe(
       catchError(this.handleAnyErrors)
     );
   }

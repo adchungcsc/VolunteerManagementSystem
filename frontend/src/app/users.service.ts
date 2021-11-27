@@ -40,7 +40,12 @@ export class UsersService {
     return throwError('Error: ' + `${error.error['error']?.message}`);
   }
 
+  // Not reliable, but gets the current User ID.
   getCurrentUserId(): number {
+    if (this.user_id !== 0) {
+      return this.user_id;
+    }
+
     //users api returns array size 1
     let results = this.http.get(this.usersRoute, this.httpOptions).pipe(
       catchError(this.handleAnyErrors)
@@ -48,7 +53,20 @@ export class UsersService {
     results.subscribe((res: any) => {
       this.user_id = res[0].user_id
     })
+
     return this.user_id
+  }
+
+  /**
+   * Gets the current user information.
+   * @returns the User in a one element array observable.
+   */
+  getCurrentUser(): Observable<any> {
+    //users api returns array size 1
+    let results = this.http.get(this.usersRoute, this.httpOptions).pipe(
+      catchError(this.handleAnyErrors)
+    );
+    return results;
   }
 
   /**

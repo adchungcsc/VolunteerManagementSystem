@@ -92,7 +92,20 @@ export class MyEventsDataSource extends DataSource<EventItem> {
             console.log('Event Signup Service Test');
             events.forEach((element: any) => {
                 console.log(element);
-                eventsConvertedTest.push(element.event[0]);
+                eventsConvertedTest.push({
+                    event_id: element.event[0].event_id,
+                    event_name: element.event[0].event_name,
+                    event_location: element.event[0].event_location,
+                    event_start: new Date(element.event[0].event_start),
+                    event_end: new Date(element.event[0].event_end),
+                    event_organizer: element.event[0].event_organizer,
+                    event_organizer_email: element.event[0].event_organizer_email,
+                    event_max_volunteers: element.event[0].event_max_volunteers,
+                    event_max_waitlist: element.event[0].event_max_waitlist,
+                    event_description: element.event[0].event_description,
+                    event_credit: element.event[0].event_credit,
+                    event_image: element.event[0].event_image
+                });
             });
             this.eventSubject.next(eventsConvertedTest);
         });

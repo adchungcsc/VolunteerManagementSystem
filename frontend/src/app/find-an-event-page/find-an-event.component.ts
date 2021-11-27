@@ -134,6 +134,7 @@ export class FindAnEventComponent implements OnInit {
     }
 
     // Adjust skip token due to changes made.
+    this.currentPageSize = event.pageSize;
     this.currentSkipToken = event.pageIndex * event.pageSize;
 
     // This loads the new events.

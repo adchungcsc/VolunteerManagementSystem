@@ -56,9 +56,8 @@ export class MyEventsPageComponent implements OnInit {
   private userId = 1;
   userHoursTotal = 0;
   userEventsTotal = 0;
-  private userEventsRoute = this.apiBaseUrl + '/api/v1/attend/user/' + this.userId;
+  // private userEventsRoute = this.apiBaseUrl + '/api/v1/attend/user/' + this.userId;
 
-  // TODO IMPORT USERS SERVICE
   constructor(
     private signupsService: SignupService,
     private eventsService: EventsService,
@@ -66,8 +65,11 @@ export class MyEventsPageComponent implements OnInit {
     private usersService: UsersService,
     private http: HttpClient
     ) { 
-      this.userId = usersService.getCurrentUserId();
-      this.userEventsRoute = this.apiBaseUrl + '/api/v1/attend/user/' + this.userId;
+      // this.userId = usersService.getCurrentUserId();
+      usersService.getCurrentUser().subscribe(u => {
+        this.userId = u[0].user_id;
+      });
+      // this.userEventsRoute = this.apiBaseUrl + '/api/v1/attend/user/' + this.userId;
     }
 
   private handleAnyErrors(error: HttpErrorResponse): any {
@@ -77,7 +79,7 @@ export class MyEventsPageComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    this.getProfile();
+    // this.getProfile();
 
     // TODO UNCOMMENT TO TEST THIS>
     // TODO
@@ -87,7 +89,15 @@ export class MyEventsPageComponent implements OnInit {
 
     this.dataSourceInfo = this.dataSource.connect(this);
     // TODO set user ID.
-    this.dataSource.loadEvents(this.userId);
+    this.usersService.getCurrentUser().subscribe(u => {
+      this.userId = u[0].user_id;
+      console.log(`The User ID is ${this.userId}`);
+      this.dataSource.loadEvents(this.userId);
+
+      console.log("DataSourceInfo from MyEvents");
+      console.log(this.dataSourceInfo);
+    });
+    
 
     // this.dataSourceInfo.subscribe((item) => {
     //   item.forEach(element => {
@@ -102,8 +112,8 @@ export class MyEventsPageComponent implements OnInit {
     // })
     
 
-    console.log("DataSourceInfo from MyEvents");
-    console.log(this.dataSourceInfo);
+    // console.log("DataSourceInfo from MyEvents");
+    // console.log(this.dataSourceInfo);
 
     // TODO UNCOMMENT THIS.
     // let events = this.http.get(this.userEventsRoute, this.httpOptions).pipe(
