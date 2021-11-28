@@ -49,6 +49,7 @@ import { DashboardComponent } from './dashboard/dashboard.component';
 import { SocketioService } from './socketio.service';
 import { LineTruncationDirective, LineTruncationLibModule } from 'ngx-line-truncation';
 import { ManageEventComponent } from './manage-event/manage-event.component';
+import {MatAutocompleteModule} from '@angular/material/autocomplete';
 
 // what application is currently directing
 export function MSALInstanceFactory(): IPublicClientApplication {
@@ -143,7 +144,8 @@ export function MSALGuardConfigFactory(): MsalGuardConfiguration {
     MatExpansionModule,
     MatSliderModule,
     HttpClientModule,
-    LineTruncationLibModule
+    LineTruncationLibModule,
+    MatAutocompleteModule
   ],
   providers: [
     // {
