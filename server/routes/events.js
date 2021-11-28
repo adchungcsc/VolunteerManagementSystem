@@ -6,7 +6,7 @@ const {Op, Sequelize} = require("sequelize");
 var router = express.Router();
 
 
-router.get('/:id?', async (req, res) => {
+router.get('/:id?', isLoggedIn, async (req, res) => {
     /**
      * Get events
      */
@@ -16,8 +16,10 @@ router.get('/:id?', async (req, res) => {
     let event_name = req.query.event_name || ""
     event_name = event_name.toLowerCase()
     // Optional find events within a start and end range.
+    let target_date = new Date();
+    target_date.setDate(target_date.getDate() + 180) // Default ~6 months into future
     let event_start_timestamp = req.query.event_start || (new Date("01 Jan 1970 00:00:00 GMT")).toISOString()
-    let event_end_timestamp = req.query.event_end || (new Date()).toISOString()
+    let event_end_timestamp = req.query.event_end || target_date.toISOString()
 
     //Pagination
     let limit = req.query.pageSize || 100;
