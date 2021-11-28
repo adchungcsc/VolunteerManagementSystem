@@ -5,8 +5,8 @@ function applyExtraSetup(sequelize) {
     event.hasMany(event_attendance, {foreignKey: "event_id"});
     event_signup.hasOne(users, {foreignKey: "user_id"});
     event_signup.hasOne(event, {foreignKey: "event_id"});
-    event_attendance.hasOne(users, {foreignKey: "user_id"});
-    event_attendance.hasOne(event, {foreignKey: "event_id"});
+    event_attendance.hasOne(users, {foreignKey: "user_id", sourceKey: 'attendee_id'});
+    event_attendance.hasOne(event, {foreignKey: "event_id", sourceKey: 'event_id'});
 
 }
 
