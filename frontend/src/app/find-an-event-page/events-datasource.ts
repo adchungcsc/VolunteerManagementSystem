@@ -11,7 +11,7 @@ export interface EventItem {
     event_start: Date;
     event_end: Date;
     event_organizer: string
-    event_organizer_email: string;
+    // event_organizer_email: string;
     event_max_volunteers: number;
     event_max_waitlist: number;
     event_description: string;
@@ -108,7 +108,7 @@ export class EventsDataSource extends DataSource<EventItem> {
                     event_start: new Date(item.event_start),
                     event_end: new Date(item.event_end),
                     event_organizer: item.event_organizer,
-                    event_organizer_email: item.event_organizer_email,
+                    // event_organizer_email: item.event_organizer_email,
                     event_max_volunteers: item.event_max_volunteers,
                     event_max_waitlist: item.event_max_waitlist,
                     event_description: item.event_description,
