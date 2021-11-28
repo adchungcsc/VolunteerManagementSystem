@@ -213,13 +213,15 @@ export class ManageEventComponent implements OnInit {
     })).subscribe(result => {
       if (result) {
         // If yes, sends the request.
-        this.signupService.deleteSignup(signup.event_signup_id).pipe(err => {
+        this.signupService.deleteSignup(signup.event_signup_id).pipe(catchError(err => {
           this.openSnackBar(`Error: ${err}`);
           return of([err]);
-        }).subscribe(res => {
+        })).subscribe(res => {
           console.log(`The response for the signup deletion is ${res}`);
           // I need to check if the signup deletion was a success
           this.openSnackBar("Signup Deleted.");
+          // Reinit the page to get the new data.
+          this.ngOnInit();
         });
 
       } else {

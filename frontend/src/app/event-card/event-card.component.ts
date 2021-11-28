@@ -90,11 +90,14 @@ export class EventCardComponent implements OnInit {
       console.log(`The Result of the confirmation is ${result}`);
       if (result) {
         // If yes, sends the request.
-        this.eventService.deleteEvent(this.eventItem?.event_id).pipe(err => {
+        this.eventService.deleteEvent(this.eventItem?.event_id).pipe(catchError(err => {
           this.openSnackBar(`Error: ${err}`);
+          console.log("Error with deleting event");
           return of([err]);
-        }).subscribe(res => {
+        })).subscribe(res => {
           console.log(`The response for the event deletion is ${res.toString()}`);
+          console.log(`Error may be ${res[0]}`);
+          console.log(res);
           this.openSnackBar("Event Deleted.");
         });
 
