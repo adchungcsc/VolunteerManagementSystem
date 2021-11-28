@@ -1,18 +1,11 @@
 import { Component, OnInit } from '@angular/core';
-import { environment } from 'src/environments/environment';
-import { HttpClient, HttpErrorResponse, HttpHeaders } from '@angular/common/http';
-import { catchError } from 'rxjs/operators';
-import { throwError } from 'rxjs';
+import { Observable } from 'rxjs';
 import { UsersService } from '../users.service';
-
-const GRAPH_ENDPOINT = 'https://graph.microsoft.com/v1.0/me';
-
-type ProfileType = {
-  givenName?: string,
-  surname?: string,
-  userPrincipalName?: string,
-  id?: string
-}
+import { MyEventsDataSource } from '../my-events-page/my-events-datasource';
+import { AttendanceService } from '../attendance.service';
+import { EventSignupsService } from '../event-signups.service';
+import { EventItem, EventsService } from '../events.service';
+import { SignupService } from '../signup.service';
 
 @Component({
   selector: 'app-home-page',
@@ -20,53 +13,45 @@ type ProfileType = {
   styleUrls: ['./home-page.component.css']
 })
 export class HomePageComponent implements OnInit {
-  profile!: ProfileType;
-  /**
-   * Headers used for ease
-   */
-   httpHeaders = new HttpHeaders({
-    'Content-Type': 'application/json',
-    'Access-Control-Allow-Origin': '*'
-  });
 
-  /** Http Options - pulled from prior sample code */
-	httpOptions = {
-		headers: this.httpHeaders
-	}
+  welcomeMessage: string = "Hello."
+  dataSource!: MyEventsDataSource;
+  userId:number = -1;
+  userHoursTotal:number = 0;
+  dataSourceInfo!: Observable<EventItem[]>;
+  viewChange: any;
 
-  private apiBaseUrl = environment.host;
-  // TODO: get current user id
-  private userId = 1;
-  userHoursTotal = 0;
-  private userEventsRoute = this.apiBaseUrl + '/api/v1/attend/user/' + this.userId;
-
-  constructor(private http: HttpClient, private userService: UsersService) { 
-    this.userId = userService.getCurrentUserId();
-    this.userEventsRoute = this.apiBaseUrl + '/api/v1/attend/user/' + this.userId;
-  }
-
-	private handleAnyErrors(error: HttpErrorResponse): any {
-		console.error(`Error from server with code ${error.status}, ` 
-      + `${error.error['error']?.message}`);
-		return throwError('Error: ' + `${error.error['error']?.message}`);
-	}
+  constructor(private usersService: UsersService,
+    private signupsService: SignupService,
+    private eventsService: EventsService,
+    private eventSignupService: EventSignupsService,
+    private attendanceService: AttendanceService) {
+      usersService.getCurrentUser().subscribe(u => {
+        this.userId = u[0].user_id;
+      });
+    }
 
   ngOnInit(): void {
-    let events = this.http.get(this.userEventsRoute, this.httpOptions).pipe(
-      catchError(this.handleAnyErrors)
-    );
-    events.forEach((e: any) => {
-      let event:any = Object.values(e);
-      this.userHoursTotal += event[0].hours;
-    })
-    this.getProfile();
-  }
 
-  getProfile() {
-    this.http.get(GRAPH_ENDPOINT)
-      .subscribe(profile => {
-        this.profile = profile;
+    this.dataSource = new MyEventsDataSource(this.signupsService, this.eventsService, this.eventSignupService);
+
+    this.dataSourceInfo = this.dataSource.connect(this);
+    let self:any = this;
+    this.usersService.getCurrentUser().subscribe(u => {
+      console.log(u);
+      this.welcomeMessage = "Hello " + u[0].name.split(" ")[0] + ".";
+      this.userId = u[0].user_id;
+      this.dataSource.loadEvents(this.userId);
+
+      console.log("DataSourceInfo from MyEvents");
+      console.log(this.dataSourceInfo);
+
+      this.attendanceService.getAllAttendanceForUser(this.userId).subscribe(a => {
+        a.forEach(function (attendance: any) {
+          self.userHoursTotal += attendance.hours;
+        });
       });
+    });
   }
 
 }

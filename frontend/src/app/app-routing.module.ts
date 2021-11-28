@@ -20,6 +20,7 @@ const routes: Routes = [
   { path: 'dashboard', component: DashboardComponent},
   { path: 'create-event', component: CreateEventPageComponent},
   { path: 'manage-event', component: ManageEventComponent},
+  { path: 'profile', component: LogInPageComponent}
 ];
 
 @NgModule({
