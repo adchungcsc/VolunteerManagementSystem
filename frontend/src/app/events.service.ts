@@ -180,6 +180,8 @@ export class EventsService {
       throw new Error('No valid ID provided');
     }
 
+    console.log("Attempting delete");
+
     // delete the matching ID.
     return this.http.delete(this.eventsRoute + id, this.httpOptions).pipe(
       catchError(this.handleAnyErrors)

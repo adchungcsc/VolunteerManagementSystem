@@ -39,6 +39,7 @@ import {CreateEventPageComponent} from "./create-event-page/create-event-page.co
 import {MatSlideToggleModule} from '@angular/material/slide-toggle';
 import {MatSliderModule} from '@angular/material/slider';
 import {MatExpansionModule} from '@angular/material/expansion';
+import {MatTooltipModule} from '@angular/material/tooltip';
 import { UnauthorizedComponent } from './unauthorized/unauthorized.component';
 import { BrowserCacheLocation, InteractionType, IPublicClientApplication, LogLevel, PublicClientApplication } from '@azure/msal-browser';
 import { MsalBroadcastService, MsalGuard, MsalGuardConfiguration, MsalInterceptor, MsalInterceptorConfiguration, MsalRedirectComponent, MsalService, MSAL_GUARD_CONFIG, MSAL_INSTANCE, MSAL_INTERCEPTOR_CONFIG } from '@azure/msal-angular';
@@ -49,6 +50,7 @@ import { DashboardComponent } from './dashboard/dashboard.component';
 import { SocketioService } from './socketio.service';
 import { LineTruncationDirective, LineTruncationLibModule } from 'ngx-line-truncation';
 import { ManageEventComponent } from './manage-event/manage-event.component';
+import { DeleteConfirmDialogComponent } from './delete-confirm-dialog/delete-confirm-dialog.component';
 
 // what application is currently directing
 export function MSALInstanceFactory(): IPublicClientApplication {
@@ -110,7 +112,8 @@ export function MSALGuardConfigFactory(): MsalGuardConfiguration {
     ConfirmDialogComponent,
     MicrosoftLoginComponent,
     DashboardComponent,
-    ManageEventComponent
+    ManageEventComponent,
+    DeleteConfirmDialogComponent
   ],
   imports: [
     BrowserModule,
@@ -141,6 +144,7 @@ export function MSALGuardConfigFactory(): MsalGuardConfiguration {
     MatDialogModule,
     MatSnackBarModule,
     MatExpansionModule,
+    MatTooltipModule,
     MatSliderModule,
     HttpClientModule,
     LineTruncationLibModule
