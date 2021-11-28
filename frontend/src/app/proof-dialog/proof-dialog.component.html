@@ -1,5 +1,5 @@
 <div class="eventProofDialog">
-    <h2 mat-dialog-title>[TODO INSERT NAME FROM GRAPH]'s Attendance for {{data.eventName}}</h2>
+    <h2 mat-dialog-title>{{nameOfUser}}'s Attendance for {{data.eventName}}</h2>
     <h4 [ngStyle]="getMyStyles()">Attendance Status: {{submitStatus ? 'Submitted' : 'Not Submitted'}}</h4>
 
     <form [formGroup]="form" (ngSubmit)="onSubmitClick()">

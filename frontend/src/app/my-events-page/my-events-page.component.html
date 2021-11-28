@@ -14,6 +14,13 @@
 </mat-card>
 
 <mat-tab-group>
+    <mat-tab label="All Events">
+        <div fxLayout="row wrap" fxLayoutGap="5vw" class="cardContainer">
+            <ng-container *ngFor="let event of this.dataSourceInfo | async">
+                <app-event-card fxFlex.xs="100%" fxFlex.lt-lg="50%" fxFlex.lg="33%" [eventItem]="event"></app-event-card>
+            </ng-container>
+        </div>
+    </mat-tab>
     <mat-tab label="Upcoming">
         <div fxLayout="row wrap" fxLayoutGap="5vw" class="cardContainer">
             <ng-container *ngFor="let event of this.dataSourceInfo | async">

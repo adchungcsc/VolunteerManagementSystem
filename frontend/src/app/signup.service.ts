@@ -4,6 +4,17 @@ import { Observable, throwError } from 'rxjs';
 import { catchError } from 'rxjs/operators';
 import { environment } from 'src/environments/environment';
 
+/**
+ * Represents what is returned from signup Service.
+ */
+export interface SignupItem {
+  event_id: number;
+  event_signup_id: number;
+  is_waitlisted: boolean;
+  user_id: number;
+  waitlist_timestamp: any;
+}
+
 @Injectable({
   providedIn: 'root'
 })
@@ -55,6 +66,25 @@ export class SignupService {
 
     // TODO REMOVE
     console.log(results);
+
+    return results;
+  }
+
+  /**
+   * Finds all of the events a user has signed up.
+   * @param userId The User ID to find events
+   */
+  getEventSignupsForUser(userId: number): Observable<any> {
+    if ((userId == undefined || userId == null) && userId !== 0) {
+      throw new Error('Invalid ID');
+    }
+
+    // Returns the result or the error...
+    let results = this.http.get(this.signupRoute + 'user/' + userId, {
+      headers: this.httpHeaders,
+    }).pipe(
+      catchError(this.handleAnyErrors)
+    );
 
     return results;
   }

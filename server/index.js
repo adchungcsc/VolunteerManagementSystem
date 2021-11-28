@@ -9,6 +9,7 @@ require('./auth');
 require('dotenv').config();
 
 const port = process.env.PORT || 4200
+// const port = process.env.PORT || 3000
 const sessionSecret = process.env.SESSION_SECRET || 'cats'
 
 

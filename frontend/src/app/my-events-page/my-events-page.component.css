@@ -61,3 +61,7 @@ mat-tab-group {
         margin-right: 15px;
     }
 }
+
+app-event-card {
+    flex: 0 1;
+}

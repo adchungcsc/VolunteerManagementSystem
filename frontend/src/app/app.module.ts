@@ -47,6 +47,8 @@ import { ConfirmDialogComponent } from './confirm-dialog/confirm-dialog.componen
 import {MicrosoftLoginComponent} from "./microsoft-login/microsoft-login.component";
 import { DashboardComponent } from './dashboard/dashboard.component';
 import { SocketioService } from './socketio.service';
+import { LineTruncationDirective, LineTruncationLibModule } from 'ngx-line-truncation';
+import { ManageEventComponent } from './manage-event/manage-event.component';
 
 // what application is currently directing
 export function MSALInstanceFactory(): IPublicClientApplication {
@@ -107,7 +109,8 @@ export function MSALGuardConfigFactory(): MsalGuardConfiguration {
     ProofDialogComponent,
     ConfirmDialogComponent,
     MicrosoftLoginComponent,
-    DashboardComponent
+    DashboardComponent,
+    ManageEventComponent
   ],
   imports: [
     BrowserModule,
@@ -139,7 +142,8 @@ export function MSALGuardConfigFactory(): MsalGuardConfiguration {
     MatSnackBarModule,
     MatExpansionModule,
     MatSliderModule,
-    HttpClientModule
+    HttpClientModule,
+    LineTruncationLibModule
   ],
   providers: [
     // {
@@ -164,6 +168,7 @@ export function MSALGuardConfigFactory(): MsalGuardConfiguration {
     // MsalBroadcastService,
     SocketioService
   ],
+  exports: [LineTruncationDirective],
   bootstrap: [AppComponent] //, MsalRedirectComponent]
 })
 export class AppModule { }

@@ -51,25 +51,28 @@ export class DetailsDialogComponent implements OnInit {
       var enrollCount: number = 0;
       console.log(res);
       console.log(res.length);
-      for (let item of res) {
-        console.log(item);
-        console.log(this.myId)
-        if (item.is_waitlisted) {
-          waitCount++;
-          if (item.user_id === this.myId) {
-            this.currentlyWaitlisted = true;
-            this.positionOnList = waitCount;
-          }
-        } else {
-          enrollCount++;
-          if (item.user_id === this.myId) {
-            this.currentlyEnrolled = true;
+      userService.getCurrentUser().subscribe(u => {
+        this.myId = u[0].user_id;
+        for (let item of res) {
+          console.log(item);
+          console.log(this.myId)
+          if (item.is_waitlisted) {
+            waitCount++;
+            if (item.user_id === this.myId) {
+              this.currentlyWaitlisted = true;
+              this.positionOnList = waitCount;
+            }
+          } else {
+            enrollCount++;
+            if (item.user_id === this.myId) {
+              this.currentlyEnrolled = true;
+            }
           }
         }
-      }
-      this.numberFilled = enrollCount;
-      this.numberWaitlistFilled = waitCount;
-      this.loadComplete = true;
+        this.numberFilled = enrollCount;
+        this.numberWaitlistFilled = waitCount;
+        this.loadComplete = true;
+      });
     });
 
 
@@ -105,7 +108,7 @@ export class DetailsDialogComponent implements OnInit {
 
       this.loadComplete = true;
       // Open dialog box.
-      const proofDialogRef = this.dialog.open(ProofDialogComponent, {data: {eventId: this.eventId, eventName: this.data.event_name, attendance: attendMatch}});
+      const proofDialogRef = this.dialog.open(ProofDialogComponent, {data: {eventId: this.eventId, eventName: this.data.event_name, attendance: attendMatch, userId: this.myId}});
 
       proofDialogRef.afterClosed().subscribe(result => {
         console.log(`Proof Dialog Result: ${result}`);
