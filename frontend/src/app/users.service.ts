@@ -80,4 +80,13 @@ export class UsersService {
     );
   }
 
+  /**
+   * Gets and returns all users in an Observable.
+   */
+  getAllUsers(): Observable<any> {
+    return this.http.get(this.usersRoute + 'organization', this.httpOptions).pipe(
+      catchError(this.handleAnyErrors)
+    );
+  }
+
 }

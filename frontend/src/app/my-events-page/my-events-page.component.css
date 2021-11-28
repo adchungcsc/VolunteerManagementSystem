@@ -1,5 +1,7 @@
 div.cardContainer {
-    max-height: 75vh;
+    max-height: 100%;
+    display: flex;
+    /* max-height: 75vh; */
     padding-left: 5vw;
 }
 
@@ -64,4 +66,5 @@ mat-tab-group {
 
 app-event-card {
     flex: 0 1;
+    
 }

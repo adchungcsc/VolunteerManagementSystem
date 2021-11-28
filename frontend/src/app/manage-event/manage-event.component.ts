@@ -3,6 +3,7 @@ import { MatDialog } from '@angular/material/dialog';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { MatTableDataSource } from '@angular/material/table';
 import { ActivatedRoute, Router } from '@angular/router';
+import { AttendanceItem, AttendanceService } from '../attendance.service';
 import { EventsService } from '../events.service';
 import { SignupItem, SignupService } from '../signup.service';
 import { UsersService } from '../users.service';
@@ -27,8 +28,8 @@ export class ManageEventComponent implements OnInit {
   eventId: number = 0;
 
   // What columns to show.
-  displayedColumns = ['user_id', 'is_waitlisted', 'waitlist_timestamp'];
-  // displayedColumns = ['user_name', 'user_email', 'is_waitlisted', 'waitlist_timestamp'];
+  // displayedColumns = ['user_id', 'is_waitlisted', 'waitlist_timestamp'];
+  displayedColumns = ['user_id', 'user_name', 'user_email', 'is_waitlisted', 'waitlist_timestamp'];
 
 
   // The datasource
@@ -41,6 +42,7 @@ export class ManageEventComponent implements OnInit {
     private usersService: UsersService,
     private eventService: EventsService,
     private signupService: SignupService,
+    private attendanceService: AttendanceService,
     public dialog: MatDialog,
     private _snackBar: MatSnackBar,
     private Activatedroute: ActivatedRoute,
@@ -68,28 +70,25 @@ export class ManageEventComponent implements OnInit {
              this.eventName = item[0].event_name;
            })
 
-           // At this point, we are not still in our request.
-           // TODO FIX THIS
-           this.signupService.getSignupsForEvent(this.eventId).subscribe((signups: any) => {
-            //  var loop = new Promise((resolve, reject) => {
-               signups.forEach((element: SignupItem) => {
-                 this.usersService.getUserObjectFromId(element.user_id).subscribe(i => {
-                   let u: UserItem = {
-                     user_id: element.user_id,
-                     user_name: i.name,
-                     user_email: i.email
-                   };
-                   this.userMap.set(element.user_id, u);
-                //  }).add(resolve('complete'));
-                  });
-               });
-            //  });
-             
-             console.log(this.userMap);
-             console.log(this.userMap.values());
-             // TODO THIS RUNS TOO EARLY!!!!!!
-            //  loop.then(this.dataSource.data = signups);
-             this.dataSource.data = signups
+           // Get ALL of the users in the system.
+           this.usersService.getAllUsers().subscribe((users: any) => {
+             // This basically takes each user and makes a UserItem, storing it in the map.
+             users.forEach((element: any) => {
+               let u: UserItem = {
+                 user_id: element.user_id,
+                 user_name: element.name,
+                 user_email: element.email
+               };
+               this.userMap.set(element.user_id, u);
+             });
+
+             // This gets the actual signups and provides it as the datasource.
+             this.signupService.getSignupsForEvent(this.eventId).subscribe((signups: any) => {
+               console.log(this.userMap);
+               console.log(this.userMap.values());
+
+               this.dataSource.data = signups;
+             });
            });
         });
   }
@@ -120,7 +119,27 @@ export class ManageEventComponent implements OnInit {
   }
 
   clickedRow(row: any) {
-    this.openSnackBar(`Clicked on ${row.user_id}`);
+    this.openSnackBar(`Clicked on ${row.user_id} ${this.userMap.get(row.user_id)?.user_name}`);
+
+    this.attendanceService.getAllAttendanceForEvent(this.eventId).subscribe(result => {
+      console.log(result);
+      var attendMatch: (AttendanceItem | null) = null;
+      // PULL THE CORRECT ONE IF PRESENT AND PASS IT ONWARDS.
+      // Find the match.
+      result.forEach((element: any) => {
+        if (element.attendee_id === row.user_id) {
+          attendMatch = element;
+        }
+      });
+
+      // We have a match (or there is no match).
+      console.log(attendMatch);
+      if (attendMatch !== null) {
+        this.openSnackBar(`Attendance Found: ${attendMatch}`);
+      } else {
+        this.openSnackBar("No Attendance Records Present");
+      }
+    });
   }
 
 }

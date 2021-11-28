@@ -71,6 +71,8 @@ export class EventCardComponent implements OnInit {
         console.log(`Dialog result: ${result}`);
         if (result.event === 'signup') {
           this.openSnackBar(`Event Sign-up Status: ${result.status}`);
+        } else if (result.event === 'proofSubmitted') {
+          this.openSnackBar(`Event Attendance Status: ${result.status}`);
         }
       }
     });

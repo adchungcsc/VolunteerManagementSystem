@@ -6,16 +6,21 @@
 <table mat-table [dataSource]="dataSource">
     <!-- The User Column -->
     <ng-container matColumnDef="user_id">
-        <th mat-header-cell *matHeaderCellDef> Attendee </th>
-        <td mat-cell *matCellDef="let signup"> {{userMap.get(signup.user_id)?.user_name ?? signup.user_id}} </td>
-        <!-- <td mat-cell *matCellDef="let signup"> {{userMap.get(signup.user_id)?.user_name ?? signup.user_id}} </td> -->
+        <th mat-header-cell *matHeaderCellDef> User ID </th>
+        <td mat-cell *matCellDef="let signup"> {{signup.user_id}} </td>
+    </ng-container>
+
+    <!-- The User Name Column -->
+    <ng-container matColumnDef="user_name">
+        <th mat-header-cell *matHeaderCellDef> Attendee Name </th>
+        <td mat-cell *matCellDef="let signup"> {{userMap.get(signup.user_id)?.user_name}} </td>
     </ng-container>
 
     <!-- The User Email Column -->
-    <!-- <ng-container matColumnDef="user_email">
+    <ng-container matColumnDef="user_email">
         <th mat-header-cell *matHeaderCellDef> Attendee Email </th>
         <td mat-cell *matCellDef="let signup"> {{userMap.get(signup.user_id)?.user_email}} </td>
-    </ng-container> -->
+    </ng-container>
 
     <!-- The Status Column -->
     <ng-container matColumnDef="is_waitlisted">
