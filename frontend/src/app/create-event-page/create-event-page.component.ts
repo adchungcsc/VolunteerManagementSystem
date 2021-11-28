@@ -21,8 +21,6 @@ export interface User {
 })
 export class CreateEventPageComponent implements OnInit {
 
-
-
   /** The form object for fields to be edited */
   form = new FormGroup({
     event_name: new FormControl('', [Validators.minLength(2), Validators.required]),
@@ -33,7 +31,7 @@ export class CreateEventPageComponent implements OnInit {
     num_of_volunteers: new FormControl(10, Validators.required),
     waitlist_num: new FormControl(0),
     address: new FormControl('', [Validators.minLength(2), Validators.required]),
-    event_organizer: new FormControl(1),
+    event_organizer: new FormControl(''),
     description: new FormControl(''),
     image: new FormControl(null)
   });
@@ -49,7 +47,7 @@ export class CreateEventPageComponent implements OnInit {
   imagePreview: string = '';
 
   // List of users for organizer selection
-  myControl = new FormControl();
+
   options: User[] = [];
   filteredOptions: Observable<User[]> | undefined;
 
@@ -112,7 +110,6 @@ export class CreateEventPageComponent implements OnInit {
            }
     });
 
-    console.log("all users");
     this.usersService.getAllUsers().subscribe(response => {
       response.forEach((item: any) => {
         this.options.push({
@@ -122,7 +119,7 @@ export class CreateEventPageComponent implements OnInit {
         });
       });
     });
-    this.filteredOptions = this.myControl.valueChanges.pipe(
+    this.filteredOptions = this.form.controls.event_organizer.valueChanges.pipe(
       startWith(''),
       map(value => this._filter(value)),
     );
@@ -167,13 +164,16 @@ export class CreateEventPageComponent implements OnInit {
     console.log(startT);
     let endT = (endDateTime.toISOString());
 
+    let organizerDelimited = this.form.get('event_organizer')?.value.split(" ");
+    let organizerId = organizerDelimited[organizerDelimited.length - 1];
+
     // First, bundle the form
     let formData = {
       event_name: this.form.get('event_name')?.value,
       event_location: this.form.get('address')?.value,
       event_start: startT,
       event_end: endT,
-      event_organizer: this.form.get('event_organizer')?.value,
+      event_organizer: Number(organizerId),
       event_max_volunteers: this.form.get('num_of_volunteers')?.value,
       event_max_waitlist: this.form.get('waitlist_num')?.value,
       event_description: this.form.get('description')?.value,
