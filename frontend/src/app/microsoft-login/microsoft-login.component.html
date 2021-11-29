@@ -1,16 +1,13 @@
 <div class="jumbotron bg-transparent text-center">
   <div class="card text-center">
-    <h6 class="card-header">
-      Login
-    </h6>
 
     <div class="spinner-container">
       <h1 class="loading">Please Wait...</h1>
       <mat-spinner class="main-spin" *ngIf="displaySpinner"></mat-spinner>
     </div>
 
-    <div class="card-block">
-      <button mat-raised-button class="btn btn-social-icon " (click)="signInWithAzureAd()"><span class="fa fa-google">MICROSOFT SIGN IN</span>
+    <div class="card-block signin">
+      <button mat-raised-button class="btn btn-social-icon signinButton" (click)="signInWithAzureAd()"><span class="fa fa-google">Sign in with Microsoft</span>
       </button>
     </div>
   </div>
@@ -18,5 +15,5 @@
     <button mat-raised-button class="btn btn-danger" (click)="signOut()">Sign out</button>
   </div>
   <hr/>
-  <button mat-raised-button (click)="testProtectedApiEndpoint()">Test Protection</button>
+  <button hidden mat-raised-button (click)="testProtectedApiEndpoint()">Test Protection</button>
 </div>
