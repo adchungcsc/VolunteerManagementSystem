@@ -72,7 +72,7 @@ function isLoggedIn(req, res, next) {
 
 module.exports = {isLoggedIn}
 
-app.get('/api/v1/auth/azureadoauth2', passport.authenticate('azure_ad_oauth2'), (req, res) => {
+app.get('/auth/azureadoauth2', passport.authenticate('azure_ad_oauth2'), (req, res) => {
 })
 
 
@@ -84,11 +84,11 @@ app.get('/callback',
     }
 );
 
-app.get('/api/v1/protected', isLoggedIn, (req, res) => {
+app.get('/protected', isLoggedIn, (req, res) => {
     res.send(JSON.stringify(req.user.user_id));
 });
 
-app.get('/api/v1/logout', (req, res) => {
+app.get('/logout', (req, res) => {
     req.logout();
     req.session.destroy();
     res.send('Goodbye!');
@@ -123,20 +123,20 @@ const event = require('./routes/events');
 const attendance = require('./routes/attendance');
 const signup = require('./routes/signup');
 
-app.use('/api/v1/user', users);
-app.use('/api/v1/attend', attendance);
-app.use('/api/v1/event', event);
-app.use('/api/v1/signup', signup);
+app.use('/user', users);
+app.use('/attend', attendance);
+app.use('/event', event);
+app.use('/signup', signup);
 
 
-const path = require('path');
-
-// Migrate angular frontend off express and onto nginx server later.
-app.use(express.static(path.join(__dirname, 'static')));
-
-app.get('/*', async (req, res) => {
-    res.sendFile(path.resolve(__dirname, 'static', 'index.html'));
-});
+// const path = require('path');
+//
+// // Migrate angular frontend off express and onto nginx server later.
+// app.use(express.static(path.join(__dirname, 'static')));
+//
+// app.get('/*', async (req, res) => {
+//     res.sendFile(path.resolve(__dirname, 'static', 'index.html'));
+// });
 
 
 app.listen(port, function () {
