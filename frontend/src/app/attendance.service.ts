@@ -115,7 +115,7 @@ export class AttendanceService {
         throw new Error('Invalid ID');
       }
   
-      return this.http.put(this.attendanceRoute + eventId + '/' + attendanceId, JSON.stringify(data), this.httpOptions).pipe(
+      return this.http.put(this.attendanceRoute + attendanceId, JSON.stringify(data), this.httpOptions).pipe(
         catchError(this.handleAnyErrors)
       );
     }
