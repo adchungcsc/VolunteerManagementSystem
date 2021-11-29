@@ -38,7 +38,6 @@ export class HomePageComponent implements OnInit {
     this.dataSourceInfo = this.dataSource.connect(this);
     let self:any = this;
     this.usersService.getCurrentUser().subscribe(u => {
-      console.log(u);
       if (u[0].name.includes(" ")) {
         this.welcomeMessage = "Hello " + u[0].name.split(" ")[0] + ".";
       } else {

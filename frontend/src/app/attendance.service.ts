@@ -62,9 +62,6 @@ export class AttendanceService {
       catchError(this.handleAnyErrors)
     );
 
-    // TODO REMOVE
-    console.log(results);
-
     return results;
   }
 

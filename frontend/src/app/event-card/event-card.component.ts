@@ -70,7 +70,6 @@ export class EventCardComponent implements OnInit {
       return of([err]);
     })).subscribe(result => {
       if (result != undefined) {
-        console.log(`Dialog result: ${result}`);
         if (result.event === 'signup') {
           this.openSnackBar(`Event Sign-up Status: ${result.status}`);
         } else if (result.event === 'proofSubmitted') {
@@ -88,17 +87,12 @@ export class EventCardComponent implements OnInit {
       this.openSnackBar(`Error: ${err}`);
       return of([err]);
     })).subscribe(result => {
-      console.log(`The Result of the confirmation is ${result}`);
       if (result) {
         // If yes, sends the request.
         this.eventService.deleteEvent(this.eventItem?.event_id).pipe(catchError(err => {
           this.openSnackBar(`Error: ${err}`);
-          console.log("Error with deleting event");
           return of([err]);
         })).subscribe(res => {
-          console.log(`The response for the event deletion is ${res.toString()}`);
-          console.log(`Error may be ${res[0]}`);
-          console.log(res);
           this.openSnackBar("Event Deleted.");
         });
 
