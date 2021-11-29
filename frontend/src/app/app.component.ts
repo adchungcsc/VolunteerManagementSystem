@@ -18,6 +18,9 @@ export class AppComponent {
       if (event instanceof NavigationEnd) {
         let eventUrl = event.url.replace("/", "");
         if (eventUrl == "") eventUrl = "landing";       
+        if (eventUrl.includes("?")) {
+          eventUrl = eventUrl.split("?")[0];
+        }
         this.socketService.socket.emit('route call update', eventUrl);
       }
 
