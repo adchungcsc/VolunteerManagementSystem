@@ -33,3 +33,13 @@ div.spinner-container {
   visibility: hidden;
   height: 1px;
 }
+
+mat-form-field {
+  display: block;
+}
+
+@media (max-width: 768px) {
+  .form-container{
+    margin: 50px;
+  }
+}
