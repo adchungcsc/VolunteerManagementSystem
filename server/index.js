@@ -11,7 +11,10 @@ require('dotenv').config();
 
 const io = require('socket.io')(http, {
     cors: {
-      origins: ['http://localhost:4200']
+    // local:
+        origins: ['http://localhost:4200']
+    // vm:
+    //   origins: ['https://participance.eastus.cloudapp.azure.com']
     }
 });
 

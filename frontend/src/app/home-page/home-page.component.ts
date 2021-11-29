@@ -39,7 +39,11 @@ export class HomePageComponent implements OnInit {
     let self:any = this;
     this.usersService.getCurrentUser().subscribe(u => {
       console.log(u);
-      this.welcomeMessage = "Hello " + u[0].name.split(" ")[0] + ".";
+      if (u[0].name.includes(" ")) {
+        this.welcomeMessage = "Hello " + u[0].name.split(" ")[0] + ".";
+      } else {
+        this.welcomeMessage = "Hello " + u[0].name + ".";
+      }
       this.userId = u[0].user_id;
       this.dataSource.loadEvents(this.userId);
 
