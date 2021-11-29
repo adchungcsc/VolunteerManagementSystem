@@ -1,10 +1,12 @@
-1. Build code
-2. Add detail
-3. Profit
-
 # Setup Runbook
 
-Skip steps 1 and 2 if already done once.
+Skip steps 0, 1 and 2 if already done once.
+
+0. Provision Azure Postgres Database
+   - Allow incoming connections from your IP addresses (configure your home/company network IP address on allowlist)
+   - Choose cheapest postgres database needed
+   - Once provisioned and credentials set, run DDL to configure schema
+     - WEBAPPS-11/schema/schemav2.sql
 
 1. Provision Azure Virtual Machine (Cloud web dashboard UI intermittently changes but core configurations stay save)
    - On provision step, allow incoming and outbound traffic from HTTPS port 443 and HTTP port 80 in firewall rules
@@ -72,9 +74,13 @@ Skip steps 1 and 2 if already done once.
       - Navigate to `https://DESIRED_SUBDOMAIN.eastus.cloudapp.azure.com` in browser from local machine to verify your files are being served.
         - Note: HTTP should not be enabled. Only HTTPS.
       - change directory back to WEBAPPS-11/server `cd /home/USERNAME/WEBAPPS-11/server`
-      - set required environment variables (variables with example configuration) (server will not run without these)
-        - `export DB_CONN_STR=postgres://DATABASE_USERNAME@DATABASE_NAME:DATABASE_PASSWORD@DATABASE_NAME.postgres.database.azure.com:5432/DATABASE?ssl=true`
-        - `export CALLBACK_URL=https://participance.eastus.cloudapp.azure.com/callback`
-        - `export CLIENT_SECRET=AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA`
-        - `export SESSION_SECRET=SOMETHINGSECRETTHATSNOTADICTIONARYWORDORSOMETHINGEVERSAIDBEFOREORSUPERRANDOM`
-      - run server `node index.js`
+      - set required environment variables in *volunteer-manager.config.js* in PRODUCTION ENVIRONMENT for pm2 (variables with example configuration) (server will not run without these)
+        - `DB_CONN_STR=postgres://DATABASE_USERNAME@DATABASE_NAME:DATABASE_PASSWORD@DATABASE_NAME.postgres.database.azure.com:5432/DATABASE?ssl=true`
+        - `CALLBACK_URL=https://participance.eastus.cloudapp.azure.com/callback`
+        - `CLIENT_SECRET=AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA`
+        - `SESSION_SECRET=SOMETHINGSECRETTHATSNOTADICTIONARYWORDORSOMETHINGEVERSAIDBEFOREORSUPERRANDOM`
+      - Running the server.
+        - (NOT RECOMMENDED EXCEPT FOR SMALL TEST (MUST ALSO SET ENV VARS ON SERVER)) run server quick and dirty `node index.js`
+        - (*RECOMMENDED* MORE ROBUST & WILL RUN IN BACKGROUND EVEN IF TERMINAL CLOSED) `pm2 start volunteer-manager.config.js --env production`
+      - Stopping the server
+        - `pm2 stop VolunteerManager` Stop pm2
