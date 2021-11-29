@@ -74,7 +74,7 @@ Skip steps 0, 1 and 2 if already done once.
       - Navigate to `https://DESIRED_SUBDOMAIN.eastus.cloudapp.azure.com` in browser from local machine to verify your files are being served.
         - Note: HTTP should not be enabled. Only HTTPS.
       - change directory back to WEBAPPS-11/server `cd /home/USERNAME/WEBAPPS-11/server`
-      - set required environment variables in *volunteer-manager.config.js* in PRODUCTION ENVIRONMENT for pm2 (variables with example configuration) (server will not run without these)
+      - set required environment variables in FILE *volunteer-manager.config.js* in PRODUCTION ENVIRONMENT for pm2 (variables with example configuration) (server will not run without these)
         - `DB_CONN_STR=postgres://DATABASE_USERNAME@DATABASE_NAME:DATABASE_PASSWORD@DATABASE_NAME.postgres.database.azure.com:5432/DATABASE?ssl=true`
         - `CALLBACK_URL=https://participance.eastus.cloudapp.azure.com/callback`
         - `CLIENT_SECRET=AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA`
