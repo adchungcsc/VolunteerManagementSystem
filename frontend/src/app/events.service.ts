@@ -12,7 +12,7 @@ export interface EventItem {
   event_start: Date;
   event_end: Date;
   event_organizer: string
-  event_organizer_email: string;
+  // event_organizer_email: string;
   event_max_volunteers: number;
   event_max_waitlist: number;
   event_description: string;

@@ -28,3 +28,8 @@ div.spinner-container {
   width: 100%;
   background-color: rgba(0, 0, 0, 0.034);
 }
+
+.waitlistinfo {
+  visibility: hidden;
+  height: 1px;
+}
