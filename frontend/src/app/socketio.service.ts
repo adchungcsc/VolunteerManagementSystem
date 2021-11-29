@@ -9,35 +9,54 @@ import { BehaviorSubject } from 'rxjs';
 export class SocketioService {
 
   socket: any;
-  private _usersSource = new BehaviorSubject<number>(0);
-  users$ = this._usersSource.asObservable();
+  private _pagesSource = new BehaviorSubject<number>(0);
+  pages$ = this._pagesSource.asObservable();
   private _uptimeSource = new BehaviorSubject<number>(0);
   uptime$ = this._uptimeSource.asObservable();
+  private _apiCallsSource = new BehaviorSubject<number>(0);
+  apiCalls$ = this._apiCallsSource.asObservable();
+  private _routesSource = new BehaviorSubject<any>([]);
+  routesCalled$ = this._routesSource.asObservable();
 
   constructor() {}
 
-  usersChange(userCount: number) {
-    console.log("new user count: " + userCount);
-    this._usersSource.next(userCount);
+  pagesChange(pageCount: number) {
+    this._pagesSource.next(pageCount);
   }
 
   uptimeChange(uptimeSeconds: number) {
     this._uptimeSource.next(uptimeSeconds);
   }
 
+  apiCallsChange(apiCalls: number) {
+    this._apiCallsSource.next(apiCalls);
+  }
+
+  routesCalledChange(data: any) {
+    this._routesSource.next(data);
+  }
+
   setupSocketConnection() {
     this.socket = io(environment.SOCKET_ENDPOINT);  
 
     this.socket.on('server uptime', (data: number) => {
-      console.log(data);
       this.uptimeChange(data);
     });
 
-    this.socket.on('user count update', (data: number) => {
-      console.log(data);
-      this.usersChange(data);
+    this.socket.on('page count update', (data: number) => {
+      this.pagesChange(data);
+    });
+
+    this.socket.on('api call update', (data: number) => {
+      this.apiCallsChange(data);
+    });
+
+    this.socket.on('routes array update', (data: any) => {
+      this.routesCalledChange(data);
     });
   }
+
+
 
   disconnect() {
     if (this.socket) {
