@@ -14,9 +14,10 @@ import { EventItem, EventsService } from '../events.service';
 })
 export class EventCardComponent implements OnInit {
 
-  
+  // The eventItem is passed in.
   @Input() eventItem?: EventItem;
 
+  // Additional information.
   eventDate: string;
   eventTimes: string;
   eventImage: string;
@@ -60,7 +61,7 @@ export class EventCardComponent implements OnInit {
     }
   }
 
-
+  // Opens the details dialog.
   openDialog() {
     const dialogRef = this.dialog.open(DetailsDialogComponent, {data: this.eventItem});
 
@@ -107,6 +108,7 @@ export class EventCardComponent implements OnInit {
     });
   }
 
+  // Opens a snackbar with a message
   openSnackBar(message: string) {
     this._snackBar.open(message, undefined, {duration: 3000});
   }

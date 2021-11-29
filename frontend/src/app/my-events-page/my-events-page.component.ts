@@ -44,8 +44,6 @@ export class MyEventsPageComponent implements OnInit {
 
     this.dataSource = new MyEventsDataSource(this.signupsService, this.eventsService, this.eventSignupService);
 
-    // CollectionViewer a = new CollectionViewer();
-
     this.dataSourceInfo = this.dataSource.connect(this);
     let self:any = this;
     this.usersService.getCurrentUser().subscribe(u => {
@@ -56,9 +54,6 @@ export class MyEventsPageComponent implements OnInit {
       }
       this.userId = u[0].user_id;
       this.dataSource.loadEvents(this.userId);
-
-      console.log("DataSourceInfo from MyEvents");
-      console.log(this.dataSourceInfo);
 
       this.attendanceService.getAllAttendanceForUser(this.userId).subscribe(a => {
         a.forEach(function (attendance: any) {

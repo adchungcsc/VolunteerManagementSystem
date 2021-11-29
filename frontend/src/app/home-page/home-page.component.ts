@@ -47,9 +47,6 @@ export class HomePageComponent implements OnInit {
       this.userId = u[0].user_id;
       this.dataSource.loadEvents(this.userId);
 
-      console.log("DataSourceInfo from MyEvents");
-      console.log(this.dataSourceInfo);
-
       this.attendanceService.getAllAttendanceForUser(this.userId).subscribe(a => {
         a.forEach(function (attendance: any) {
           self.userHoursTotal += attendance.hours;

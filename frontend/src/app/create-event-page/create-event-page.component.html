@@ -70,7 +70,6 @@
       <input id="description" formControlName="description" matInput type="text">
     </mat-form-field>
 
-      <!-- TODO FIX THIS -->
     <mat-label>Event Image</mat-label>
     <button type="button" mat-button (click)="fileUploader.click()">Upload Image</button>
     <input type="file" #fileUploader (change)="onSelect($event)" hidden accept=".jpg, .jpeg, .png, .heic, .tiff">

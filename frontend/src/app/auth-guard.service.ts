@@ -25,8 +25,6 @@ export class AuthGuardService implements CanActivate {
       }))
       .subscribe((response) => {
         if (response) {
-          console.log("Guard");
-          console.log(response);
           this.validUser = (response != 0);
         }
         resolve(response != 0);
