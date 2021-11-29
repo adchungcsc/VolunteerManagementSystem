@@ -102,4 +102,19 @@ export class SignupService {
       catchError(this.handleAnyErrors)
     );
   }
+
+  /**
+   * Deletes a signup with the matching ID.
+   * @param eventSignupId The ID of the signup to delete
+   * @returns Confirmation the signup was deleted
+   */
+  deleteSignup(eventSignupId: number): Observable<any> {
+    if ((eventSignupId == undefined || eventSignupId == null) && eventSignupId !== 0) {
+      throw new Error('Invalid ID');
+    }
+
+    return this.http.delete(this.signupRoute + eventSignupId, this.httpOptions).pipe(
+      catchError(this.handleAnyErrors)
+    );
+  }
 }

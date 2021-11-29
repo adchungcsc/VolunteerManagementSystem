@@ -23,6 +23,7 @@
             <!-- <a [routerLink]="['../', 'create-event']" [queryParams]="{eventId: this.eventItem.event_id}">Edit Event</a> -->
             <button mat-menu-item [routerLink]="['../', 'create-event']" [queryParams]="{eventId: this.eventItem.event_id}"><span>Edit Event</span></button>
             <button mat-menu-item [routerLink]="['../', 'manage-event']" [queryParams]="{eventId: this.eventItem.event_id}"><span>Manage Event</span></button>
+            <button mat-menu-item (click)="deleteThisEvent($event)"><span>Delete Event</span></button>
         </mat-menu>
         <button mat-button (click)="openDialog()">More Details</button>
     </mat-card-actions>

@@ -23,5 +23,6 @@
     </ng-container>
 </div>
 
-<mat-paginator [length]="numberOfEvents" [pageSize]="currentPageSize" [pageSizeOptions]="[5, 10, 25, 50, 100]" (page)="onPageChange($event)" [pageIndex]="currentPageIndex" aria-label="Select Page"></mat-paginator>
+<mat-paginator [length]="dataSource.lengthOfEvents" [pageSize]="currentPageSize" [pageSizeOptions]="[5, 10, 25, 50, 100]" (page)="onPageChange($event)" [pageIndex]="currentPageIndex" aria-label="Select Page"></mat-paginator>
+
 

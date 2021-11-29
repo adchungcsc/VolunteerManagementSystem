@@ -48,6 +48,7 @@ export class AttendanceService {
 
 
 
+  // TODO REMOVE DOES NOT WORK.
   /**
    * Gets the attendance for the specific user and event provided.
    * @param eventId The ID of the event to get attendance.

@@ -1,0 +1,10 @@
+<h2 mat-dialog-title>Please Confirm:</h2>
+<mat-dialog-content class="mat-typography">
+    <h3 *ngIf="this.userName !== ''">Are you sure you would like to DELETE {{userName}}'s Signup for {{eventName}}?</h3>
+    <h3 *ngIf="this.userName === ''">Are you sure you would like to DELETE {{eventName}}?</h3>
+    <h3><strong>Note: This action cannot be undone.</strong></h3>
+</mat-dialog-content>
+<mat-dialog-actions align="end">
+    <button mat-button (click)="onDismiss()">No</button>
+    <button mat-raised-button color="primary" (click)="onConfirm()">Yes</button>
+</mat-dialog-actions>

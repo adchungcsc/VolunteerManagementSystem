@@ -139,8 +139,8 @@ export class EventsService {
       let results = this.http.get(this.eventsRoute, {
         headers: this.httpHeaders,
         params: new HttpParams()
-          .set('filter', filter)
-          .set('includePastEvents', includePastEvents)
+          .set('event_name', filter)
+          .set('event_start', includePastEvents ? '' : (new Date()).toISOString())
           .set('skipToken', skipToken.toString())
           .set('pageSize', maxToReturn.toString())
       }).pipe(
@@ -179,6 +179,8 @@ export class EventsService {
     if (!id) {
       throw new Error('No valid ID provided');
     }
+
+    console.log("Attempting delete");
 
     // delete the matching ID.
     return this.http.delete(this.eventsRoute + id, this.httpOptions).pipe(
