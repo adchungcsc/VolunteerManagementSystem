@@ -14,7 +14,7 @@ export class NavBarComponent implements OnInit {
     {title: 'Find Events', route: '/find-event', icon: 'add_circle_outline'},
     {title: 'My Events', route: '/my-events', icon: 'calendar_today'},
     {title: 'Dashboard', route: '/dashboard', icon: 'insights'},
-    {title: 'Add/Edit Events', route: '/create-event', icon: 'create'},
+    {title: 'Create Events', route: '/create-event', icon: 'create'},
     {title: 'My Account', route: '/log-in', icon: 'account_circle'}
   ];
 
