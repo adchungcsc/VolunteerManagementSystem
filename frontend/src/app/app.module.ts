@@ -152,6 +152,7 @@ export function MSALGuardConfigFactory(): MsalGuardConfiguration {
     MatAutocompleteModule
   ],
   providers: [
+    // Leaving these comments in place in case we re-implement this method
     // {
     //   provide: HTTP_INTERCEPTORS,
     //   useClass: MsalInterceptor,

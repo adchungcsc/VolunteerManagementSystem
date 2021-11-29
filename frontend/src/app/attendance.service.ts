@@ -47,47 +47,12 @@ export class AttendanceService {
 	}
 
 
-
-  // TODO REMOVE DOES NOT WORK.
-  /**
-   * Gets the attendance for the specific user and event provided.
-   * @param eventId The ID of the event to get attendance.
-   * @param userId The user ID for the user to get their attendance for the event, or empty if current user.
-   */
-  getSpecificUserAttendanceForEvent(eventId: number, userId?: number): Observable<any> {
-
-    // If not a valid ID/if null, error.
-    console.log("the ID is " + eventId);
-    if ((eventId == undefined || eventId == null) && eventId !== 0) {
-      throw new Error('Invalid Event ID');
-    }
-
-    // If not provided, get for current user.
-    // TODO ON BACKEND THE API SHOULD ONLY ALLOW USER TO GET THEIR OWN IF NOT ADMIN.
-    if ((userId == undefined || userId == null) && userId !== 0) {
-      // then assign it to be the current user.
-      userId = /* TODO ADD REAL USER ID HERE */ 1;
-    }
-    
-    // Returns the result or the error....
-    let results = this.http.get(this.attendanceRoute + 'event/' + eventId + '/' + userId, this.httpOptions).pipe(
-      catchError(this.handleAnyErrors)
-    );
-
-    // TODO REMOVE
-    console.log(results);
-
-    return results;
-  }
-
-
   /**
    * Gets attendance for the event ID provided.
    * @param eventId The ID of the event to get
    */
   getAllAttendanceForEvent(eventId: number): Observable<any> {
     // If not a valid ID/if null, error.
-    console.log("the ID is " + eventId);
     if ((eventId == undefined || eventId == null) && eventId !== 0) {
       throw new Error('Invalid Event ID');
     }
@@ -97,22 +62,16 @@ export class AttendanceService {
       catchError(this.handleAnyErrors)
     );
 
-    // TODO REMOVE
-    console.log(results);
-
     return results;
   }
 
 
-  // TODO NEED TO ACCOUNT FOR POTENTIALLY NOT NUMBER FOR USER ID.
-  // ALSO, WE MIGHT NOT WANT TO GET THE IMAGES - EITHER A LINK or a set of links to make other calls is fine.
   /**
    * Gets all attendance for events.
    * @param userId The User ID to use when getting attendance logs.
    */
   getAllAttendanceForUser(userId: number): Observable<any> {
     // If not a valid ID/if null, error.
-    console.log("the ID is " + userId);
     if ((userId == undefined || userId == null) && userId !== 0) {
       throw new Error('Invalid User ID');
     }
@@ -122,30 +81,12 @@ export class AttendanceService {
       catchError(this.handleAnyErrors)
     );
 
-    // TODO REMOVE
-    console.log(results);
-
     return results;
   }
 
-  // /**
-  //  * Enrolls the current volunteer into the event.
-  //  * TODO SHOULD WE ALSO PROVIDE THE USER ID?
-  //  * @param eventId The Id of the event.
-  //  * @param formData The Contents of the form (image, description).
-  //  */
-  //  submitAttendanceForEvent(eventId: number, formData: FormData): Observable<any> {
-  //   if ((eventId == undefined || eventId == null) && eventId !== 0) {
-  //     throw new Error('Invalid ID');
-  //   }
-  //   return this.http.post(this.attendanceRoute, {'eventId': eventId, 'formData': formData}, this.httpOptions).pipe(
-  //     catchError(this.handleAnyErrors)
-  //   );
-  // }
 
   /**
    * Submits the proof into the event.
-   * TODO SHOULD WE ALSO PROVIDE THE USER ID?
    * @param eventId The Id of the event.
    * @param data The Contents of the form (description).
    */
@@ -153,9 +94,6 @@ export class AttendanceService {
     if ((eventId == undefined || eventId == null) && eventId !== 0) {
       throw new Error('Invalid ID');
     }
-
-    console.log(data);
-    console.log(JSON.stringify(data));
 
     // Removed EventID from the post path.
     return this.http.post(this.attendanceRoute, JSON.stringify(data), this.httpOptions).pipe(
@@ -165,7 +103,6 @@ export class AttendanceService {
 
     /**
    * Submits the proof into the event.
-   * TODO SHOULD WE ALSO PROVIDE THE USER ID?
    * @param eventId The Id of the event.
    * @param data The Contents of the form (description).
    */
@@ -178,10 +115,7 @@ export class AttendanceService {
         throw new Error('Invalid ID');
       }
   
-      console.log(data);
-      console.log(JSON.stringify(data));
-  
-      return this.http.put(this.attendanceRoute + eventId + '/' + attendanceId, JSON.stringify(data), this.httpOptions).pipe(
+      return this.http.put(this.attendanceRoute + attendanceId, JSON.stringify(data), this.httpOptions).pipe(
         catchError(this.handleAnyErrors)
       );
     }

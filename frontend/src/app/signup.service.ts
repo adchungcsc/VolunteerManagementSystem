@@ -54,7 +54,6 @@ export class SignupService {
    */
   getSignupsForEvent(eventId: number): Observable<any> {
     // If not a valid ID/if null, error.
-    console.log("the ID is " + eventId);
     if ((eventId == undefined || eventId == null) && eventId !== 0) {
       throw new Error('Invalid ID');
     }
@@ -63,9 +62,6 @@ export class SignupService {
     let results = this.http.get(this.signupRoute + 'event/' + eventId, this.httpOptions).pipe(
       catchError(this.handleAnyErrors)
     );
-
-    // TODO REMOVE
-    console.log(results);
 
     return results;
   }
@@ -91,7 +87,6 @@ export class SignupService {
 
   /**
    * Enrolls the current volunteer into the event.
-   * TODO SHOULD WE ALSO PROVIDE THE USER ID?
    * @param eventId The Id of the event.
    */
   signupForEvent(eventId: number): Observable<any> {

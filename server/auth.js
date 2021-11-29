@@ -19,9 +19,6 @@ passport.use(new AzureAdOAuth2Strategy({
     async function (request, accessToken, refreshToken, profile, done) {
         //Returns a JWT so get the email from it.
         const decoded = jwt_decode(request);
-        // console.log(request)
-        // console.log(decoded)
-        // console.log("email" + decoded.upn)
         const [user, created] = await models.users.findOrCreate({
             where: {email: decoded.upn},
             defaults: {
@@ -30,18 +27,14 @@ passport.use(new AzureAdOAuth2Strategy({
                 phone_number: ""
             }
         });
-        // console.log(user)
-        // console.log(created)
         decoded.user_id = user.user_id
         return done(null, decoded);
     }));
 
 passport.serializeUser(function (user, done) {
-    // console.log("SERIALIZE USER" + JSON.stringify(user))
     done(null, user);
 });
 
 passport.deserializeUser(function (user, done) {
-    // console.log("DESERIALIZE USER" + JSON.stringify(user))
     done(null, user);
 });

@@ -12,15 +12,13 @@
         <img mat-card-image [src]="eventImage" [alt]="">
     </section>
     <mat-card-content>
-        <!-- TODO Add location and other info needed. -->
+        <!-- In the future, this is where I can Add location and other info needed. -->
         <!-- One idea https://zoaibkhan.com/blog/truncate-multiple-line-text-in-angular-like-a-pro/ -->
-        <!-- <p>{{eventInformation}}</p> -->
         <p [line-truncation]="2">{{eventItem.event_description}}</p>
     </mat-card-content>
     <mat-card-actions align="end">
         <button mat-button [matMenuTriggerFor]="menu">Management</button>
         <mat-menu #menu="matMenu">
-            <!-- <a [routerLink]="['../', 'create-event']" [queryParams]="{eventId: this.eventItem.event_id}">Edit Event</a> -->
             <button mat-menu-item [routerLink]="['../', 'create-event']" [queryParams]="{eventId: this.eventItem.event_id}"><span>Edit Event</span></button>
             <button mat-menu-item [routerLink]="['../', 'manage-event']" [queryParams]="{eventId: this.eventItem.event_id}"><span>Manage Event</span></button>
             <button mat-menu-item (click)="deleteThisEvent($event)"><span>Delete Event</span></button>

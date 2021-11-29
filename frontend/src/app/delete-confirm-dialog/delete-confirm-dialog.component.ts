@@ -11,6 +11,7 @@ export class DeleteConfirmDialogComponent implements OnInit {
   eventName: string;
   userName: string;
 
+  // Constructs the dialog box for the deletion.
   constructor(public dialogRef: MatDialogRef<DeleteConfirmDialogComponent>, @Inject(MAT_DIALOG_DATA) public data: {eventName: string, currentUser: string}) { 
     this.eventName = data.eventName;
     this.userName = data.currentUser;

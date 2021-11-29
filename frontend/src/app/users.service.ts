@@ -89,4 +89,14 @@ export class UsersService {
       catchError(this.handleAnyErrors)
     );
   }
+
+  /**
+   * Basically checks the login Auth.
+   * This doesn't use the Users Route but made sense in the Users service.
+   */
+  checkLoginAuth(): Observable<any> {
+    return this.http.get(this.apiBaseUrl + '/api/v1/protected', this.httpOptions).pipe(
+      catchError(this.handleAnyErrors)
+    );
+  }
 }
