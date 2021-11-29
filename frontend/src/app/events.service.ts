@@ -12,7 +12,6 @@ export interface EventItem {
   event_start: Date;
   event_end: Date;
   event_organizer: string
-  // event_organizer_email: string;
   event_max_volunteers: number;
   event_max_waitlist: number;
   event_description: string;
@@ -92,29 +91,7 @@ export class EventsService {
     );
   }  
 
-  // /**
-  //  * Gets all events - calls GET api/v1/events
-  //  * @param includePastEvents True if including those that already occurred.
-  //  * @param skipToken The place to start when getting events.
-  //  * @param maxToReturn The maximum number of itemss to return.
-  //  * @returns response.
-  //  */
-  // getAllEvents(includePastEvents: boolean, skipToken?: number, maxToReturn?: number): Observable<any> {
-  //   if (!skipToken) {
-  //     skipToken = 0;
-  //   }
-  //   if (!maxToReturn) {
-  //     maxToReturn = Number.MAX_SAFE_INTEGER;
-  //   }
-
-  //   // TODO ACCOUNT FOR tokens!
-  //   // Returns the result or the error...
-  //   return this.http.get(this.eventsRoute, this.httpOptions).pipe(
-  //     catchError(this.handleAnyErrors)
-  //   );
-  // }
-
-    /**
+  /**
    * Gets all events - calls GET api/v1/events
    * @param includePastEvents True if including those that already occurred. (true if empty)
    * @param skipToken The place to start when getting events. First page (0) if not specified.
@@ -132,8 +109,6 @@ export class EventsService {
       if (!filter) {
         filter = '';
       }
-
-
   
       // Returns the result or the error...
       let results = this.http.get(this.eventsRoute, {
@@ -146,25 +121,6 @@ export class EventsService {
       }).pipe(
         catchError(this.handleAnyErrors)
       );
-
-      // results.forEach(result => {
-      //   result["spaghetti"] = "spaghet";
-      // })
-
-      // arr: any = [];
-
-      // console.log("results");
-      // console.log(results);
-      // console.log("results body");
-      // console.log(results.subscribe(item => {
-      //   for (const d of (item as any)) {
-      //     this.arr.push({
-      //       {
-
-      //       }
-      //     })
-      //   }
-      // }));
 
       return results;
     }
@@ -179,8 +135,6 @@ export class EventsService {
     if (!id) {
       throw new Error('No valid ID provided');
     }
-
-    console.log("Attempting delete");
 
     // delete the matching ID.
     return this.http.delete(this.eventsRoute + id, this.httpOptions).pipe(
@@ -210,5 +164,4 @@ export class EventsService {
     );
   }
 
-  // TODO NEED TO ADD ABILITY TO CREATE AN EVENT AND UPDATE AN EVENT.
 }

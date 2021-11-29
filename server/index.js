@@ -66,7 +66,6 @@ app.use(function (req, res, next) {
 });
 
 function isLoggedIn(req, res, next) {
-    console.log("CHECKING LOG IN STAT")
     req.user ? next() : res.sendStatus(401);
 }
 

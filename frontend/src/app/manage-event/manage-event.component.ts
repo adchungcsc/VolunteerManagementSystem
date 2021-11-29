@@ -12,6 +12,9 @@ import { EventsService } from '../events.service';
 import { SignupItem, SignupService } from '../signup.service';
 import { UsersService } from '../users.service';
 
+/**
+ * The UserItem
+ */
 interface UserItem {
   user_id: number;
   user_name: string;
@@ -30,6 +33,10 @@ interface UserItem {
     ]),
   ],
 })
+
+/**
+ * The class for Event Management
+ */
 export class ManageEventComponent implements OnInit {
 
   // The users
@@ -39,7 +46,6 @@ export class ManageEventComponent implements OnInit {
   eventId: number = 0;
 
   // What columns to show.
-  // displayedColumns = ['user_id', 'is_waitlisted', 'waitlist_timestamp'];
   displayedColumns = ['user_id', 'user_name', 'user_email', 'is_waitlisted', 'waitlist_timestamp', 'actions'];
 
 
@@ -71,12 +77,11 @@ export class ManageEventComponent implements OnInit {
     private router: Router) { }
 
 
-  // TODO MIGRATE/MAP - ideally don't nest subscribes.
+  // In the future, move to a map, but this okay for now - ideally don't nest subscribes.
   ngOnInit(): void {
     this.Activatedroute.queryParams
         .subscribe(params => { 
             this.eventId = +params['eventId']||0;
-           console.log('Query params ',this.eventId) 
            if (this.eventId === null || this.eventId === 0) {
              // If this, quick message then redirect.
              try {
@@ -108,32 +113,12 @@ export class ManageEventComponent implements OnInit {
 
              // This gets the actual signups and provides it as the datasource.
              this.signupService.getSignupsForEvent(this.eventId).subscribe((signups: any) => {
-               console.log(this.userMap);
-               console.log(this.userMap.values());
-
                this.dataSource.data = signups;
                this.loading = false;
              });
            });
         });
   }
-
-
-  // openDialog() {
-  //   const dialogRef = this.dialog.open(DetailsDialogComponent, {data: this.eventItem});
-
-  //   dialogRef.afterClosed().pipe(catchError(err => {
-  //     this.openSnackBar(`Error: ${err}`);
-  //     return of([err]);
-  //   })).subscribe(result => {
-  //     if (result != undefined) {
-  //       console.log(`Dialog result: ${result}`);
-  //       if (result.event === 'signup') {
-  //         this.openSnackBar(`Event Sign-up Status: ${result.status}`);
-  //       }
-  //     }
-  //   });
-  // }
 
   /**
    * Opens a snackbar with a message specified.
@@ -167,7 +152,6 @@ export class ManageEventComponent implements OnInit {
         this.openSnackBar(`Error ${err}`);
         return of([err]);
       })).subscribe(result => {
-        console.log(result);
         let attendMatch: (AttendanceItem | null) = null;
         // PULL THE CORRECT ONE IF PRESENT AND PASS IT ONWARDS.
         // Find the match.
@@ -182,7 +166,6 @@ export class ManageEventComponent implements OnInit {
 
         // We have a match (or there is no match).
         // Note - the casting is because we need to force TypeScript to acknowledge it can be non-null.
-        console.log(attendMatch);
         if (attendMatch! !== null) {
           this.openSnackBar(`Attendance Found: ${attendMatch}`);
           this.expandedElementFound = true;
@@ -217,7 +200,6 @@ export class ManageEventComponent implements OnInit {
           this.openSnackBar(`Error: ${err}`);
           return of([err]);
         })).subscribe(res => {
-          console.log(`The response for the signup deletion is ${res}`);
           // I need to check if the signup deletion was a success
           this.openSnackBar("Signup Deleted.");
           // Reinit the page to get the new data.

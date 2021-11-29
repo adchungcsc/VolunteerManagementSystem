@@ -7,6 +7,9 @@ import { catchError, map, startWith } from 'rxjs/operators';
 import { EventsService } from '../events.service';
 import { UsersService } from '../users.service';
 
+/**
+ * The User interface - used for the User object on this page.
+ */
 export interface User {
   id: number;
   name: string;
@@ -38,6 +41,7 @@ export class CreateEventPageComponent implements OnInit {
 
   // A String representing if this is creating an event.
   action: string = 'Create';
+  // The current event.
   eventId: number = 0;
 
   // If currently loading.
@@ -59,36 +63,18 @@ export class CreateEventPageComponent implements OnInit {
     this.loadingNow = false;  
   }
 
-  // /**
-  //  * Creates the form as new again.
-  //  */
-  // configureNewForm(): void {
-  //   this.form = new FormGroup({
-  //     event_name: new FormControl('', [Validators.minLength(2), Validators.required]),
-  //     start_date: new FormControl(new Date(), Validators.required),
-  //     end_date: new FormControl(new Date(), Validators.required),
-  //     start_time: new FormControl(new Date()),
-  //     end_time: new FormControl(new Date()),
-  //     num_of_volunteers: new FormControl(10, Validators.required),
-  //     waitlist_num: new FormControl(0),
-  //     address: new FormControl('', [Validators.minLength(2), Validators.required]),
-  //     event_organizer: new FormControl(1),
-  //     description: new FormControl(''),
-  //     image: new FormControl('')
-  //   });
-  // }
-
+  /**
+   * Initializes create event, becoming edit event if there is a URL Query Parameter.
+   */
   ngOnInit(): void {
     this.Activatedroute.queryParams
         .subscribe(params => { 
             this.eventId = +params['eventId']||0;
-           console.log('Query params ',this.eventId) 
            if (this.eventId !== null && this.eventId !== 0) {
              this.action = "Edit";
              this.loadingNow = true;
              this.eventService.getEvent(this.eventId).subscribe(items => {
                let item = items[0];
-               console.log(item);
                let sT = new Date(item.event_start);
                let eT = new Date(item.event_end);
                this.form = new FormGroup({
@@ -159,11 +145,8 @@ export class CreateEventPageComponent implements OnInit {
     // Combine the date and time for start date/time and end date/time.
     let startDateTime = this.combineTwoDates(this.form.get('start_date')?.value, this.form.get('start_time')?.value);
     let endDateTime = this.combineTwoDates(this.form.get('end_date')?.value, this.form.get('end_time')?.value);
-    console.log(startDateTime);
     let startT = startDateTime.toISOString();
-    console.log(startT);
     let endT = (endDateTime.toISOString());
-
     let organizerDelimited = this.form.get('event_organizer')?.value.split(" ");
     let organizerId = organizerDelimited[organizerDelimited.length - 1];
 
@@ -177,20 +160,16 @@ export class CreateEventPageComponent implements OnInit {
       event_max_volunteers: this.form.get('num_of_volunteers')?.value,
       event_max_waitlist: this.form.get('waitlist_num')?.value,
       event_description: this.form.get('description')?.value,
-      // event_image: this.form.get('image')?.value
       event_image: this.imagePreview
     }
 
-    console.log(formData);
-
-    // TODO EDIT
+    // Create or EDIT
     if (this.action === 'Create') {
       // Second, send the form and the image to a service to send to the server
       this.eventService.createEvent(formData).pipe(catchError(err => {
         return of([err]);
       })).subscribe(item => {
         // Third, Wait for a response.
-        console.log(item);
         this.loadingNow = false;
 
         // Fourth, display a 'snackbar'
@@ -205,7 +184,6 @@ export class CreateEventPageComponent implements OnInit {
         return of([err]);
       })).subscribe(item => {
         // Third, Wait for a response.
-        console.log(item);
         this.loadingNow = false;
 
         // Fourth, display a 'snackbar'
@@ -251,17 +229,19 @@ export class CreateEventPageComponent implements OnInit {
     let year: number = dateInfo.getFullYear();
     let day: number = dateInfo.getDate();
     let month: number = dateInfo.getMonth();
-    console.log(year);
 
     const timeKeeper = timeInfo.split(':');
 
     let hour: number = timeKeeper[0];
     let minute: number = timeKeeper[1];
     let combinedDate: Date = new Date(year, month, day, hour, minute);
-    console.log(combinedDate);
     return combinedDate;
   }
 
+  /**
+   * Opens a snackbar with the message indicated.
+   * @param message The message to display
+   */
   openSnackBar(message: string) {
     this._snackBar.open(message, undefined, {duration: 3000});
   }
