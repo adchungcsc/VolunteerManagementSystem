@@ -14,8 +14,13 @@ import { UsersService } from '../users.service';
   templateUrl: './details-dialog.component.html',
   styleUrls: ['./details-dialog.component.css']
 })
+
+/**
+ * Contains all of the information about the event to be displayed, along with where to signup.
+ */
 export class DetailsDialogComponent implements OnInit {
 
+  // Event details needed
   eventId: number;
   eventDate: string;
   eventTimes: string;
@@ -29,6 +34,7 @@ export class DetailsDialogComponent implements OnInit {
   positionOnList: number = 0;
   myId: number = 0;
 
+  // Constructs the details dialog and performs some setup.
   constructor(public dialogRef: MatDialogRef<DetailsDialogComponent>, @Inject (MAT_DIALOG_DATA) public data: EventItem, public signupService: SignupService, public userService: UsersService, public attendanceService: AttendanceService, public dialog: MatDialog) {
     this.eventId = this.data.event_id;
     this.eventDate = this.data.event_start.toLocaleDateString();
@@ -49,13 +55,9 @@ export class DetailsDialogComponent implements OnInit {
     this.signupService.getSignupsForEvent(this.data.event_id).subscribe(res => {
       var waitCount: number = 0;
       var enrollCount: number = 0;
-      console.log(res);
-      console.log(res.length);
       userService.getCurrentUser().subscribe(u => {
         this.myId = u[0].user_id;
         for (let item of res) {
-          console.log(item);
-          console.log(this.myId)
           if (item.is_waitlisted) {
             waitCount++;
             if (item.user_id === this.myId) {
@@ -97,7 +99,6 @@ export class DetailsDialogComponent implements OnInit {
     // Get all of the proofs for the current event:
     this.loadComplete = false;
     this.attendanceService.getAllAttendanceForEvent(this.eventId).subscribe(result => {
-      console.log(result);
       var attendMatch: AttendanceItem | null = null;
       // PULL THE CORRECT ONE IF PRESENT AND PASS IT ONWARDS.
       result.forEach((element: any) => {
@@ -111,26 +112,19 @@ export class DetailsDialogComponent implements OnInit {
       const proofDialogRef = this.dialog.open(ProofDialogComponent, {data: {eventId: this.eventId, eventName: this.data.event_name, attendance: attendMatch, userId: this.myId}});
 
       proofDialogRef.afterClosed().subscribe(result => {
-        console.log(`Proof Dialog Result: ${result}`);
         if (result.event === 'cancel') {
-          console.log('CANCELLED');
           this.dialogRef.close({event: 'No Changes Made to Proof.', status: resStatus})
         } else if (result.event === 'submitted') {
-          console.log('SUBMITTED');
           if (attendMatch != null) {
-            console.log('Do an update');
             this.attendanceService.updateAttendanceForEvent(this.eventId, attendMatch.event_attendance_id, result.data).pipe(catchError(rr => {
               return of([rr]);
             })).subscribe(item => {
-              console.log(item);
               this.dialogRef.close({event: 'proofUpdated', status: resStatus})
             });
           } else {
-            console.log('Create a new');
             this.attendanceService.submitAttendanceForEvent(this.eventId, result.data).pipe(catchError(rr => {
               return of([rr]);
             })).subscribe(item => {
-              console.log(item);
               this.dialogRef.close({event: 'proofSubmitted', status: resStatus})
             });
           }
@@ -152,11 +146,9 @@ export class DetailsDialogComponent implements OnInit {
     const confDialogRef = this.dialog.open(ConfirmDialogComponent, {data: this.data.event_name});
 
     confDialogRef.afterClosed().subscribe(result => {
-      console.log(`Confirm Dialog Result: ${result}`);
       if (result) {
         // If yes, sends the request.
         this.signupService.signupForEvent(this.data.event_id).subscribe(res => {
-          console.log(`The response for the signup is ${res}`);
           // I need to check if the signup was a success
           if (res.is_waitlisted) {
             resStatus = 'Waitlist';

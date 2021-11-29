@@ -45,7 +45,6 @@ export class ProofDialogComponent implements OnInit {
   ngOnInit(): void {
     // Get the user name
     this.usersService.getUserObjectFromId(this.data.userId).subscribe(userOb => {
-      console.log(userOb);
       this.nameOfUser = userOb[0].name;
     });
   }
@@ -65,7 +64,6 @@ export class ProofDialogComponent implements OnInit {
   }
 
   onSubmitClick(): void {
-    console.log(this.form.get("rating")?.value);
     let formData = {
       event_id: this.data.eventId,
       hours: Number(this.form.get("hours")?.value),

@@ -38,7 +38,6 @@ export class HomePageComponent implements OnInit {
     this.dataSourceInfo = this.dataSource.connect(this);
     let self:any = this;
     this.usersService.getCurrentUser().subscribe(u => {
-      console.log(u);
       if (u[0].name.includes(" ")) {
         this.welcomeMessage = "Hello " + u[0].name.split(" ")[0] + ".";
       } else {
@@ -46,9 +45,6 @@ export class HomePageComponent implements OnInit {
       }
       this.userId = u[0].user_id;
       this.dataSource.loadEvents(this.userId);
-
-      console.log("DataSourceInfo from MyEvents");
-      console.log(this.dataSourceInfo);
 
       this.attendanceService.getAllAttendanceForUser(this.userId).subscribe(a => {
         a.forEach(function (attendance: any) {

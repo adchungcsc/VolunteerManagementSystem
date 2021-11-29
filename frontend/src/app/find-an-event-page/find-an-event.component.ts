@@ -64,17 +64,9 @@ export class FindAnEventComponent implements OnInit {
     this.currentSkipToken = 0;
     this.currentPageIndex = 0;
 
-    // CollectionViewer a = new CollectionViewer();
-
     // Connects to the database and loads events.
     this.dataSourceInfo = this.dataSource.connect(this);
     this.dataSource.loadEvents(this.displayOldEvents, '', this.currentSkipToken, this.currentPageSize);
-
-    // TODO REMOVE LOGS.
-    console.log('view change');
-    console.log(this.viewChange);
-    console.log('datasourceinfo');
-    console.log(this.dataSourceInfo);
   }
 
   /**
@@ -109,9 +101,7 @@ export class FindAnEventComponent implements OnInit {
   applyFilter(event: Event) {
     // Gets the value from the field.
     const valueOfFilter = (event.target as HTMLInputElement).value;
-    // Actually filter it.
-    
-
+    // This actually filters it.
   }
 
   /**
@@ -119,13 +109,6 @@ export class FindAnEventComponent implements OnInit {
    * @param event The page change
    */
   onPageChange(event: PageEvent) {
-    console.log('Paginator:');
-    console.log(event);
-    console.log('Current index ' + this.currentPageIndex);
-    console.log('Current page size ' + this.currentPageSize);
-    console.log('Current Skip Token ' + this.currentSkipToken);
-    console.log('Event page size is ' + event.pageSize + ' and index is ' + event.pageIndex);
-    
     if (event.pageSize != this.oldPageSize) {
       // If the page size changed, reset the index to be back to the start.
       this.currentPageIndex = 0;

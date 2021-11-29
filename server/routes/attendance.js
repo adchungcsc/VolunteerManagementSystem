@@ -26,7 +26,7 @@ router.post('/', isLoggedIn, async (req, res) => {
     })
     await addedAttendance.save().then(() => res.status(201).send(addedAttendance)
     ).catch((reason) => {
-        // TODO more gracefully handle later.
+        // more gracefully handle later.
         res.status(400).send(reason)
     })
 })
