@@ -71,7 +71,7 @@ function isLoggedIn(req, res, next) {
 
 module.exports = {isLoggedIn}
 
-app.get('/api/v1/auth/azureadoauth2', passport.authenticate('azure_ad_oauth2'), (req, res) => {
+app.get('/auth/azureadoauth2', passport.authenticate('azure_ad_oauth2'), (req, res) => {
 })
 
 
@@ -83,11 +83,11 @@ app.get('/callback',
     }
 );
 
-app.get('/api/v1/protected', isLoggedIn, (req, res) => {
+app.get('/protected', isLoggedIn, (req, res) => {
     res.send(JSON.stringify(req.user.user_id));
 });
 
-app.get('/api/v1/logout', (req, res) => {
+app.get('/logout', (req, res) => {
     req.logout();
     req.session.destroy();
     res.send('Goodbye!');
@@ -100,9 +100,9 @@ app.get('/auth/google/failure', (req, res) => {
 io.on('connection', (socket) => {
     io.emit('server uptime', process.uptime());
     io.emit('api call update', apiCount);
-  
+
     io.emit('page count update', ++pageCount);
-    
+
     socket.on('disconnect', () => {
       io.emit('page count update', --pageCount);
     });
@@ -112,7 +112,7 @@ io.on('connection', (socket) => {
         io.emit('routes array update', routes);
     });
 });
-  
+
 http.listen(3000, () => {
     console.log('listening on *:3000');
 });
@@ -122,10 +122,10 @@ const event = require('./routes/events');
 const attendance = require('./routes/attendance');
 const signup = require('./routes/signup');
 
-app.use('/api/v1/user', users);
-app.use('/api/v1/attend', attendance);
-app.use('/api/v1/event', event);
-app.use('/api/v1/signup', signup);
+app.use('/user', users);
+app.use('/attend', attendance);
+app.use('/event', event);
+app.use('/signup', signup);
 
 
 const path = require('path');
