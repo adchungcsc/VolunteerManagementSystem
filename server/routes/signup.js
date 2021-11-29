@@ -5,7 +5,7 @@ var router = express.Router();
 
 
 //Signup for event
-router.post('/', isLoggedIn, async (req, res) => {
+router.post('/',isLoggedIn, async (req, res) => {
     /**
      * Create new signup
      */
@@ -15,17 +15,29 @@ router.post('/', isLoggedIn, async (req, res) => {
     const is_waitlisted = false
     const waitlist_timestamp = "01 Jan 1970 00:00:00 GMT"
 
-    const addedSignup = models.event_signup.build({
-        event_id: event_id,
-        user_id: user_id,
-        is_waitlisted: is_waitlisted,
-        waitlist_timestamp: waitlist_timestamp
+    //Naive duplicate check to prevent double signup. Make more efficient complicated sequelize tx in future.
+    const count = await models.event_signup.count({
+        where: {
+            event_id: event_id,
+            user_id: user_id
+        }
     })
-    try {
-        await addedSignup.save()
-        res.status(201).send(addedSignup)
-    } catch (e) {
-        res.status(400).send()
+
+    if(count >= 1){
+        res.status(409).send("Already Signed Up")
+    }else{
+        const addedSignup = models.event_signup.build({
+            event_id: event_id,
+            user_id: user_id,
+            is_waitlisted: is_waitlisted,
+            waitlist_timestamp: waitlist_timestamp
+        })
+        try {
+            await addedSignup.save()
+            res.status(201).send(addedSignup)
+        } catch (e) {
+            res.status(400).send()
+        }
     }
 })
 

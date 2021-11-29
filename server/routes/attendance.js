@@ -17,18 +17,30 @@ router.post('/', isLoggedIn, async (req, res) => {
     const rating = req.body.rating
     const attendee_id = req.user.user_id // Get user ID from session.
 
-    const addedAttendance = models.event_attendance.build({
-        event_id: event_id,
-        hours: hours,
-        comment: comment,
-        rating: rating,
-        attendee_id: attendee_id
+    //Naive duplicate check to prevent double signup. Make more efficient complicated sequelize tx in future.
+    const count = await models.event_attendance.count({
+        where: {
+            event_id: event_id,
+            attendee_id: attendee_id
+        }
     })
-    await addedAttendance.save().then(() => res.status(201).send(addedAttendance)
-    ).catch((reason) => {
-        // more gracefully handle later.
-        res.status(400).send(reason)
-    })
+
+    if(count >= 1){
+        res.status(409).send("Already Signed Up")
+    }else{
+        const addedAttendance = models.event_attendance.build({
+            event_id: event_id,
+            hours: hours,
+            comment: comment,
+            rating: rating,
+            attendee_id: attendee_id
+        })
+        await addedAttendance.save().then(() => res.status(201).send(addedAttendance)
+        ).catch((reason) => {
+            // more gracefully handle later.
+            res.status(400).send(reason)
+        })
+    }
 })
 
 
