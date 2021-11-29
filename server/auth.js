@@ -12,7 +12,7 @@ passport.use(new AzureAdOAuth2Strategy({
         clientID: 'dcd1af31-45f0-43a4-9977-329f46129ba4',
         clientSecret: clientSecret,
         resource: '00000002-0000-0000-c000-000000000000',
-        callbackURL: 'https://participance.eastus.cloudapp.azure.com/callback',
+        callbackURL: 'http://localhost:4200/callback',
         useCommonEndpoint: 'https://login.microsoftonline.com/common'
     },
     async function (request, accessToken, refreshToken, profile, done) {

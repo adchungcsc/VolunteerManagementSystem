@@ -1,5 +1,5 @@
 export const environment = {
   production: true,
-  host: 'https://participance.eastus.cloudapp.azure.com',
+  host: 'http://localhost:4200',
   SOCKET_ENDPOINT: 'http://localhost:3000'
 };
