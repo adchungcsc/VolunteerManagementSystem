@@ -13,7 +13,7 @@ export interface EventItem {
     event_start: Date;
     event_end: Date;
     event_organizer: string
-    event_organizer_email: string;
+    // event_organizer_email: string;
     event_max_volunteers: number;
     event_max_waitlist: number;
     event_description: string;
@@ -99,7 +99,7 @@ export class MyEventsDataSource extends DataSource<EventItem> {
                     event_start: new Date(element.event[0].event_start),
                     event_end: new Date(element.event[0].event_end),
                     event_organizer: element.event[0].event_organizer,
-                    event_organizer_email: element.event[0].event_organizer_email,
+                    // event_organizer_email: element.event[0].event_organizer_email,
                     event_max_volunteers: element.event[0].event_max_volunteers,
                     event_max_waitlist: element.event[0].event_max_waitlist,
                     event_description: element.event[0].event_description,

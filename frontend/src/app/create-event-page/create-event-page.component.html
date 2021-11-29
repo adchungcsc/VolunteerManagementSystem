@@ -44,9 +44,9 @@
       <input id="maximum_volunteers" formControlName="num_of_volunteers" matInput type="number">
     </mat-form-field>
 
-    <mat-form-field class="full-width">
-      <mat-label>Waitlist Capacity</mat-label>
-      <input id="maximum_waitlist" formControlName="waitlist_num" matInput type="number">
+    <mat-form-field hidden class="full-width waitlistinfo">
+      <mat-label hidden>Waitlist Capacity</mat-label>
+      <input hidden id="maximum_waitlist" formControlName="waitlist_num" matInput type="number">
     </mat-form-field>
 
     <mat-form-field class="full-width">
@@ -56,7 +56,13 @@
 
     <mat-form-field class="full-width">
       <mat-label>Event Organizer</mat-label>
-      <input id="organizer" formControlName="event_organizer" matInput type="number">
+      <!-- <input id="organizer" formControlName="event_organizer" matInput type="number"> -->
+      <input type="text" placeholder="Search for a user" aria-label="Number" matInput formControlName="event_organizer" [matAutocomplete]="auto">
+      <mat-autocomplete #auto="matAutocomplete">
+        <mat-option *ngFor="let user of filteredOptions | async" [value]="user.display">
+          {{user.name}}
+        </mat-option>
+      </mat-autocomplete>
     </mat-form-field>
 
     <mat-form-field class="full-width">

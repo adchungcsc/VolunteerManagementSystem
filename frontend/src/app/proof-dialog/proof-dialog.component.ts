@@ -19,6 +19,7 @@ export class ProofDialogComponent implements OnInit {
 
   constructor(public dialogRef: MatDialogRef<ProofDialogComponent>, @Inject(MAT_DIALOG_DATA) public data: {eventId: number, eventName: string, attendance?: AttendanceItem, userId: number}, private usersService: UsersService) { 
 
+    this.submitStatus = false;
     let numOfHours = 0;
     let commentMessage = '';
     let ratingStars = 0.0;
@@ -28,6 +29,7 @@ export class ProofDialogComponent implements OnInit {
       numOfHours = data.attendance.hours;
       commentMessage = data.attendance.comment;
       ratingStars = data.attendance.rating;
+      this.submitStatus = true;
     }
 
     // Create a FormGroup with the Response.

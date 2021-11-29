@@ -11,7 +11,7 @@ export interface EventItem {
     event_start: Date;
     event_end: Date;
     event_organizer: string
-    event_organizer_email: string;
+    // event_organizer_email: string;
     event_max_volunteers: number;
     event_max_waitlist: number;
     event_description: string;
@@ -60,6 +60,8 @@ export class EventsDataSource extends DataSource<EventItem> {
     private loadingSubject = new BehaviorSubject<boolean>(false);
 
     public loading$ = this.loadingSubject.asObservable();
+    // Length for paginator.
+    public lengthOfEvents = 100;
 
     constructor(private eventsService: EventsService) {
         super();
@@ -94,9 +96,10 @@ export class EventsDataSource extends DataSource<EventItem> {
             catchError(() => of([])),
             finalize(() => this.loadingSubject.next(false))
         )
-        .subscribe(events => {
+        .subscribe(eventsRet => {
+            this.lengthOfEvents = eventsRet.count;
             let eventsConverted = new Array<EventItem>();
-            events.forEach((item: any) => {
+            eventsRet.events.forEach((item: any) => {
                 console.log("Item: ", item);
                 eventsConverted.push({
                     event_id: item.event_id,
@@ -105,7 +108,7 @@ export class EventsDataSource extends DataSource<EventItem> {
                     event_start: new Date(item.event_start),
                     event_end: new Date(item.event_end),
                     event_organizer: item.event_organizer,
-                    event_organizer_email: item.event_organizer_email,
+                    // event_organizer_email: item.event_organizer_email,
                     event_max_volunteers: item.event_max_volunteers,
                     event_max_waitlist: item.event_max_waitlist,
                     event_description: item.event_description,

@@ -26,9 +26,9 @@
             </div>
         </mat-dialog-content>
 
-        <mat-dialog-actions>
+        <mat-dialog-actions align="end">
             <button mat-button type="button" (click)="onCancelClick()">Close</button>
-            <button mat-button type="submit" [disabled]="form.invalid">Submit Attendance</button>
+            <button mat-button type="submit" [disabled]="form.invalid">{{submitStatus ? 'Update' : 'Submit'}} Attendance</button>
         </mat-dialog-actions>
     </form>
 </div>
