@@ -1,11 +1,19 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, Injectable, OnInit } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { ActivatedRoute, Router } from '@angular/router';
-import { of } from 'rxjs';
-import { catchError } from 'rxjs/operators';
+import { Observable, of } from 'rxjs';
+import { catchError, map, startWith } from 'rxjs/operators';
 import { EventsService } from '../events.service';
+import { UsersService } from '../users.service';
 
+export interface User {
+  id: number;
+  name: string;
+  display: string;
+}
+
+@Injectable()
 @Component({
   selector: 'app-create-event-page',
   templateUrl: './create-event-page.component.html',
@@ -23,7 +31,7 @@ export class CreateEventPageComponent implements OnInit {
     num_of_volunteers: new FormControl(10, Validators.required),
     waitlist_num: new FormControl(0),
     address: new FormControl('', [Validators.minLength(2), Validators.required]),
-    event_organizer: new FormControl(1),
+    event_organizer: new FormControl(''),
     description: new FormControl(''),
     image: new FormControl(null)
   });
@@ -38,7 +46,16 @@ export class CreateEventPageComponent implements OnInit {
   // Used for a preview image.
   imagePreview: string = '';
 
-  constructor(public eventService: EventsService, private _snackBar: MatSnackBar, private Activatedroute:ActivatedRoute, private router:Router) { 
+  // List of users for organizer selection
+
+  options: User[] = [];
+  filteredOptions: Observable<User[]> | undefined;
+
+  constructor(public eventService: EventsService, 
+    private _snackBar: MatSnackBar, 
+    private Activatedroute:ActivatedRoute, 
+    private router:Router, 
+    private usersService:UsersService) { 
     this.loadingNow = false;  
   }
 
@@ -92,8 +109,27 @@ export class CreateEventPageComponent implements OnInit {
              });
            }
     });
+
+    this.usersService.getAllUsers().subscribe(response => {
+      response.forEach((item: any) => {
+        this.options.push({
+            id: item.user_id,
+            name: item.name,
+            display: item.name + " - " + item.user_id
+        });
+      });
+    });
+    this.filteredOptions = this.form.controls.event_organizer.valueChanges.pipe(
+      startWith(''),
+      map(value => this._filter(value)),
+    );
   }
 
+  private _filter(value: string): User[] {
+    const filterValue = value.toLowerCase();
+
+    return this.options.filter(option => option.name.toLowerCase().includes(filterValue));
+  }
 
   // Image Preview
   // ADAPTED FROM https://medium.com/weekly-webtips/handling-file-uploads-in-angular-reactive-approach-7f90453f57cb
@@ -128,13 +164,16 @@ export class CreateEventPageComponent implements OnInit {
     console.log(startT);
     let endT = (endDateTime.toISOString());
 
+    let organizerDelimited = this.form.get('event_organizer')?.value.split(" ");
+    let organizerId = organizerDelimited[organizerDelimited.length - 1];
+
     // First, bundle the form
     let formData = {
       event_name: this.form.get('event_name')?.value,
       event_location: this.form.get('address')?.value,
       event_start: startT,
       event_end: endT,
-      event_organizer: this.form.get('event_organizer')?.value,
+      event_organizer: Number(organizerId),
       event_max_volunteers: this.form.get('num_of_volunteers')?.value,
       event_max_waitlist: this.form.get('waitlist_num')?.value,
       event_description: this.form.get('description')?.value,

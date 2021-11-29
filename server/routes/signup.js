@@ -22,10 +22,10 @@ router.post('/', isLoggedIn, async (req, res) => {
         is_waitlisted: is_waitlisted,
         waitlist_timestamp: waitlist_timestamp
     })
-    try{
+    try {
         await addedSignup.save()
         res.status(201).send(addedSignup)
-    }catch(e){
+    } catch (e) {
         console.log(e)
         res.status(400).send()
     }
@@ -48,7 +48,11 @@ router.get('/event/:id', isLoggedIn, async (req, res) => {
         let signups = await models.event_signup.findAll({
             where: {
                 event_id: queried_id
-            }
+            },
+            include: [{
+                model: models.users,
+                required: true
+            }],
         });
         if (signups !== null) {
             res.send(signups)
@@ -71,7 +75,11 @@ router.get('/user/:id', isLoggedIn, async (req, res) => {
     let signups = await models.event_signup.findAll({
         where: {
             user_id: queried_id
-        }
+        },
+        include: [{
+            model: models.event,
+            required: true
+        }],
     });
     if (signups !== null) {
         res.send(signups)

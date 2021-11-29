@@ -51,6 +51,7 @@ import { SocketioService } from './socketio.service';
 import { LineTruncationDirective, LineTruncationLibModule } from 'ngx-line-truncation';
 import { ManageEventComponent } from './manage-event/manage-event.component';
 import { DeleteConfirmDialogComponent } from './delete-confirm-dialog/delete-confirm-dialog.component';
+import {MatAutocompleteModule} from '@angular/material/autocomplete';
 
 // what application is currently directing
 export function MSALInstanceFactory(): IPublicClientApplication {
@@ -147,7 +148,8 @@ export function MSALGuardConfigFactory(): MsalGuardConfiguration {
     MatTooltipModule,
     MatSliderModule,
     HttpClientModule,
-    LineTruncationLibModule
+    LineTruncationLibModule,
+    MatAutocompleteModule
   ],
   providers: [
     // {

@@ -9,28 +9,44 @@ import { SocketioService } from '../socketio.service';
 })
 export class DashboardComponent {
 
-  usersSubscription: Subscription = new Subscription;
+  pagesSubscription: Subscription = new Subscription;
   uptimeSubscription: Subscription = new Subscription;
-  users: number = 1;
+  apiCallsSubscription: Subscription = new Subscription;
+  routesSubscription: Subscription = new Subscription;
+  pages: number = 0;
   uptime: number = 0;
-  uptimeFormatted: string = '00:00:00:00';
+  days: number = 0;
+  uptimeFormatted: string = '00:00:00';
+  apiCalls: number = 0;
+  routesCalled: any = [];
 
   constructor(private socketioService: SocketioService) {}
 
   ngOnInit() {
-    this.usersSubscription = this.socketioService.users$
-      .subscribe(change => this.users = change);
+    this.pagesSubscription = this.socketioService.pages$
+      .subscribe(change => this.pages = change);
     this.uptimeSubscription = this.socketioService.uptime$
       .subscribe(curTime => this.uptime = Math.round(curTime));
     setInterval(() => {
-      this.uptime++;
-      this.uptimeFormatted = new Date(this.uptime * 1000).toISOString().substr(11, 8);;
+      if (this.uptime == 86399) {
+        this.days++;
+        this.uptime = 0;
+      } else {
+        this.uptime++;
+      }
+      this.uptimeFormatted = new Date(this.uptime * 1000).toISOString().substr(11, 8);
     }, 1000);
+    this.apiCallsSubscription = this.socketioService.apiCalls$
+      .subscribe(change => this.apiCalls = change);
+    this.routesSubscription = this.socketioService.routesCalled$
+      .subscribe(updatedRoutes => this.routesCalled = updatedRoutes.reverse());
   }
 
   ngOnDestroy() {
-    this.usersSubscription.unsubscribe();
+    this.pagesSubscription.unsubscribe();
     this.uptimeSubscription.unsubscribe();
+    this.apiCallsSubscription.unsubscribe();
+    this.routesSubscription.unsubscribe();
   }
     
 }

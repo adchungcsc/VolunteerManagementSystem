@@ -1,6 +1,7 @@
 var express = require('express');
 const {models} = require("../orm");
 const {isLoggedIn} = require("../index");
+const {Sequelize} = require("sequelize");
 var router = express.Router();
 
 //Register attendance for event.
@@ -31,6 +32,30 @@ router.post('/', isLoggedIn, async (req, res) => {
 })
 
 
+router.put('/:id', isLoggedIn, async (req, res) => {
+    const event_attendance_id = req.params.id
+    const hours = req.body.hours || 0
+    const comment = req.body.comment || ""
+    const rating = req.body.rating || 5
+
+    models.event_attendance.update(
+        {
+            hours: hours,
+            comment: comment,
+            rating: rating,
+        }, {
+            where: {event_attendance_id: event_attendance_id},
+        }
+    ).then((updated) => {
+        res.status(200).send(updated)
+    }).catch(err => {
+        console.log(err)
+        res.status(404).send(err)
+    })
+
+})
+
+
 router.get('/event/:id', isLoggedIn, async (req, res) => {
     /**
      * Get who attended an event
@@ -43,7 +68,11 @@ router.get('/event/:id', isLoggedIn, async (req, res) => {
         let attendance = await models.event_attendance.findAll({
             where: {
                 event_id: queried_id
-            }
+            },
+            include: [{
+                model: models.users,
+                required: true
+            }],
         });
         if (attendance !== null) {
             res.send(attendance)
@@ -64,9 +93,12 @@ router.get('/user/:id?', isLoggedIn, async (req, res) => {
         queried_id = req.user.user_id
     }
     let attendance = await models.event_attendance.findAll({
+        include: [{
+            model: models.event,
+        }],
         where: {
             attendee_id: queried_id
-        }
+        },
     });
     if (attendance !== null) {
         res.send(attendance)
