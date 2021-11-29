@@ -1,29 +1,53 @@
 <div class="page-content">
-  <div class="metrics">
-    <mat-card class="metric-card">
-      <mat-card-header>
-        <!-- TODO: maybe icon -->
-        <!-- <div mat-card-avatar class="example-header-image"></div> -->
-        <mat-card-title>Active Users</mat-card-title>
-      </mat-card-header>
-      <mat-card-content>
-        <p class="metric-value">
-          {{ users }}
-        </p>
-      </mat-card-content>
-    </mat-card>    
+  <div class="row">
+    <div class="metrics">
+      <mat-card class="metric-card">
+        <mat-card-header>
+          <mat-card-title>Open Pages</mat-card-title>
+        </mat-card-header>
+        <mat-card-content>
+          <p class="metric-value">
+            {{ pages }}
+          </p>
+        </mat-card-content>
+      </mat-card>    
+    </div>
+    <div class="metrics">
+      <mat-card class="metric-card">
+        <mat-card-header>
+          <mat-card-title>Application Uptime</mat-card-title>
+        </mat-card-header>
+        <mat-card-content>
+          <p class="metric-value">
+            {{ days }}:{{ uptimeFormatted }}
+          </p>
+        </mat-card-content>
+      </mat-card>   
+    </div>
+    <div class="metrics">
+      <mat-card class="metric-card">
+        <mat-card-header>
+          <mat-card-title>API Calls</mat-card-title>
+        </mat-card-header>
+        <mat-card-content>
+          <p class="metric-value">
+            {{ apiCalls }}
+          </p>
+        </mat-card-content>
+      </mat-card>   
+    </div>
   </div>
-  <div class="metrics">
+  <div class="metrics routes">
     <mat-card class="metric-card">
       <mat-card-header>
-        <!-- TODO: maybe icon -->
-        <!-- <div mat-card-avatar class="example-header-image"></div> -->
-        <mat-card-title>Application Uptime</mat-card-title>
+        <mat-card-title>Recently Accessed Pages</mat-card-title>
       </mat-card-header>
       <mat-card-content>
-        <p class="metric-value">
-            {{ uptimeFormatted }}
+        <div class="most-recent"><b>(most recent)</b></div>
+        <p *ngFor="let route of routesCalled" class="metric-value">
+          {{ route }}
         </p>
+        <b>(least recent)</b>
       </mat-card-content>
     </mat-card>   
   </div>

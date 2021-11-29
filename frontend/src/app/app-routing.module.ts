@@ -21,6 +21,7 @@ const routes: Routes = [
   { path: 'dashboard', component: DashboardComponent, canActivate: [AuthGuardService]},
   { path: 'create-event', component: CreateEventPageComponent, canActivate: [AuthGuardService]},
   { path: 'manage-event', component: ManageEventComponent, canActivate: [AuthGuardService]},
+  { path: 'profile', component: LogInPageComponent}
 ];
 
 @NgModule({
