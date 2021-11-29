@@ -9,17 +9,18 @@ import { FindAnEventComponent } from './find-an-event-page/find-an-event.compone
 import { DashboardComponent } from './dashboard/dashboard.component';
 import { MsalGuard } from '@azure/msal-angular';
 import { ManageEventComponent } from './manage-event/manage-event.component';
+import { AuthGuardService } from './auth-guard.service';
 
 const routes: Routes = [
   { path: '', redirectTo: '/landing', pathMatch: 'full' },
-  { path: 'landing', component: LandingPageComponent },
+  { path: 'landing', component: LandingPageComponent},
   { path: 'log-in', component: LogInPageComponent},
-  { path: 'home', component: HomePageComponent},
-  { path: 'find-event', component: FindAnEventComponent},
-  { path: 'my-events', component: MyEventsPageComponent},
-  { path: 'dashboard', component: DashboardComponent},
-  { path: 'create-event', component: CreateEventPageComponent},
-  { path: 'manage-event', component: ManageEventComponent},
+  { path: 'home', component: HomePageComponent, canActivate: [AuthGuardService] },
+  { path: 'find-event', component: FindAnEventComponent, canActivate: [AuthGuardService]},
+  { path: 'my-events', component: MyEventsPageComponent, canActivate: [AuthGuardService]},
+  { path: 'dashboard', component: DashboardComponent, canActivate: [AuthGuardService]},
+  { path: 'create-event', component: CreateEventPageComponent, canActivate: [AuthGuardService]},
+  { path: 'manage-event', component: ManageEventComponent, canActivate: [AuthGuardService]},
   { path: 'profile', component: LogInPageComponent}
 ];
 

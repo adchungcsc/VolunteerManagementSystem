@@ -1,4 +1,5 @@
 import {Component, OnInit} from '@angular/core';
+import { AuthGuardService } from '../auth-guard.service';
 
 // import {SocialAuthService} from 'angularx-social-login';
 // import {SocialUser} from 'angularx-social-login';
@@ -12,16 +13,27 @@ import {Component, OnInit} from '@angular/core';
 })
 export class MicrosoftLoginComponent implements OnInit {
 
+  displaySpinner: boolean = true;
+
   // user: SocialUser | undefined;
   //
-  // constructor(private authService: SocialAuthService) {
-  // }
+  constructor(private authService: AuthGuardService) {
+
+  }
 
   ngOnInit() {
-    // this.authService.authState.subscribe((user) => {
-    //   this.user = user;
-    //   console.log(user);
+    this.displaySpinner = true;
+
+    // this.authService.canActivate().then(() => {
+      if (!this.authService.validUser) {
+        this.signInWithAzureAd();
+      } else {
+        this.displaySpinner = false;
+      }
+    // }).catch(() => {
+      // this.signInWithAzureAd();
     // });
+
   }
 
   signInWithAzureAd(): void {
@@ -45,6 +57,7 @@ export class MicrosoftLoginComponent implements OnInit {
   }
 
   signOut(): void {
+    this.authService.signOutUser();
     fetch(`/api/v1/logout`).then(() => console.log("Logged Out"))
     // this.authService.signOut().then(r => console.log(r));
   }
