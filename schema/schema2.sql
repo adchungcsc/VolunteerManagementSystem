@@ -11,16 +11,16 @@ CREATE TABLE users
 CREATE TABLE event
 (
     event_id        serial,
-    event_name      text,
-    event_location  text,
-    event_start     timestamp,
-    event_end       timestamp,
-    event_organizer int,
-    event_max_volunteers  int,
-    event_description     text,
-    event_image     text,
+    name      text,
+    address  text,
+    start_timestamp     timestamp,
+    end_timestamp       timestamp,
+    organizer_id int,
+    max_volunteers  int,
+    description     text,
+    image_path     text,
     primary key (event_id),
-    foreign key (organizer_id) references users (user_id)
+    foreign key (organizer_id) references users (user_id) on delete cascade
 );
 
 CREATE TABLE event_signup
@@ -31,8 +31,8 @@ CREATE TABLE event_signup
     is_waitlisted      boolean,
     waitlist_timestamp timestamp,
     primary key (event_signup_id),
-    foreign key (event_id) references event (event_id),
-    foreign key (user_id) references users (user_id)
+    foreign key (event_id) references event (event_id) on delete cascade,
+    foreign key (user_id) references users (user_id) on delete cascade
 );
 
 CREATE TABLE event_attendance
@@ -44,6 +44,6 @@ CREATE TABLE event_attendance
     rating              float,
     attendee_id         int,
     primary key (event_attendance_id),
-    foreign key (event_id) references event (event_id),
-    foreign key (attendee_id) references users (user_id)
+    foreign key (event_id) references event (event_id) on delete cascade,
+    foreign key (attendee_id) references users (user_id) on delete cascade
 );
