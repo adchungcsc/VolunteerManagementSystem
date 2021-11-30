@@ -31,7 +31,7 @@ export class CreateEventPageComponent implements OnInit {
     end_date: new FormControl(new Date(), Validators.required),
     start_time: new FormControl(new Date()),
     end_time: new FormControl(new Date()),
-    num_of_volunteers: new FormControl(10, Validators.required),
+    num_of_volunteers: new FormControl(10, [Validators.min(1), Validators.required]),
     waitlist_num: new FormControl(0),
     address: new FormControl('', [Validators.minLength(2), Validators.required]),
     event_organizer: new FormControl(''),
@@ -82,7 +82,7 @@ export class CreateEventPageComponent implements OnInit {
                  if (u.length == 0) {
                   orgString = "Unknown User - "
                  } else {
-                   orgString = `${u[0].user_name} - `;
+                   orgString = `${u[0].name} - `;
                  }
                  orgString += item.event_organizer;
 
