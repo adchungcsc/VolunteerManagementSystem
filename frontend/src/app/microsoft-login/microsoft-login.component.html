@@ -2,7 +2,7 @@
   <div class="card text-center">
 
     <div class="spinner-container">
-      <h1 class="loading">Please Wait...</h1>
+      <h1 class="loading" *ngIf="displaySpinner">Please Wait...</h1>
       <mat-spinner class="main-spin" *ngIf="displaySpinner"></mat-spinner>
     </div>
 
