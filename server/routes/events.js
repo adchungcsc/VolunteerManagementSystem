@@ -133,21 +133,19 @@ router.post('/', isLoggedIn, async (req, res) => {
     res.status(201).send(addedEvent)
 })
 
-router.delete('/:id', isLoggedIn, (req, res) => {
+router.delete('/:id', isLoggedIn, async (req, res) => {
     /**
      * delete event
      */
-    let queried_id = req.params.id
-    let event = models.event.findOne({
+    let deletedCount = await models.event.destroy({
         where: {
-            event_id: queried_id
+            event_id: req.params.id
         }
     })
-    if (event !== null) {
-        event.delete()
-        res.status(200).send({})
+    if (deletedCount === 1) {
+        res.status(204).send()
     } else {
-        res.status(404).send({})
+        res.status(404).send()
     }
 })
 
