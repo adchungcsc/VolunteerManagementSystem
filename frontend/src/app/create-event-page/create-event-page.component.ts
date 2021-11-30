@@ -92,10 +92,10 @@ export class CreateEventPageComponent implements OnInit {
                   end_date: new FormControl(new Date(item.event_end), Validators.required),
                   start_time: new FormControl('' + (sT.getHours() > 9 ? sT.getHours() : ('0' + sT.getHours())) + ':' + (sT.getMinutes() > 9 ? sT.getMinutes() : ('0' + sT.getMinutes()))),
                   end_time: new FormControl('' + (eT.getHours() > 9 ? eT.getHours() : ('0' + eT.getHours())) + ':' + (eT.getMinutes() != 0 ? eT.getMinutes() : ('0' + eT.getMinutes()))),
-                  num_of_volunteers: new FormControl(item.event_max_volunteers, Validators.required),
+                  num_of_volunteers: new FormControl(item.event_max_volunteers, [Validators.min(1), Validators.required]),
                   waitlist_num: new FormControl(0),
                   address: new FormControl(item.event_location, [Validators.minLength(2), Validators.required]),
-                  event_organizer: new FormControl(item.event_organizer),
+                  event_organizer: new FormControl(orgString),
                   description: new FormControl(item.event_description),
                   image: new FormControl(item.event_image)
                 });
