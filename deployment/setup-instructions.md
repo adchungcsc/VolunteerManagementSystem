@@ -1,14 +1,23 @@
 # Setup Runbook
 
-Skip steps 0, 1 and 2 if already done once.
+Skip steps 0, 1, 2 and 3 if already done once.
 
-0. Provision Azure Postgres Database
+0. Setup Azure Active Directory
+    - Follow microsoft azure ad app [instructions](https://docs.microsoft.com/en-us/azure/app-service/configure-authentication-provider-aad#--option-1-create-a-new-app-registration-automatically) to set up app.
+    - Set redirect URL in WEB app (DO NOT PICK SINGLE PAGE APP) to point to `https://DESIRED_SUBDOMAIN.eastus.cloudapp.azure.com/callback`
+      - Also set dev env redir urls if desired at localhost.
+    - Copy app configurations in preparation to use in app.
+      - client ID
+      - client secret
+      - desired redirect uris
+
+1. Provision Azure Postgres Database
    - Allow incoming connections from your IP addresses (configure your home/company network IP address on allowlist)
    - Choose cheapest postgres database needed
    - Once provisioned and credentials set, run DDL to configure schema
      - WEBAPPS-11/schema/schemav2.sql
 
-1. Provision Azure Virtual Machine (Cloud web dashboard UI intermittently changes but core configurations stay save)
+2. Provision Azure Virtual Machine (Cloud web dashboard UI intermittently changes but core configurations stay save)
    - On provision step, allow incoming and outbound traffic from HTTPS port 443 and HTTP port 80 in firewall rules
      - Azure services should be allowed by default through firewall (needed to connect to DB instance)
    - Choose preferred security type (key or user+pass). Will be needed to SSH later.
@@ -18,7 +27,7 @@ Skip steps 0, 1 and 2 if already done once.
    - Pick region (we used eastus in this tutorial)
    - Set subdomain on `DESIRED_SUBDOMAIN.eastus.cloudapp.azure.com`  (we chose `participance` as subdomain)
   
-2. Configure Azure Virtual Machine With Required Software
+3. Configure Azure Virtual Machine With Required Software
    - SSH to VM `ssh USERNAME@DESIRED_SUBDOMAIN.eastus.cloudapp.azure.com`
      - Enter credentials or pass in key as needed
    - Update
@@ -31,7 +40,7 @@ Skip steps 0, 1 and 2 if already done once.
      - `sudo apt install nginx` (do not configure yet just install it)
      - Navigate to `http://DESIRED_SUBDOMAIN.eastus.cloudapp.azure.com` in browser from local machine to verify nginx service working & that firewall rule is working.
 
-3. Build Project & Push to Server (On Development machine) (These steps for building can be done on the target machines if needed AND IF IT HAS ENOUGH RESOURCES.)
+4. Build Project & Push to Server (On Development machine) (These steps for building can be done on the target machines if needed AND IF IT HAS ENOUGH RESOURCES.)
      - [Have project repo cloned](https://github.ncsu.edu/CSC-WebApps-F21/WEBAPPS-11)
      - Clone repository from github and start at root of project
      - Change directory to frontend
@@ -52,7 +61,7 @@ Skip steps 0, 1 and 2 if already done once.
        - `sudo rm -rf WEBAPPS-11` Delete previous files if present from previous deployment
        - `unzip WEBAPPS-11.zip` expand files on target machine (assuming sshed in).
 
-4. Setup project on remote VM.
+5. Setup project on remote VM.
     - Connect to VM if not already
       - `ssh USERNAME@DESIRED_SUBDOMAIN.eastus.cloudapp.azure.com`
     - Get to position
@@ -67,6 +76,7 @@ Skip steps 0, 1 and 2 if already done once.
         - `sudo openssl req -x509 -nodes -days 365 -newkey rsa:2048 -keyout /etc/ssl/private/nginx-selfsigned.key -out /etc/ssl/certs/nginx-selfsigned.crt`
       - [tutorial on both self-signed and real certificate with nginx](https://www.fhtino.it/blog/experiment-how-to-assign-a-domain-name-and-activate-https-on-a-free-or-shared-azure-web-site)
     - Setup reverse proxy & static file hosting (configuring NGINX).
+      - overwrite nginx.conf in *etc/nginx/nginx.conf* with nginx.conf in *deployment* dir of project 
       - copy contents of file *deployment/participance* in WEBAPPS-11 directory into */etc/nginx/sites-available* `cp /home/USERNAME/WEBAPPS-11/deployment/participance /etc/nginx/sites-available`
       - symlink file from sites-available into sites-enabled. `ln -s /etc/nginx/sites-available/participance /ec/nginx/sites-enabled/participance` (View contents of sites-enabled to verify proper link. WARNING: DO NOT SYMLINK WITH RELATIVE PATH IT WON'T WORK)
       - validate NGINX configuration `nginx -t` (Will warn or okay your configuration)
