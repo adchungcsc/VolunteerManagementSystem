@@ -6,11 +6,12 @@
 | Page         | Status     | Wireframe |
 |--------------|-----------|------------|
 | Landing | Done | [Wireframe](https://github.ncsu.edu/CSC-WebApps-F21/WEBAPPS-11/blob/development/wireframes/landing.jpg) |
-| Dashboard      | Done | [Wireframe](https://github.ncsu.edu/CSC-WebApps-F21/WEBAPPS-11/blob/development/wireframes/dashboard.jpg) |
+| Home      | Done | [Wireframe](https://github.ncsu.edu/CSC-WebApps-F21/WEBAPPS-11/blob/development/wireframes/dashboard.jpg) |
 | Find an Event      | Done  | [Wireframe](https://github.ncsu.edu/CSC-WebApps-F21/WEBAPPS-11/blob/development/wireframes/find-event.jpg) |
 | My Registered Events      | Done  | [Wireframe](https://github.ncsu.edu/CSC-WebApps-F21/WEBAPPS-11/blob/development/wireframes/my-events.jpg) |
 | Create an Event      | Done | [Wireframe](https://github.ncsu.edu/CSC-WebApps-F21/WEBAPPS-11/blob/development/wireframes/create-event.jpg) |
-| Reports       | Modified-Done | [Wireframe (admin)](https://github.ncsu.edu/CSC-WebApps-F21/WEBAPPS-11/blob/development/wireframes/reports-admin.jpg), [Wireframe (user)](https://github.ncsu.edu/CSC-WebApps-F21/WEBAPPS-11/blob/development/wireframes/reports-user.jpg) |
+| Dashboard | Done | https://media.github.ncsu.edu/user/11654/files/9388e308-62de-407f-8282-41c3eca9981d(https://github.ncsu.edu/CSC-WebApps-F21/WEBAPPS-11/blob/development/wireframes/reports-user.jpg) |
+| Manage Event  | Done | https://media.github.ncsu.edu/user/11654/files/87c3919c-6655-4b47-b091-3619c9e6c489 |
 
 ### API Endpoints
 | Endpoints         | Status     | Purpose |
@@ -45,3 +46,17 @@ https://drive.google.com/file/d/10xpLSYd45yZM1qrMiOw33iecIT7S0Hhu/view?usp=shari
 
 ### M2 Demo Video
 http://csc342m2video.catalfu.com
+
+### M3 Demo Video
+https://ncsu.zoom.us/rec/share/kTpD4yGqKeoQ_Jlydhu7O6LzlEvVxg9Zr1zHNaZ6TLdbsNNGxxE-9w_eZB6ZiznQ.YLlY6qRFGNYAHg47?startTime=1638246682000
+password: CSC342Final!
+
+Site address: https://participance.eastus.cloudapp.azure.com/
+
+Setup instructions: https://github.ncsu.edu/CSC-WebApps-F21/WEBAPPS-11/blob/development/deployment/setup-instructions.md
+
+### Final Report
+https://docs.google.com/document/d/1lLeIolqcR6v2HUnuqYi_vz9k1VDCHAXO7ZBQWX06LjY/edit
+
+### Acceptance Tests
+https://docs.google.com/document/d/1pMbShJ9xZyFOe-AQPeQMRh8Fm-tZL_poFQ9uUewimPM/edit
