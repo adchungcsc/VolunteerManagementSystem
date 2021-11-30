@@ -1,0 +1,16 @@
+div.eventDetailsDialog {
+    max-height: 90vh;
+}
+
+.mat-dialog-content {
+    max-height: 60vh;
+}
+
+img.dialog-image {
+    max-width: 100%;
+}
+
+.waitlistinfo {
+    visibility: hidden;
+    height: 1px;
+}

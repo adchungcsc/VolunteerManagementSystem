@@ -1,0 +1,31 @@
+<div class="eventProofDialog">
+    <h2 mat-dialog-title>{{nameOfUser}}'s Attendance for {{data.eventName}}</h2>
+    <h4 [ngStyle]="getMyStyles()">Attendance Status: {{submitStatus ? 'Submitted' : 'Not Submitted'}}</h4>
+
+    <form [formGroup]="form" (ngSubmit)="onSubmitClick()">
+        <mat-dialog-content>
+            <div>
+                <!-- This will be used for the rating, comments, and the rest of the form. -->
+                <mat-form-field>
+                    <mat-label>Hours spent Volunteering</mat-label>
+                    <input type="number" formControlName="hours" matInput min="0.25" step="0.25" required>
+                </mat-form-field>
+                <br>
+                <mat-form-field>
+                    <mat-label>Comments</mat-label>
+                    <textarea matInput placeholder="Any comments or information to share?" formControlName="comment" required minlength="1"></textarea>
+                </mat-form-field>
+                <br>
+                <mat-form-field>
+                    <mat-label><mat-icon>star</mat-icon> Rating</mat-label>
+                    <input type="number" formControlName="rating" matInput min="1" max="5" required>
+                </mat-form-field>
+            </div>
+        </mat-dialog-content>
+
+        <mat-dialog-actions align="end">
+            <button mat-button type="button" (click)="onCancelClick()">Close</button>
+            <button mat-button type="submit" [disabled]="form.invalid">{{submitStatus ? 'Update' : 'Submit'}} Attendance</button>
+        </mat-dialog-actions>
+    </form>
+</div>

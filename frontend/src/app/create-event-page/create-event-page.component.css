@@ -1,0 +1,45 @@
+.full-width{
+  width: 100%;
+}
+
+.top-padding{
+  padding-top: 3px;
+}
+
+.margin-left mat-radio-button:not(:first-child){
+  margin-left:10px;
+}
+
+.form-container{
+  margin: 100px;
+}
+
+img.previewImage {
+  max-width: 100%;
+}
+
+mat-spinner.main-spin {
+  margin: 0 auto;
+  vertical-align: auto;
+}
+
+div.spinner-container {
+  height: 100vh;
+  width: 100%;
+  background-color: rgba(0, 0, 0, 0.034);
+}
+
+.waitlistinfo {
+  visibility: hidden;
+  height: 1px;
+}
+
+mat-form-field {
+  display: block;
+}
+
+@media (max-width: 768px) {
+  .form-container{
+    margin: 50px;
+  }
+}

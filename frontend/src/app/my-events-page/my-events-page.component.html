@@ -1,0 +1,57 @@
+<h1 class="page-header">My Registered Events</h1>
+<hr>
+<mat-card class="greeting-container">
+    <div class="row">
+        <div class="column greeting-card-title">
+            <h2 class="m-0">{{ welcomeMessage }}</h2>
+        </div>
+        <div class="greeting-card-divider"></div>
+        <div class="double-column">
+            <p>You have attended a total of {{ userEventsTotal }} event<span *ngIf="userEventsTotal != 1">s</span>.</p>
+            <p>You have volunteered for a total of {{ userHoursTotal }} hour<span *ngIf="userHoursTotal != 1">s</span>.</p>
+        </div>
+    </div>
+</mat-card>
+
+<mat-tab-group>
+    <mat-tab label="All Events">
+        <ng-template matTabContent>
+            <div fxLayout="row wrap" fxLayoutGap="5vw grid" class="cardContainer">
+                <ng-container *ngFor="let event of this.dataSourceInfo | async">
+                    <app-event-card fxFlex.xs="100%" fxFlex.lt-lg="50%" fxFlex.lg="33%" [eventItem]="event"></app-event-card>
+                </ng-container>
+                <br>
+            </div>
+        </ng-template>
+    </mat-tab>
+    <mat-tab label="Upcoming">
+        <ng-template matTabContent>
+            <div fxLayout="row wrap" fxLayoutGap="5vw grid" class="cardContainer">
+                <ng-container *ngFor="let event of this.dataSourceInfo | async">
+                    <app-event-card fxFlex.xs="100%" fxFlex.lt-lg="50%" fxFlex.lg="33%" *ngIf="event.event_end > this.now" [eventItem]="event"></app-event-card>
+                </ng-container>
+                <br>
+            </div>
+        </ng-template>
+    </mat-tab>
+    <mat-tab label="Recent">
+        <ng-template matTabContent>
+            <div fxLayout="row wrap" fxLayoutGap="5vw grid" class="cardContainer">
+                <ng-container *ngFor="let event of this.dataSourceInfo | async">
+                    <app-event-card fxFlex.xs="100%" fxFlex.lt-lg="50%" fxFlex.lg="33%" *ngIf="event.event_end > this.aWeekAgo && event.event_end <= this.now" [eventItem]="event"></app-event-card>
+                </ng-container>
+                <br>
+            </div>
+        </ng-template>
+    </mat-tab>
+    <mat-tab label="Past">
+        <ng-template matTabContent>
+            <div fxLayout="row wrap" fxLayoutGap="5vw grid" class="cardContainer">
+                <ng-container *ngFor="let event of this.dataSourceInfo | async">
+                    <app-event-card fxFlex.xs="100%" fxFlex.lt-lg="50%" fxFlex.lg="33%" *ngIf="event.event_end <= this.aWeekAgo" [eventItem]="event"></app-event-card>
+                </ng-container>
+                <br>
+            </div>
+        </ng-template>
+    </mat-tab>
+</mat-tab-group>

@@ -1,0 +1,200 @@
+.landing-page {
+    background: #f5f5f5;
+}
+
+.flex-row-container {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: center;
+}
+.flex-row-container-header > .flex-row-item-small {
+    flex: 1 1 20%;
+    height: 55px;
+}
+.flex-row-container-header > .flex-row-item-medium {
+    flex: 1 1 50%;
+    height: 55px;
+}
+.flex-row-container-proposition > .flex-row-item-medium {
+    flex: 1 1 50%;
+    height: 280px;
+}
+.flex-row-container-hero > .flex-row-item-medium {
+    flex: 1 1 50%;
+    height: 280px;
+}
+
+.mobile-header {
+    display: none;
+}
+.landing-header {
+    color: white;
+    background-color: #CC0000;
+}
+.landing-logo {
+    margin-left: 10%;
+    display: inline;
+}
+.site-icon {
+    margin-bottom: 12px;
+    margin-left: 20px;
+    width: 10%;
+}
+.landing-support {
+    margin-top: 5px;
+}
+
+.nav-link-container {
+    margin: auto;
+}
+.nav-link {
+    line-height: 3.2rem;
+    font-size: 1.1rem;
+    color: white;
+    display: inline;
+    margin: 4%;
+}
+.nav-link:hover {
+    color: #ff7944;
+}
+
+.selling-proposition {
+    margin-top: 20px;
+}
+.bg-image-skyline {
+    background-image: url(../../assets/community_landscape.jpg);
+    height: 100%;
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: cover;
+}
+.proposition-headline {
+    text-align: center;
+    margin-bottom: 20px;
+}
+.proposition-details {
+    padding-left: 32%;
+    padding-top: 70px;
+    padding-bottom: 70px;
+    color: white;
+    /* background-color: rgb(0,0,0); Fallback color */
+    background-color: rgba(0,0,0, 0.2);
+}
+.proposition-detail {
+    font-size: 1.4rem;
+    line-height: 2.5rem;
+}
+.proposition-icon {
+    width: 4%;
+}
+
+.benefits {
+    display: flex;
+    justify-content: space-between;
+    max-width: 960px;
+    margin: auto;
+}
+.benefit-detail {
+    flex: 1;
+    background-color: #CC0000;
+    margin: 15px 10px;
+    padding: 30px;
+    border-radius: 6px;
+    color: #fff;
+}
+.benefit-icon {
+    filter: invert(100%);
+    padding-bottom: 10px;
+}
+.benefit-text {
+    border-top: 2px solid white;
+    padding-top: 10px;
+}
+
+.hero-image-container {
+    background-image: url('../../assets/water_background.jpg');
+    background-position: top;
+    background-repeat: no-repeat;
+    background-size: cover;
+    color: white;
+    height: 350px;
+}
+.flex-row-container-hero {
+    display: flex;
+    justify-content: space-between;
+    max-width: 960px;
+    margin: auto;
+}
+.hero-image, .hero-text {
+    text-align: center;
+    flex: 1;
+    margin: 0px 10px;
+    padding: 30px;
+    border-radius: 6px;
+}
+.hero-text {
+    padding-top: 140px;
+}
+
+@media (max-width: 768px) {
+    .desktop-header {
+        display: none;
+    }
+    .mobile-header {
+        display: block;
+        background-color: #CC0000;
+    }
+    .mobile-nav-button {
+        padding-bottom: 9px;
+        width: 50px;
+    }
+    .mobile-logo {
+        color: white;
+        display: inline;
+        margin-left: 30px;
+    }
+    .mobile-nav-link-container {
+        padding-bottom: 4px;
+    }
+    .mobile-nav-link {
+        display: block;
+        line-height: 1.5rem;
+        font-size: 1rem;
+        color: white;
+        margin: 4%;
+    }
+    .site-icon {
+        margin-bottom: 0;
+    }
+    .hidden {
+        display: none;
+    }
+
+    .benefits, .flex-row-container-hero {
+      display: block;
+    }
+
+    .hero-image-container {
+        height: 450px;
+        overflow: hidden;
+    }
+
+    .hero-text {
+        padding-top: 0px;
+    }
+
+    .proposition-details {
+        padding-left: 10%;
+        padding-top: 70px;
+        padding-bottom: 70px;
+        color: white;
+    }
+    .proposition-icon {
+        width: 10%;
+    }
+    .proposition-headline {
+        padding-left: 20px;
+        padding-right: 20px;
+    }
+  }

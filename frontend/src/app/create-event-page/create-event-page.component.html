@@ -1,0 +1,85 @@
+<!-- Loading dialog - only visible when loading. -->
+<div class="spinner-container" *ngIf="loadingNow">
+  <mat-spinner class="main-spin"></mat-spinner>
+</div>
+
+<!-- This is the form -->
+<form class="form-container" [formGroup]="form" (ngSubmit)="onSubmit()">
+  <mat-card>
+    <mat-card-header>
+      <mat-card-title>{{action}} an Event</mat-card-title>
+    </mat-card-header>
+
+    <mat-form-field>
+      <mat-label>Event Name</mat-label>
+      <input id="eventName" formControlName="event_name" type="text" matInput required>
+    </mat-form-field>
+
+    <mat-form-field>
+      <mat-label>Enter a start date</mat-label>
+      <input id="start_timestamp" formControlName="start_date" matInput [matDatepicker]="picker">
+      <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+      <mat-datepicker #picker></mat-datepicker>
+    </mat-form-field>
+
+    <mat-form-field>
+      <mat-label>Enter a end date</mat-label>
+      <input id="end_timestamp" formControlName="end_date" matInput [matDatepicker]="pickerEnd">
+      <mat-datepicker-toggle matSuffix [for]="pickerEnd"></mat-datepicker-toggle>
+      <mat-datepicker #pickerEnd></mat-datepicker>
+    </mat-form-field>
+
+    <mat-form-field class="full-width">
+      <mat-label>Start Time</mat-label>
+      <input id="start_time" formControlName="start_time" matInput type="time">
+    </mat-form-field>
+
+    <mat-form-field class="full-width">
+      <mat-label>End Time</mat-label>
+      <input id="end_time" formControlName="end_time" matInput type="time">
+    </mat-form-field>
+
+    <mat-form-field class="full-width">
+      <mat-label>Maximum Volunteers</mat-label>
+      <input id="maximum_volunteers" formControlName="num_of_volunteers" matInput type="number">
+    </mat-form-field>
+
+    <mat-form-field hidden class="full-width waitlistinfo">
+      <mat-label hidden>Waitlist Capacity</mat-label>
+      <input hidden id="maximum_waitlist" formControlName="waitlist_num" matInput type="number">
+    </mat-form-field>
+
+    <mat-form-field class="full-width">
+      <mat-label>Location or Address</mat-label>
+      <input id="address" formControlName="address" matInput type="text">
+    </mat-form-field>
+
+    <mat-form-field class="full-width">
+      <mat-label>Event Organizer</mat-label>
+      <!-- <input id="organizer" formControlName="event_organizer" matInput type="number"> -->
+      <input type="text" placeholder="Search for a user" aria-label="Number" matInput formControlName="event_organizer" [matAutocomplete]="auto">
+      <mat-autocomplete #auto="matAutocomplete">
+        <mat-option *ngFor="let user of filteredOptions | async" [value]="user.display">
+          {{user.name}}
+        </mat-option>
+      </mat-autocomplete>
+    </mat-form-field>
+
+    <mat-form-field class="full-width">
+      <mat-label>Description</mat-label>
+      <input id="description" formControlName="description" matInput type="text">
+    </mat-form-field>
+
+    <mat-label>Event Image</mat-label>
+    <button type="button" mat-button (click)="fileUploader.click()">Upload Image</button>
+    <input type="file" #fileUploader (change)="onSelect($event)" hidden accept=".jpg, .jpeg, .png, .heic, .tiff">
+    <div class="preview-image" *ngIf="imagePreview !== '' && imagePreview && form.get('image')?.valid">
+      <img [src]="imagePreview" [alt]="form.value.title" class="previewImage">
+    </div>
+
+    <mat-card-actions>
+      <button mat-raised-button color="primary" type="submit">{{action}}</button>
+      <button mat-raised-button color="accent" type="reset" (click)="onClear()">Clear</button>
+    </mat-card-actions>
+  </mat-card>
+</form>

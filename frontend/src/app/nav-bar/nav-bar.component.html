@@ -1,0 +1,19 @@
+<mat-drawer-container class="nav-container">
+    <mat-drawer #drawer class="nav-link-container" mode="side" [opened]="router.url != '/landing' && desktop">
+        <h1 class="landing-logo"><a [routerLink]="['']">Participance</a></h1>
+        <img class="site-icon" src="../../assets/site_icon.svg">
+        <mat-nav-list>
+            <mat-list-item *ngFor="let link of links" class="nav-link" [routerLink]="link.route">
+                <mat-icon class="nav-icon">{{ link.icon }}</mat-icon>{{ link.title }}
+            </mat-list-item>
+        </mat-nav-list>
+    </mat-drawer>
+
+    <mat-drawer-content>
+        <div class="example-sidenav-content" *ngIf="router.url != '/landing'">
+            <div (click)="drawer.toggle(); showFirst=!showFirst"><mat-icon *ngIf="showFirst">chevron_right</mat-icon><mat-icon *ngIf="!showFirst">chevron_left</mat-icon></div>
+        </div>
+    <router-outlet></router-outlet>
+        
+    </mat-drawer-content>
+</mat-drawer-container>

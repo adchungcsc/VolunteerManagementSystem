@@ -1,0 +1,46 @@
+.bg-transparent {
+  background-color: transparent;
+}
+
+:host {
+  height: 100%;
+}
+
+.photo {
+  object-fit: contain;
+}
+
+.card {
+  width: 20rem;
+  margin: 0 auto;
+}
+
+mat-spinner.main-spin {
+  margin: 0 auto;
+  vertical-align: auto;
+}
+
+/* div.spinner-container {
+  height: 100vh;
+  width: 100%;
+  background-color: rgba(0, 0, 0, 0.034);
+} */
+
+.loading {
+  text-align: center;
+}
+
+.signinButton {
+  margin: auto;
+}
+
+
+.signin {
+  align-content: center;
+  padding-left: auto;
+  padding-right: auto;
+  padding-top: 1vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}

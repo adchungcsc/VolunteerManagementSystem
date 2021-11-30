@@ -1,0 +1,33 @@
+@import '~@angular/material/theming';
+@include mat-core();
+
+$mat-wolf-red: (
+    100: #CC0000,  // Red
+    50: #F57777, // Light Red
+    contrast: ()
+);
+
+$mat-wolf-black: (
+    100: #222222fd,  // Dark gray
+    50: #000000, // Black
+    contrast: ()
+);
+
+$mat-wolf-white: (
+    100: #FFFFFF,  // White
+    contrast: ()
+);
+
+$volunteer-theme-primary: mat-palette($mat-wolf-red, 100);
+$volunteer-theme-accent: mat-palette($mat-wolf-red, 50);
+$volunteer-theme-warn: mat-palette($mat-wolf-black, 50);
+$volunteer-theme: mat-light-theme((
+    color: (
+      primary: $volunteer-theme-primary,
+      accent: $volunteer-theme-accent,
+      warn: $volunteer-theme-warn,
+    )
+  )
+);
+@include angular-material-theme($volunteer-theme);
+

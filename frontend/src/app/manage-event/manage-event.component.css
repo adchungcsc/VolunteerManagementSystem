@@ -1,0 +1,22 @@
+table {
+    width: 100%;
+    display: inline-table;
+}
+
+tr.signup-detail-row {
+    height: 0;
+}
+
+tr:not(.signup-detail-row) {
+    cursor: pointer;
+}
+
+tr:not(.signup-detail-row):hover {
+    background-color: whitesmoke;
+}
+
+.signup-detail {
+    overflow: hidden;
+    display: flex;
+    position: relative;
+}

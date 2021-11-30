@@ -1,0 +1,70 @@
+div.cardContainer {
+    max-height: 100%;
+    display: flex;
+    /* max-height: 75vh; */
+    padding-left: 5vw;
+    margin: 0;
+}
+
+mat-tab-group {
+    height: 100vh;
+}
+
+.greeting-container {
+    display: flex;
+    justify-content: center;
+    margin: 20px 15vw 20px 15vw;
+    background: #ffe6e6;
+    padding: 30px;
+}
+
+.greeting-card-title {
+    display: flex;
+    text-align: center;
+    justify-content: center;
+}
+
+.column {
+    display: flex;
+    flex-direction: column;
+    flex-basis: 100%;
+    flex: 1;
+}
+
+.double-column {
+    display: flex;
+    flex-direction: column;
+    flex-basis: 100%;
+    flex: 2;
+}
+  
+.row {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    width: 100%;
+}
+
+.greeting-card-divider {
+    border-left:3px solid #000;
+    height: auto;
+    margin-left: 10px;
+    margin-right: 50px;
+}
+
+.m-0 {
+    margin: 0;
+}
+
+@media (max-width: 768px) {
+    .greeting-container {
+        margin: 20px;
+    }
+    .greeting-card-divider {
+        margin-right: 15px;
+    }
+}
+
+app-event-card {
+    flex: 0 1;
+}
