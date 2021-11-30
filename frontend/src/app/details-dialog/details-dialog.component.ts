@@ -113,25 +113,26 @@ export class DetailsDialogComponent implements OnInit {
 
       proofDialogRef.afterClosed().subscribe(result => {
         if (result.event === 'cancel') {
-          this.dialogRef.close({event: 'No Changes Made to Proof.', status: resStatus})
+          this.dialogRef.close({event: 'No Changes Made to Proof.', status: resStatus});
         } else if (result.event === 'submitted') {
           if (attendMatch != null) {
             this.attendanceService.updateAttendanceForEvent(this.eventId, attendMatch.event_attendance_id, result.data).pipe(catchError(rr => {
+              this.dialogRef.close({event: 'proofSubmitted', status: resStatus});
               return of([rr]);
             })).subscribe(item => {
-              this.dialogRef.close({event: 'proofUpdated', status: resStatus})
+              this.dialogRef.close({event: 'proofUpdated', status: resStatus});
             });
           } else {
             this.attendanceService.submitAttendanceForEvent(this.eventId, result.data).pipe(catchError(rr => {
               return of([rr]);
             })).subscribe(item => {
-              this.dialogRef.close({event: 'proofSubmitted', status: resStatus})
+              this.dialogRef.close({event: 'proofSubmitted', status: resStatus});
             });
           }
         }
-      })
+      });
       // Shouldn't get here, but just in case.
-      this.dialogRef.close({event: 'proofSubmitted', status: resStatus})
+      // this.dialogRef.close({event: 'proofSubmitted', status: resStatus})
       });
   }
 
@@ -162,10 +163,10 @@ export class DetailsDialogComponent implements OnInit {
       } else {
         // If no, sets the status to canceled or calls canceled.
         resStatus = 'Canceled';
-      }
 
-      // This closes the dialog and sends a response.
-      this.dialogRef.close({event: 'signup', status: resStatus})
+        // This closes the dialog and sends a response.
+        this.dialogRef.close({event: 'signup', status: resStatus})
+      }
     });
   }
 

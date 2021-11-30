@@ -139,9 +139,6 @@ export class ManageEventComponent implements OnInit {
     this.expandedElementRating = 0;
     this.expandedElementStar = '';
 
-    // A placeholder showing what was clicked.
-    this.openSnackBar(`Clicked on ${row.user_id} ${this.userMap.get(row.user_id)?.user_name}`);
-
     // Basically, if we are expanding the row (not collapsing it).
     if (this.expandedElement === row) {
       // Set it to start loading
@@ -167,7 +164,6 @@ export class ManageEventComponent implements OnInit {
         // We have a match (or there is no match).
         // Note - the casting is because we need to force TypeScript to acknowledge it can be non-null.
         if (attendMatch! !== null) {
-          this.openSnackBar(`Attendance Found: ${attendMatch}`);
           this.expandedElementFound = true;
           this.expandedElementHours = (attendMatch as AttendanceItem).hours;
           this.expandedElementComment = (attendMatch as AttendanceItem).comment;
@@ -175,10 +171,7 @@ export class ManageEventComponent implements OnInit {
           for (let i = 0; i < this.expandedElementRating; i++) {
             this.expandedElementStar += '⭐';
           }
-        } else {
-          this.openSnackBar("No Attendance Records Present");
         }
-        
       });
     }
     
