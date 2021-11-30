@@ -77,21 +77,31 @@ export class CreateEventPageComponent implements OnInit {
                let item = items[0];
                let sT = new Date(item.event_start);
                let eT = new Date(item.event_end);
-               this.form = new FormGroup({
-                event_name: new FormControl(item.event_name, [Validators.minLength(2), Validators.required]),
-                start_date: new FormControl(new Date(item.event_start), Validators.required),
-                end_date: new FormControl(new Date(item.event_end), Validators.required),
-                start_time: new FormControl('' + (sT.getHours() > 9 ? sT.getHours() : ('0' + sT.getHours())) + ':' + (sT.getMinutes() > 9 ? sT.getMinutes() : ('0' + sT.getMinutes()))),
-                end_time: new FormControl('' + (eT.getHours() > 9 ? eT.getHours() : ('0' + eT.getHours())) + ':' + (eT.getMinutes() != 0 ? eT.getMinutes() : ('0' + eT.getMinutes()))),
-                num_of_volunteers: new FormControl(item.event_max_volunteers, Validators.required),
-                waitlist_num: new FormControl(0),
-                address: new FormControl(item.event_location, [Validators.minLength(2), Validators.required]),
-                event_organizer: new FormControl(item.event_organizer),
-                description: new FormControl(item.event_description),
-                image: new FormControl(item.event_image)
-              });
-              this.imagePreview = item.event_image;
-              this.loadingNow = false;
+               let orgString = '';
+               this.usersService.getUserObjectFromId(item.event_organizer).subscribe(u => {
+                 if (u.length == 0) {
+                  orgString = "Unknown User - "
+                 } else {
+                   orgString = `${u[0].user_name} - `;
+                 }
+                 orgString += item.event_organizer;
+
+                 this.form = new FormGroup({
+                  event_name: new FormControl(item.event_name, [Validators.minLength(2), Validators.required]),
+                  start_date: new FormControl(new Date(item.event_start), Validators.required),
+                  end_date: new FormControl(new Date(item.event_end), Validators.required),
+                  start_time: new FormControl('' + (sT.getHours() > 9 ? sT.getHours() : ('0' + sT.getHours())) + ':' + (sT.getMinutes() > 9 ? sT.getMinutes() : ('0' + sT.getMinutes()))),
+                  end_time: new FormControl('' + (eT.getHours() > 9 ? eT.getHours() : ('0' + eT.getHours())) + ':' + (eT.getMinutes() != 0 ? eT.getMinutes() : ('0' + eT.getMinutes()))),
+                  num_of_volunteers: new FormControl(item.event_max_volunteers, Validators.required),
+                  waitlist_num: new FormControl(0),
+                  address: new FormControl(item.event_location, [Validators.minLength(2), Validators.required]),
+                  event_organizer: new FormControl(item.event_organizer),
+                  description: new FormControl(item.event_description),
+                  image: new FormControl(item.event_image)
+                });
+                this.imagePreview = item.event_image;
+                this.loadingNow = false;
+               });
              });
            }
     });
@@ -208,7 +218,7 @@ export class CreateEventPageComponent implements OnInit {
         num_of_volunteers: 10,
         waitlist_num: 0,
         address: '',
-        event_organizer: 1,
+        event_organizer: '',
         description: '',
         image: null
       });

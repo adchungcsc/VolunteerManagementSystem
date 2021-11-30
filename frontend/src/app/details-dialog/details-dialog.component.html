@@ -17,7 +17,7 @@
         <button mat-button (click)="onCancelClick()">Cancel</button>
         <span class="signupButtons" *ngIf="this.loadComplete && !this.currentlyEnrolled && !this.currentlyWaitlisted">
             <button mat-button (click)="onSignupClick()" cdkFocusInitial *ngIf="this.numberFilled < data.event_max_volunteers">Sign up to Volunteer!</button>
-            <button mat-button (click)="onSignupClick()" cdkFocusInitial *ngIf="this.numberFilled >= data.event_max_volunteers" [disabled]="data.event_max_waitlist === this.numberWaitlistFilled">Join the Waitlist</button>
+            <button mat-button (click)="onSignupClick()" cdkFocusInitial *ngIf="this.numberFilled >= data.event_max_volunteers" [disabled]="(data.event_max_waitlist ?? 0) === this.numberWaitlistFilled">Join the Waitlist</button>
         </span>
         <span class="enrolledAndProofButtons" *ngIf="this.loadComplete && this.currentlyEnrolled">
             <button mat-button disabled>You are already registered for this event</button>

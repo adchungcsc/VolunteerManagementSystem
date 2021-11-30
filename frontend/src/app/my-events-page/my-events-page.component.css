@@ -3,6 +3,7 @@ div.cardContainer {
     display: flex;
     /* max-height: 75vh; */
     padding-left: 5vw;
+    margin: 0;
 }
 
 mat-tab-group {
