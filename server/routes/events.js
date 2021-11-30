@@ -65,11 +65,11 @@ router.get('/:id?', isLoggedIn, async (req, res) => {
 })
 
 
-router.put('/',isLoggedIn, async (req, res) => {
+router.put('/:id', async (req, res) => {
     /**
      * Create new event
      */
-    const event_id = req.query.event_id
+    const event_id = req.params.id
     const name = req.body.event_name
     const location = req.body.event_location
     const event_start = req.body.event_start
