@@ -5,7 +5,7 @@ of [CSC-342 Applied Web-based Client-Server Computing (webapps)](https://github.
 
 This project was developed by myself ([Alex Chung](https://github.com/adchungcsc))
 , [Ryan Catalfu](https://github.com/Rcatalfu), and [Lorenzo Battigelli](https://github.com/ldbattig) over the course of
-approximately half a semester during Fall 2021. I primarily developed the backend.
+approximately half a semester during Fall 2021. I primarily developed the backend and deployment process.
 
 The goal of this project was to create a full stack web application from scratch using NodeJs, Express, Angular,
 Postgres, Azure Active Directory, NGINX, and Azure VM + Postgres DB. This application is a Volunteer Management System
