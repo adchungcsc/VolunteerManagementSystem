@@ -8,7 +8,7 @@ This project was developed by myself ([Alex Chung](https://github.com/adchungcsc
 approximately half a semester during Fall 2021. I primarily developed the backend.
 
 The goal of this project was to create a full stack web application from scratch using NodeJs, Express, Angular,
-Postgres, Azure Active Directory, nginx, and Azure VM + Postgres DB. This application is a Volunteer Management System
+Postgres, Azure Active Directory, NGINX, and Azure VM + Postgres DB. This application is a Volunteer Management System
 that makes it easy to organize the creation, signup, attendance, and reports of volunteering events.
 
 As of December 6, 2021, the server is deployed [here](https://participance.eastus.cloudapp.azure.com/landing)
